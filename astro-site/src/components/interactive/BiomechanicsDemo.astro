@@ -1,0 +1,144 @@
+---
+// Three.js Biomechanics Demo Component
+---
+
+<div id="biomechanics-demo" class="bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-sm">
+  <h3 class="text-xl font-semibold mb-4 text-burnt-sienna">Interactive 3D Gait Analysis</h3>
+  <div id="three-canvas" class="w-full h-64 bg-black/20 rounded-lg mb-4 relative overflow-hidden">
+    <canvas id="gait-canvas" class="w-full h-full"></canvas>
+    <div class="absolute inset-0 flex items-center justify-center text-gray-400">
+      <div class="text-center">
+        <div class="text-4xl mb-2">🦴</div>
+        <p>Interactive 3D Demo</p>
+        <p class="text-sm">(Click to activate)</p>
+      </div>
+    </div>
+  </div>
+  <div class="flex gap-4 mb-4">
+    <button id="play-gait" class="px-4 py-2 bg-burnt-sienna/20 border border-burnt-sienna/40 rounded-lg hover:bg-burnt-sienna/30 transition-colors">
+      ▶ Play Gait Cycle
+    </button>
+    <button id="reset-demo" class="px-4 py-2 bg-royal-purple/20 border border-royal-purple/40 rounded-lg hover:bg-royal-purple/30 transition-colors">
+      🔄 Reset
+    </button>
+  </div>
+  <p class="text-gray-400 text-sm">
+    This demonstration shows how AI can analyze and visualize biomechanical movement patterns in real-time.
+  </p>
+</div>
+
+<script>
+  // Simple Three.js demo (will be enhanced with actual Three.js when dependencies are added)
+  let isAnimating = false;
+  let animationId = null;
+
+  const canvas = document.getElementById('gait-canvas') as HTMLCanvasElement;
+  const ctx = canvas?.getContext('2d');
+  const playButton = document.getElementById('play-gait');
+  const resetButton = document.getElementById('reset-demo');
+
+  function resizeCanvas() {
+    if (!canvas || !ctx) return;
+    canvas.width = canvas.offsetWidth * window.devicePixelRatio;
+    canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+
+  function drawGaitCycle(progress = 0) {
+    if (!ctx || !canvas) return;
+    
+    const width = canvas.offsetWidth;
+    const height = canvas.offsetHeight;
+    
+    ctx.clearRect(0, 0, width, height);
+    
+    // Draw a simple stick figure gait animation
+    const centerX = width / 2;
+    const centerY = height / 2;
+    
+    // Body
+    ctx.strokeStyle = '#eb5b48';
+    ctx.lineWidth = 3;
+    
+    // Head
+    ctx.beginPath();
+    ctx.arc(centerX, centerY - 40, 10, 0, Math.PI * 2);
+    ctx.stroke();
+    
+    // Body line
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY - 30);
+    ctx.lineTo(centerX, centerY + 20);
+    ctx.stroke();
+    
+    // Arms
+    const armSwing = Math.sin(progress * Math.PI * 2) * 20;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY - 10);
+    ctx.lineTo(centerX - 20 + armSwing, centerY + 10);
+    ctx.moveTo(centerX, centerY - 10);
+    ctx.lineTo(centerX + 20 - armSwing, centerY + 10);
+    ctx.stroke();
+    
+    // Legs
+    const legSwing = Math.sin(progress * Math.PI * 2) * 15;
+    ctx.beginPath();
+    ctx.moveTo(centerX, centerY + 20);
+    ctx.lineTo(centerX - 15 + legSwing, centerY + 50);
+    ctx.moveTo(centerX, centerY + 20);
+    ctx.lineTo(centerX + 15 - legSwing, centerY + 50);
+    ctx.stroke();
+    
+    // Feet
+    ctx.beginPath();
+    ctx.moveTo(centerX - 15 + legSwing, centerY + 50);
+    ctx.lineTo(centerX - 25 + legSwing, centerY + 50);
+    ctx.moveTo(centerX + 15 - legSwing, centerY + 50);
+    ctx.lineTo(centerX + 25 - legSwing, centerY + 50);
+    ctx.stroke();
+  }
+
+  function animate() {
+    let start = 0;
+    let progress = 0;
+    
+    function step(timestamp: number) {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+      progress = (elapsed / 2000) % 1; // 2 second cycle
+      
+      drawGaitCycle(progress);
+      
+      if (isAnimating) {
+        animationId = requestAnimationFrame(step);
+      }
+    }
+    
+    if (isAnimating) {
+      animationId = requestAnimationFrame(step);
+    }
+  }
+
+  playButton?.addEventListener('click', () => {
+    isAnimating = !isAnimating;
+    if (isAnimating) {
+      animate();
+      playButton.textContent = '⏸ Pause';
+    } else {
+      if (animationId) cancelAnimationFrame(animationId);
+      playButton.textContent = '▶ Play Gait Cycle';
+    }
+  });
+
+  resetButton?.addEventListener('click', () => {
+    isAnimating = false;
+    if (animationId) cancelAnimationFrame(animationId);
+    playButton.textContent = '▶ Play Gait Cycle';
+    drawGaitCycle(0);
+  });
+
+  // Initialize
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  drawGaitCycle(0);
+</script>

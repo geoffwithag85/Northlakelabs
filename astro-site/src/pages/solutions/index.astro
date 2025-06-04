@@ -1,0 +1,166 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Button from '../../components/ui/Button.astro';
+import BiomechanicsDemo from '../../components/interactive/BiomechanicsDemo.astro';
+import AIAnalysisDemo from '../../components/interactive/AIAnalysisDemo.astro';
+---
+
+<Layout title="Innovative Solutions - Northlake Labs" description="AI-powered biomechanics solutions for research labs, rehabilitation clinics, and sports professionals.">
+  <Header />
+  
+  <main class="relative z-10">
+    <!-- Hero Section -->
+    <section class="py-20">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+          <span class="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
+            Innovative Solutions
+          </span>
+        </h1>
+        <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+          Custom AI-powered biomechanics solutions tailored to your specific research, clinical, or performance needs.
+        </p>
+      </div>
+    </section>
+
+    <!-- Solutions Grid -->
+    <section class="py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid lg:grid-cols-2 gap-12">
+          
+          <!-- Data Analysis Services -->
+          <div class="bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-sm">
+            <div class="text-4xl mb-6">📊</div>
+            <h2 class="text-2xl font-semibold mb-4 text-burnt-sienna">Data Analysis Services</h2>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              Transform your biomechanics data into actionable insights with advanced statistical analysis and machine learning techniques.
+            </p>
+            <ul class="text-gray-400 space-y-2 mb-6">
+              <li class="flex items-start gap-3">
+                <span class="text-royal-purple mt-1">▸</span>
+                <span>Movement pattern analysis and classification</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-royal-purple mt-1">▸</span>
+                <span>Performance metrics and outcome prediction</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-royal-purple mt-1">▸</span>
+                <span>Multi-modal data integration and processing</span>
+              </li>
+            </ul>
+            <Button href="/Northlakelabs/contact" variant="secondary">Learn More</Button>
+          </div>
+
+          <!-- AI Integration -->
+          <div class="bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-sm">
+            <div class="text-4xl mb-6">🤖</div>
+            <h2 class="text-2xl font-semibold mb-4 text-burnt-sienna">AI Integration</h2>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              Leverage cutting-edge artificial intelligence to automate analysis, predict outcomes, and discover hidden patterns in your data.
+            </p>
+            <ul class="text-gray-400 space-y-2 mb-6">
+              <li class="flex items-start gap-3">
+                <span class="text-royal-purple mt-1">▸</span>
+                <span>Computer vision for movement analysis</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-royal-purple mt-1">▸</span>
+                <span>Predictive models for injury risk assessment</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-royal-purple mt-1">▸</span>
+                <span>Real-time feedback and optimization systems</span>
+              </li>
+            </ul>
+            <Button href="/Northlakelabs/contact" variant="secondary">Learn More</Button>
+          </div>
+
+          <!-- Research Tools -->
+          <div class="bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-sm">
+            <div class="text-4xl mb-6">🔬</div>
+            <h2 class="text-2xl font-semibold mb-4 text-burnt-sienna">Research Tools</h2>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              Custom software solutions designed specifically for biomechanics research labs and academic institutions.
+            </p>
+            <ul class="text-gray-400 space-y-2 mb-6">
+              <li class="flex items-start gap-3">
+                <span class="text-royal-purple mt-1">▸</span>
+                <span>Data collection and management systems</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-royal-purple mt-1">▸</span>
+                <span>Automated analysis pipelines</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-royal-purple mt-1">▸</span>
+                <span>Visualization and reporting tools</span>
+              </li>
+            </ul>
+            <Button href="/Northlakelabs/contact" variant="secondary">Learn More</Button>
+          </div>
+
+          <!-- Robotic Applications -->
+          <div class="bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-sm">
+            <div class="text-4xl mb-6">⚙️</div>
+            <h2 class="text-2xl font-semibold mb-4 text-burnt-sienna">Robotic Applications</h2>
+            <p class="text-gray-300 mb-6 leading-relaxed">
+              Intelligent robotic systems for automated assessment, rehabilitation, and performance enhancement.
+            </p>
+            <ul class="text-gray-400 space-y-2 mb-6">
+              <li class="flex items-start gap-3">
+                <span class="text-royal-purple mt-1">▸</span>
+                <span>Automated movement assessment devices</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-royal-purple mt-1">▸</span>
+                <span>Rehabilitation robots with AI guidance</span>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="text-royal-purple mt-1">▸</span>
+                <span>Performance monitoring and feedback systems</span>
+              </li>
+            </ul>
+            <Button href="/Northlakelabs/contact" variant="secondary">Learn More</Button>
+          </div>
+
+        </div>
+      </div>
+    </section>    <!-- Interactive Demonstrations -->
+    <section class="py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-bold mb-4">
+            <span class="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
+              Interactive Demonstrations
+            </span>
+          </h2>
+          <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Experience our AI-powered solutions through live interactive demos showcasing real-world applications.
+          </p>
+        </div>
+
+        <div class="space-y-12">
+          <BiomechanicsDemo />
+          <AIAnalysisDemo />
+        </div>
+
+        <div class="mt-12 text-center">
+          <div class="bg-gradient-to-r from-burnt-sienna/10 to-royal-purple/10 p-8 rounded-2xl border border-burnt-sienna/20 backdrop-blur-sm">
+            <h3 class="text-xl font-semibold mb-4 text-burnt-sienna">
+              Ready to Implement Custom Solutions?
+            </h3>
+            <p class="text-gray-400 mb-6 leading-relaxed">
+              These demos represent just a fraction of what's possible. Let's discuss how AI can transform your specific biomechanics challenges.
+            </p>
+            <Button href="/Northlakelabs/contact" variant="primary" size="lg">Start Your Project</Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

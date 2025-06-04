@@ -1,0 +1,29 @@
+---
+export interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { href, variant = 'primary', size = 'md' } = Astro.props;
+
+const baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg';
+
+const variants = {
+  primary: 'bg-gradient-to-r from-burnt-sienna to-royal-purple text-white hover:shadow-lg hover:shadow-royal-purple/25 hover:scale-105',
+  secondary: 'border border-burnt-sienna/30 text-burnt-sienna hover:bg-burnt-sienna/10 backdrop-blur-sm',
+  ghost: 'text-gray-300 hover:text-burnt-sienna hover:bg-burnt-sienna/10'
+};
+
+const sizes = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-6 py-3 text-base',
+  lg: 'px-8 py-4 text-lg'
+};
+
+const classes = `${baseClasses} ${variants[variant]} ${sizes[size]}`;
+---
+
+<a href={href} class={classes}>
+  <slot />
+</a>

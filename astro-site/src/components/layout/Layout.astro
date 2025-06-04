@@ -1,0 +1,34 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "AI-powered biomechanics solutions for research labs, rehabilitation clinics, and sports professionals." } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content={description} />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>{title}</title>
+</head>
+<body class="bg-gradient-to-br from-black-pearl via-black-pearl/90 to-black-pearl/80 text-white min-h-screen">
+  <div class="relative">
+    <slot />
+    
+    <!-- Background Animation -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+      <div class="absolute top-[10%] left-[10%] w-15 h-15 bg-gradient-radial from-burnt-sienna/30 via-royal-purple/20 to-transparent rounded-full animate-float"></div>
+      <div class="absolute top-[20%] right-[15%] w-15 h-15 bg-gradient-radial from-burnt-sienna/30 via-royal-purple/20 to-transparent rounded-full animate-float" style="animation-delay: 2s;"></div>
+      <div class="absolute bottom-[15%] left-[20%] w-15 h-15 bg-gradient-radial from-burnt-sienna/30 via-royal-purple/20 to-transparent rounded-full animate-float" style="animation-delay: 4s;"></div>
+      <div class="absolute bottom-[25%] right-[10%] w-15 h-15 bg-gradient-radial from-burnt-sienna/30 via-royal-purple/20 to-transparent rounded-full animate-float" style="animation-delay: 6s;"></div>
+    </div>
+  </div>
+</body>
+</html>

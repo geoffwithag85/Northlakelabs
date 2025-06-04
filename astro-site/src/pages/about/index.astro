@@ -1,0 +1,131 @@
+---
+import Layout from '../../components/layout/Layout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import SocialLinks from '../../components/ui/SocialLinks.astro';
+---
+
+<Layout title="About - Northlake Labs" description="Meet the biomechanics AI specialist behind Northlake Labs - expertise in research, clinical applications, and sports performance.">
+  <Header />
+  
+  <main class="relative z-10">
+    <!-- Hero Section -->
+    <section class="py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+          <h1 class="text-4xl md:text-5xl font-bold mb-6">
+            Meet Your 
+            <span class="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
+              Biomechanics AI Partner
+            </span>
+          </h1>
+          <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            Combining deep expertise in biomechanics with cutting-edge AI to deliver custom solutions 
+            for research, clinical, and sports applications.
+          </p>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <!-- Personal Photo Placeholder -->
+          <div class="order-2 lg:order-1">
+            <div class="bg-gradient-to-br from-burnt-sienna/20 to-royal-purple/20 p-8 rounded-2xl border border-white/10 backdrop-blur-sm">
+              <div class="aspect-square bg-white/10 rounded-xl flex items-center justify-center mb-6">
+                <span class="text-6xl">👨‍🔬</span>
+              </div>
+              <div class="text-center">
+                <h3 class="text-xl font-semibold mb-2">Your Name Here</h3>
+                <p class="text-burnt-sienna mb-4">Biomechanics AI Specialist</p>
+                <SocialLinks />
+              </div>
+            </div>
+          </div>
+
+          <!-- About Content -->
+          <div class="order-1 lg:order-2">
+            <div class="space-y-6">
+              <div>
+                <h2 class="text-2xl font-semibold mb-4 text-burnt-sienna">My Journey</h2>
+                <p class="text-gray-300 leading-relaxed">
+                  [Add your personal story here - what drew you to biomechanics, your passion for AI integration, 
+                  and your vision for transforming the industry through technology.]
+                </p>
+              </div>
+
+              <div>
+                <h2 class="text-2xl font-semibold mb-4 text-burnt-sienna">Expertise & Qualifications</h2>
+                <ul class="text-gray-300 space-y-2">
+                  <li class="flex items-start gap-3">
+                    <span class="text-royal-purple mt-1">▸</span>
+                    <span>[Your degree/education in biomechanics or related field]</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="text-royal-purple mt-1">▸</span>
+                    <span>[Years of experience in the field]</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="text-royal-purple mt-1">▸</span>
+                    <span>[Key certifications or specializations]</span>
+                  </li>
+                  <li class="flex items-start gap-3">
+                    <span class="text-royal-purple mt-1">▸</span>
+                    <span>[Notable achievements or publications]</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h2 class="text-2xl font-semibold mb-4 text-burnt-sienna">My Approach</h2>
+                <p class="text-gray-300 leading-relaxed">
+                  I believe in combining rigorous scientific methodology with innovative AI techniques to solve 
+                  real-world problems. Every solution is tailored to your specific needs, ensuring both 
+                  technical excellence and practical application.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills & Expertise -->
+    <section class="py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-center mb-12">Technical Expertise</h2>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white/5 p-6 rounded-xl border border-white/10 backdrop-blur-sm">
+            <h3 class="text-lg font-semibold mb-3 text-burnt-sienna">Biomechanics Analysis</h3>
+            <ul class="text-gray-400 text-sm space-y-1">
+              <li>• Gait analysis</li>
+              <li>• Movement pattern assessment</li>
+              <li>• Joint kinetics & kinematics</li>
+              <li>• Force plate analysis</li>
+            </ul>
+          </div>
+
+          <div class="bg-white/5 p-6 rounded-xl border border-white/10 backdrop-blur-sm">
+            <h3 class="text-lg font-semibold mb-3 text-burnt-sienna">AI & Machine Learning</h3>
+            <ul class="text-gray-400 text-sm space-y-1">
+              <li>• Computer vision</li>
+              <li>• Predictive modeling</li>
+              <li>• Pattern recognition</li>
+              <li>• Deep learning</li>
+            </ul>
+          </div>
+
+          <div class="bg-white/5 p-6 rounded-xl border border-white/10 backdrop-blur-sm">
+            <h3 class="text-lg font-semibold mb-3 text-burnt-sienna">Research & Clinical</h3>
+            <ul class="text-gray-400 text-sm space-y-1">
+              <li>• Research methodology</li>
+              <li>• Clinical data analysis</li>
+              <li>• Statistical modeling</li>
+              <li>• Outcome measurement</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

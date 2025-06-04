@@ -1,0 +1,89 @@
+---
+import Layout from '../components/layout/Layout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<Layout title="Northlake Labs - AI-Powered Biomechanics Solutions">
+  <Header />
+  
+  <main class="relative z-10">
+    <!-- Hero Section -->
+    <section class="py-20">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+          Advancing Biomechanics Through
+          <span class="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
+            AI Innovation
+          </span>
+        </h2>
+        
+        <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+          Custom AI-powered solutions for research labs, rehabilitation clinics, and sports professionals. 
+          Transform your biomechanics data into actionable insights with cutting-edge machine learning.
+        </p>
+
+        <div class="inline-flex items-center gap-3 bg-burnt-sienna/10 border border-burnt-sienna/30 px-6 py-3 rounded-full backdrop-blur-sm mb-8">
+          <div class="w-2 h-2 bg-burnt-sienna rounded-full animate-pulse-custom"></div>
+          <span class="text-sm">Developing innovative solutions</span>
+        </div>        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button href="/Northlakelabs/solutions" variant="primary" size="lg">
+            Explore Solutions
+          </Button>
+          <Button href="/Northlakelabs/about" variant="secondary" size="lg">
+            Meet the Expert
+          </Button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-white/5 p-8 rounded-xl border border-white/10 backdrop-blur-sm hover:shadow-lg hover:shadow-royal-purple/20 transition-all duration-300 hover:-translate-y-2">
+            <div class="text-4xl mb-4">🔬</div>
+            <h3 class="text-xl font-semibold mb-3">Research Solutions</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Advanced data analysis and machine learning tools for biomechanics research labs and academic institutions.
+            </p>
+          </div>
+          
+          <div class="bg-white/5 p-8 rounded-xl border border-white/10 backdrop-blur-sm hover:shadow-lg hover:shadow-royal-purple/20 transition-all duration-300 hover:-translate-y-2">
+            <div class="text-4xl mb-4">🏥</div>
+            <h3 class="text-xl font-semibold mb-3">Clinical Applications</h3>
+            <p class="text-gray-400 leading-relaxed">
+              AI-powered assessment tools for rehabilitation clinics and physical therapy practices.
+            </p>
+          </div>
+          
+          <div class="bg-white/5 p-8 rounded-xl border border-white/10 backdrop-blur-sm hover:shadow-lg hover:shadow-royal-purple/20 transition-all duration-300 hover:-translate-y-2">
+            <div class="text-4xl mb-4">⚡</div>
+            <h3 class="text-xl font-semibold mb-3">Sports Performance</h3>
+            <p class="text-gray-400 leading-relaxed">
+              Performance optimization and injury prevention through biomechanical analysis and AI insights.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Coming Soon Section -->
+    <section class="py-20">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-white/5 p-12 rounded-2xl border border-white/10 backdrop-blur-sm text-center">
+          <h3 class="text-2xl font-semibold mb-4 bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
+            Innovative Solutions Coming Soon
+          </h3>
+          <p class="text-gray-400 leading-relaxed">
+            We're developing cutting-edge AI-powered tools to revolutionize biomechanics analysis. 
+            Stay tuned for interactive demonstrations and custom solution showcases.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

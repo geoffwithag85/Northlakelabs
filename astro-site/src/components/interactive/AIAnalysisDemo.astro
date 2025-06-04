@@ -1,0 +1,194 @@
+---
+// AI Analysis Demo Component
+---
+
+<div id="ai-analysis-demo" class="bg-white/5 p-8 rounded-2xl border border-white/10 backdrop-blur-sm">
+  <h3 class="text-xl font-semibold mb-4 text-burnt-sienna">AI Movement Pattern Analysis</h3>
+  
+  <div class="grid md:grid-cols-2 gap-6">
+    <!-- Input Panel -->
+    <div>
+      <h4 class="text-lg font-medium mb-3 text-royal-purple">Input Data</h4>
+      <div class="space-y-3">
+        <div class="flex items-center gap-3">
+          <label class="text-sm text-gray-300 w-24">Step Length:</label>
+          <input 
+            type="range" 
+            id="step-length" 
+            min="0.5" 
+            max="1.5" 
+            step="0.1" 
+            value="1.0"
+            class="flex-1 accent-burnt-sienna"
+          />
+          <span id="step-length-value" class="text-sm text-burnt-sienna w-12">1.0m</span>
+        </div>
+        
+        <div class="flex items-center gap-3">
+          <label class="text-sm text-gray-300 w-24">Cadence:</label>
+          <input 
+            type="range" 
+            id="cadence" 
+            min="80" 
+            max="180" 
+            step="5" 
+            value="120"
+            class="flex-1 accent-burnt-sienna"
+          />
+          <span id="cadence-value" class="text-sm text-burnt-sienna w-12">120/min</span>
+        </div>
+        
+        <div class="flex items-center gap-3">
+          <label class="text-sm text-gray-300 w-24">Symmetry:</label>
+          <input 
+            type="range" 
+            id="symmetry" 
+            min="0.5" 
+            max="1.0" 
+            step="0.05" 
+            value="0.95"
+            class="flex-1 accent-burnt-sienna"
+          />
+          <span id="symmetry-value" class="text-sm text-burnt-sienna w-12">95%</span>
+        </div>
+      </div>
+      
+      <button 
+        id="analyze-movement" 
+        class="mt-4 w-full px-4 py-2 bg-gradient-to-r from-burnt-sienna to-royal-purple rounded-lg hover:shadow-lg transition-all duration-300"
+      >
+        🔍 Analyze Movement Pattern
+      </button>
+    </div>
+    
+    <!-- Results Panel -->
+    <div>
+      <h4 class="text-lg font-medium mb-3 text-royal-purple">AI Analysis Results</h4>
+      <div id="analysis-results" class="space-y-3">
+        <div class="bg-black/20 p-4 rounded-lg">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm text-gray-300">Gait Quality Score</span>
+            <span id="quality-score" class="text-burnt-sienna font-semibold">--</span>
+          </div>
+          <div class="w-full bg-gray-700 rounded-full h-2">
+            <div id="quality-bar" class="h-2 rounded-full transition-all duration-500" style="width: 0%; background: linear-gradient(to right, #eb5b48, #5c37a9);"></div>
+          </div>
+        </div>
+        
+        <div class="bg-black/20 p-4 rounded-lg">
+          <div class="text-sm text-gray-300 mb-2">Risk Assessment</div>
+          <div id="risk-assessment" class="text-indigo">Click analyze to see results</div>
+        </div>
+        
+        <div class="bg-black/20 p-4 rounded-lg">
+          <div class="text-sm text-gray-300 mb-2">Recommendations</div>
+          <div id="recommendations" class="text-xs text-gray-400">
+            AI will provide personalized recommendations based on movement analysis
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="mt-6 p-4 bg-indigo/10 border border-indigo/30 rounded-lg">
+    <p class="text-sm text-gray-400">
+      <strong class="text-indigo">Demo Note:</strong> This is a simplified demonstration of AI-powered biomechanics analysis. 
+      Real implementations include comprehensive sensor data, computer vision, and advanced ML models.
+    </p>
+  </div>
+</div>
+
+<script>
+  // AI Analysis Demo Logic
+  const stepLengthSlider = document.getElementById('step-length') as HTMLInputElement;
+  const cadenceSlider = document.getElementById('cadence') as HTMLInputElement;
+  const symmetrySlider = document.getElementById('symmetry') as HTMLInputElement;
+  
+  const stepLengthValue = document.getElementById('step-length-value');
+  const cadenceValue = document.getElementById('cadence-value');
+  const symmetryValue = document.getElementById('symmetry-value');
+  
+  const analyzeButton = document.getElementById('analyze-movement');
+  const qualityScore = document.getElementById('quality-score');
+  const qualityBar = document.getElementById('quality-bar');
+  const riskAssessment = document.getElementById('risk-assessment');
+  const recommendations = document.getElementById('recommendations');
+
+  // Update slider values
+  function updateSliderValues() {
+    if (stepLengthValue) stepLengthValue.textContent = stepLengthSlider?.value + 'm';
+    if (cadenceValue) cadenceValue.textContent = cadenceSlider?.value + '/min';
+    if (symmetryValue) symmetryValue.textContent = Math.round(parseFloat(symmetrySlider?.value || '0') * 100) + '%';
+  }
+
+  stepLengthSlider?.addEventListener('input', updateSliderValues);
+  cadenceSlider?.addEventListener('input', updateSliderValues);
+  symmetrySlider?.addEventListener('input', updateSliderValues);
+
+  // Simulate AI analysis
+  function performAnalysis() {
+    const stepLength = parseFloat(stepLengthSlider?.value || '1.0');
+    const cadence = parseInt(cadenceSlider?.value || '120');
+    const symmetry = parseFloat(symmetrySlider?.value || '0.95');
+    
+    // Simulate analysis delay
+    if (analyzeButton) analyzeButton.textContent = '⏳ Analyzing...';
+    
+    setTimeout(() => {
+      // Calculate quality score (simplified algorithm)
+      let score = 85;
+      
+      // Step length factor (optimal around 1.0-1.2m)
+      if (stepLength < 0.8 || stepLength > 1.3) score -= 10;
+      else if (stepLength >= 1.0 && stepLength <= 1.2) score += 5;
+      
+      // Cadence factor (optimal around 100-140/min)
+      if (cadence < 90 || cadence > 150) score -= 15;
+      else if (cadence >= 110 && cadence <= 130) score += 5;
+      
+      // Symmetry factor
+      score += (symmetry - 0.8) * 50;
+      
+      score = Math.max(0, Math.min(100, score));
+      
+      // Update UI
+      if (qualityScore) qualityScore.textContent = `${Math.round(score)}/100`;
+      if (qualityBar) qualityBar.style.width = `${score}%`;
+      
+      // Risk assessment
+      let risk = 'Low Risk';
+      let riskColor = '#5c37a9';
+      if (score < 70) {
+        risk = 'High Risk - Recommend clinical evaluation';
+        riskColor = '#eb5b48';
+      } else if (score < 85) {
+        risk = 'Moderate Risk - Monitor closely';
+        riskColor = '#585ccc';
+      }
+      
+      if (riskAssessment) {
+        riskAssessment.textContent = risk;
+        riskAssessment.style.color = riskColor;
+      }
+      
+      // Recommendations
+      let recs = [];
+      if (stepLength < 0.9) recs.push('Increase step length');
+      if (stepLength > 1.3) recs.push('Reduce overstriding');
+      if (cadence < 100) recs.push('Increase step frequency');
+      if (cadence > 150) recs.push('Reduce step frequency');
+      if (symmetry < 0.9) recs.push('Focus on gait symmetry exercises');
+      
+      if (recs.length === 0) recs.push('Maintain current movement patterns');
+      
+      if (recommendations) recommendations.textContent = recs.join(' • ');
+      
+      if (analyzeButton) analyzeButton.textContent = '🔍 Analyze Movement Pattern';
+    }, 1500);
+  }
+
+  analyzeButton?.addEventListener('click', performAnalysis);
+  
+  // Initialize
+  updateSliderValues();
+</script>
