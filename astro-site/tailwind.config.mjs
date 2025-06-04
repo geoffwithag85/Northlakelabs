@@ -12,6 +12,16 @@ export default {
       fontFamily: {
         sans: ['Inter', 'sans-serif']
       },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      width: {
+        '15': '3.75rem',
+      },
+      height: {
+        '15': '3.75rem',
+      },
       animation: {
         'float': 'float 8s ease-in-out infinite',
         'pulse-custom': 'pulse-custom 2s infinite'
