@@ -6,10 +6,6 @@ export interface Props {
 }
 
 const { href, variant = 'primary', size = 'md' } = Astro.props;
-const baseUrl = import.meta.env.BASE_URL;
-
-// Handle relative URLs by adding base URL, but leave absolute URLs (http/https) unchanged
-const finalHref = href.startsWith('http') ? href : `${baseUrl}${href.startsWith('/') ? href.slice(1) : href}`;
 
 const baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-300 rounded-lg';
 
@@ -28,6 +24,6 @@ const sizes = {
 const classes = `${baseClasses} ${variants[variant]} ${sizes[size]}`;
 ---
 
-<a href={finalHref} class={classes}>
+<a href={href} class={classes}>
   <slot />
 </a>

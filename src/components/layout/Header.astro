@@ -1,5 +1,7 @@
 ---
-const baseUrl = import.meta.env.BASE_URL;
+// For navigation links and assets, we need to handle the base URL
+const baseUrl = import.meta.env.BASE_URL.replace(/\/$/, ''); // Remove trailing slash
+const logoSrc = `${import.meta.env.BASE_URL}assets/northlake_logo_transparent.png`;
 ---
 
 <header class="relative z-10 py-8">
@@ -7,7 +9,7 @@ const baseUrl = import.meta.env.BASE_URL;
     <nav class="flex items-center justify-between">
       <div class="flex items-center gap-4">        <div class="filter drop-shadow-lg">
           <img 
-            src={`${baseUrl}assets/northlake_logo_transparent.png`}
+            src={logoSrc}
             alt="Northlake Labs Logo" 
             width="60" 
             height="60"
@@ -18,10 +20,10 @@ const baseUrl = import.meta.env.BASE_URL;
           Northlake Labs
         </h1>
       </div>      <nav class="hidden md:flex items-center gap-8">
-        <a href={`${baseUrl}`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">Home</a>
-        <a href={`${baseUrl}about`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">About</a>
-        <a href={`${baseUrl}solutions`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">Solutions</a>
-        <a href={`${baseUrl}contact`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">Contact</a>
+        <a href={`${baseUrl}/`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">Home</a>
+        <a href={`${baseUrl}/about`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">About</a>
+        <a href={`${baseUrl}/solutions`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">Solutions</a>
+        <a href={`${baseUrl}/contact`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">Contact</a>
       </nav>
       
       <!-- Mobile menu button -->
