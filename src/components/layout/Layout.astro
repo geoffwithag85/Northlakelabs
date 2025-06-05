@@ -1,4 +1,6 @@
 ---
+import MobileMenu from '../ui/MobileMenu.astro';
+
 export interface Props {
   title: string;
   description?: string;
@@ -18,8 +20,7 @@ const { title, description = "AI-powered biomechanics solutions for research lab
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <title>{title}</title>
 </head>
-<body class="bg-gradient-to-br from-black-pearl via-black-pearl/90 to-black-pearl/80 text-white min-h-screen">
-  <div class="relative">
+<body class="bg-gradient-to-br from-black-pearl via-black-pearl/90 to-black-pearl/80 text-white min-h-screen">  <div style="isolation: isolate;">
     <slot />
     
     <!-- Background Animation -->
@@ -30,5 +31,8 @@ const { title, description = "AI-powered biomechanics solutions for research lab
       <div class="absolute bottom-[25%] right-[10%] w-15 h-15 bg-gradient-radial from-burnt-sienna/30 via-royal-purple/20 to-transparent rounded-full animate-float" style="animation-delay: 6s;"></div>
     </div>
   </div>
+
+  <!-- Mobile Menu Portal - Rendered at end of body for proper z-index stacking -->
+  <MobileMenu />
 </body>
 </html>

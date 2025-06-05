@@ -1,5 +1,5 @@
 ---
-import MobileMenu from '../ui/MobileMenu.astro';
+import MobileMenuButton from '../ui/MobileMenuButton.astro';
 
 // Use consistent relative paths for custom domain setup
 const logoSrc = "/assets/northlake_logo_transparent.png";
@@ -26,10 +26,8 @@ const logoSrc = "/assets/northlake_logo_transparent.png";
         <a href="/about/" class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">About</a>
         <a href="/solutions/" class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">Solutions</a>
         <a href="/contact/" class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">Contact</a>
-      </nav>
-
-      <!-- Mobile Menu Component -->
-      <MobileMenu />
+      </nav>      <!-- Mobile Menu Button -->
+      <MobileMenuButton />
     </nav>
   </div>
 </header>

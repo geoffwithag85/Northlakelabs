@@ -19,10 +19,30 @@ export default {
     'focus:ring-offset-black-pearl',
     'group-hover:text-burnt-sienna',
     'group-hover:scale-110',
-    'group-hover:translate-x-1'
-  ],
-  theme: {
+    'group-hover:translate-x-1',
+    'isolate',
+    'z-behind',
+    'z-base',
+    'z-content',
+    'z-header',
+    'z-overlay',
+    'z-modal',
+    'z-popover',
+    'z-tooltip',
+    'z-notification'
+  ],theme: {
     extend: {
+      zIndex: {
+        'behind': '-1',
+        'base': '0',
+        'content': '10',
+        'header': '20',
+        'overlay': '100',
+        'modal': '110',
+        'popover': '120',
+        'tooltip': '130',
+        'notification': '140'
+      },
       colors: {
         'black-pearl': '#040b1b',
         'burnt-sienna': '#eb5b48',
