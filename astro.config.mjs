@@ -8,7 +8,6 @@ export default defineConfig({
     react()
   ],
   output: 'static',
-  site: 'https://geoffwithag85.github.io',
-  base: '/Northlakelabs',
+  site: 'https://www.northlakelabs.com',
   trailingSlash: 'ignore'
 });
