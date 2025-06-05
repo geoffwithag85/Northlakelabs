@@ -2,18 +2,24 @@
 export default {
   content: [
     './src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
-  ],
-  safelist: [
-    'bg-black-pearl/95',
-    'translate-y-0',
-    '-translate-y-full',
-    'text-white',
-    'hover:text-burnt-sienna',
+  ],  safelist: [
+    'mobile-menu-open',
+    'translate-x-full',
+    'translate-x-0',
+    'pointer-events-none',
+    'pointer-events-auto',
     'opacity-0',
     'opacity-100',
-    'backdrop-blur-lg',
+    'backdrop-blur-sm',
+    'backdrop-blur-xl',
     'shadow-2xl',
-    'border-gray-700/50'
+    'border-gray-700/50',
+    'bg-burnt-sienna/10',
+    'focus:ring-burnt-sienna/50',
+    'focus:ring-offset-black-pearl',
+    'group-hover:text-burnt-sienna',
+    'group-hover:scale-110',
+    'group-hover:translate-x-1'
   ],
   theme: {
     extend: {
