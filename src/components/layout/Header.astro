@@ -22,9 +22,9 @@ const logoSrc = `${baseUrl}/assets/northlake_logo_transparent.png`;
       </div>      <!-- Desktop navigation -->
       <nav class="hidden md:flex items-center gap-8">
         <a href={`${baseUrl}/`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">Home</a>
-        <a href={`${baseUrl}/about`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">About</a>
-        <a href={`${baseUrl}/solutions`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">Solutions</a>
-        <a href={`${baseUrl}/contact`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">Contact</a>
+        <a href={`${baseUrl}/about/`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">About</a>
+        <a href={`${baseUrl}/solutions/`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">Solutions</a>
+        <a href={`${baseUrl}/contact/`} class="text-gray-300 hover:text-burnt-sienna transition-colors duration-300">Contact</a>
       </nav>
       
       <!-- Mobile menu button -->
@@ -44,12 +44,10 @@ const logoSrc = `${baseUrl}/assets/northlake_logo_transparent.png`;
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
         </svg>
       </button>
-    </nav>
-
-    <!-- Mobile navigation menu -->
+    </nav>    <!-- Mobile navigation menu -->
     <nav 
       id="mobile-menu"
-      class="md:hidden fixed inset-x-0 top-0 bg-black-pearl/95 backdrop-blur-sm transform -translate-y-full transition-transform duration-300 ease-in-out z-40"
+      class="md:hidden fixed inset-x-0 top-0 bg-black-pearl/98 backdrop-blur-md transform -translate-y-full transition-transform duration-300 ease-in-out z-40 border-b border-gray-700/30"
       aria-hidden="true"
     >
       <div class="px-6 pt-24 pb-8">
@@ -61,23 +59,23 @@ const logoSrc = `${baseUrl}/assets/northlake_logo_transparent.png`;
             Home
           </a>
           <a 
-            href={`${baseUrl}/about`} 
+            href={`${baseUrl}/about/`} 
             class="text-xl text-gray-300 hover:text-burnt-sienna transition-colors duration-300 py-2 border-b border-gray-700/50"
           >
             About
           </a>
           <a 
-            href={`${baseUrl}/solutions`} 
+            href={`${baseUrl}/solutions/`} 
             class="text-xl text-gray-300 hover:text-burnt-sienna transition-colors duration-300 py-2 border-b border-gray-700/50"
           >
             Solutions
           </a>
           <a 
-            href={`${baseUrl}/contact`} 
+            href={`${baseUrl}/contact/`} 
             class="text-xl text-gray-300 hover:text-burnt-sienna transition-colors duration-300 py-2"
           >
             Contact
-          </a>        </div>
+          </a></div>
       </div>
     </nav>
   </div>
