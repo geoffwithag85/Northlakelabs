@@ -3,8 +3,7 @@ import Layout from '../../components/layout/Layout.astro';
 import Header from '../../components/layout/Header.astro';
 import Footer from '../../components/layout/Footer.astro';
 import Button from '../../components/ui/Button.astro';
-import BiomechanicsDemo from '../../components/interactive/BiomechanicsDemo.astro';
-import AIAnalysisDemo from '../../components/interactive/AIAnalysisDemo.astro';
+import GaitAnalysisRobotDemo from '../../components/interactive/GaitAnalysisRobotDemo.astro';
 ---
 
 <Layout title="Innovative Solutions - Northlake Labs" description="AI-powered biomechanics solutions for research labs, rehabilitation clinics, and sports professionals.">
@@ -128,28 +127,26 @@ import AIAnalysisDemo from '../../components/interactive/AIAnalysisDemo.astro';
       </div>
     </section>    <!-- Interactive Demonstrations -->
     <section class="py-20">
-      <div class="max-w-6xl mx-auto px-6">
-        <div class="text-center mb-12">
+      <div class="max-w-6xl mx-auto px-6">        <div class="text-center mb-12">
           <h2 class="text-3xl font-bold mb-4">
             <span class="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
-              Interactive Demonstrations
+              Interactive Demonstration
             </span>
           </h2>          <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Experience our AI-integrated solutions through interactive demos showcasing hardware-software integration and intelligent processing.
+            Experience our AI-integrated robotic gait analysis system showcasing real-time biomechanics processing, 
+            3D visualization, and intelligent pattern recognition in action.
           </p>
         </div>
 
         <div class="space-y-12">
-          <BiomechanicsDemo />
-          <AIAnalysisDemo />
-        </div>
-
-        <div class="mt-12 text-center">
+          <GaitAnalysisRobotDemo />
+        </div>        <div class="mt-12 text-center">
           <div class="bg-gradient-to-r from-burnt-sienna/10 to-royal-purple/10 p-8 rounded-2xl border border-burnt-sienna/20 backdrop-blur-sm">            <h3 class="text-xl font-semibold mb-4 text-burnt-sienna">
-              Ready to Implement Custom Hardware or Software Solutions?
+              Ready to Implement AI-Powered Robotic Solutions?
             </h3>
             <p class="text-gray-400 mb-6 leading-relaxed">
-              These demos showcase our dual-track approach. Let's discuss how AI-integrated robotics and intelligent software can transform your specific biomechanics challenges.
+              This demo showcases our real-time gait analysis robot with integrated AI processing. 
+              Let's discuss how similar AI-powered robotics and intelligent software can transform your specific biomechanics applications.
             </p>
             <Button href="/contact" variant="primary" size="lg">Start Your Project</Button>
           </div>
