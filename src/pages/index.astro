@@ -8,10 +8,28 @@ import Button from '../components/ui/Button.astro';
 <Layout title="Northlake Labs - AI-Integrated Robotics + Software Solutions">
   <Header />
   
-  <main class="relative z-10">
-    <!-- Hero Section -->
+  <main class="relative z-10">    <!-- Hero Section -->
     <section class="py-20">
-      <div class="max-w-6xl mx-auto px-6 text-center">        <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+      <div class="max-w-6xl mx-auto px-6 text-center">        <!-- Large Logo/Brand Splash -->
+        <div class="flex items-center justify-center gap-4 md:gap-8 mb-8 md:mb-12">
+          <img 
+            src="/assets/northlake_logo_transparent.png"
+            alt="Northlake Labs Logo" 
+            width="100" 
+            height="100"
+            class="w-[100px] h-[100px] md:w-[140px] md:h-[140px] lg:w-[160px] lg:h-[160px] rounded-lg filter drop-shadow-xl"
+          />
+          <div class="flex flex-col mt-6 md:mt-8 lg:mt-10">
+            <h1 class="text-3xl md:text-5xl lg:text-6xl font-semibold bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent leading-none font-['Orbitron']">
+              NORTHLAKE
+            </h1>
+            <span class="text-sm md:text-lg lg:text-xl font-medium bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent self-end leading-none -mt-1 font-['Orbitron']">
+              LABS
+            </span>
+          </div>
+        </div>
+        
+        <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
           AI-Powered Biomechanics
           <span class="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
             Hardware + Software
