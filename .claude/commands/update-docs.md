@@ -19,7 +19,13 @@ Systematically update all project documentation to reflect current development p
 - `Read docs/design.md` (lines 348-380) - Current development phase status
 - `Read docs/demo-specifications.md` (lines 425-460) - Implementation timeline checkboxes
 
-### Step 3: Update Progress Tracking
+### Step 3: Update Progress Tracking & Human Time Logging
+
+**Human Time Session Logging:**
+- `Bash "git log --oneline --since='1 day ago' --format='%H %cd %s' --date=iso"` - Check recent commits with timestamps
+- Calculate session duration from commit timestamps and current time
+- Update `docs/time-tracking.md` with actual human-hours spent
+- Log specific activities completed in this session
 
 **Phase Progress Updates:**
 - **Phase A (Days 1-3)**: Update completed checkboxes in timeline
@@ -28,6 +34,12 @@ Systematically update all project documentation to reflect current development p
 - **Phase D (Days 11-13)**: Record integration and optimization progress
 
 **Files to Update Based on Progress:**
+
+#### time-tracking.md Updates:
+- **Session Log section**: Add new session entry with actual duration
+- **Phase completion metrics**: Update actual vs estimated time
+- **Velocity calculations**: Recalculate based on real human-hours
+- **Efficiency analysis**: Note factors that sped up or slowed down work
 
 #### demoplan.md Updates:
 - **Implementation Timeline section (lines 426-442)**: Update ✅ checkboxes
@@ -85,13 +97,33 @@ Systematically update all project documentation to reflect current development p
 - **Data processing notes**: CSV parsing insights and best practices
 - **Algorithm tuning**: Parameter adjustments and calibration notes
 
-### Step 7: Validation and Consistency Check
+### Step 7: Update Prime Command with New Documentation
+
+**Check for New Documentation Files:**
+- `LS docs/` - Scan for new .md files not referenced in prime.md
+- `Bash "find docs/ -name '*.md' -newer CLAUDE.md"` - Find recently created docs
+- Assess importance based on file size, content, and relevance to development
+
+**Conditionally Update `.claude/commands/prime.md`:**
+- **Add new critical documentation** to appropriate reading steps
+- **Update Context Summary** to reflect current development phase
+- **Reorganize reading order** if priorities have changed
+- **Update phase references** and current focus areas
+
+**Priority Documentation to Include:**
+- `docs/time-tracking.md` - Critical for session velocity and time context
+- `docs/phase-a-completion.md` - Important for understanding what's been completed
+- Any new phase completion or milestone documents
+- Updated specifications or architecture decisions
+
+### Step 8: Validation and Consistency Check
 
 **Final Validation Steps:**
 - **Read through updated sections** to ensure accuracy
 - **Check for conflicting information** between files
 - **Verify all links and file references** are current
 - **Ensure phase progress is accurately reflected**
+- **Verify prime.md includes all critical context documents**
 
 ## Update Decision Matrix
 
@@ -101,6 +133,8 @@ Systematically update all project documentation to reflect current development p
 - ✅ Performance targets achieved (update metrics)
 - ✅ Technical decisions made (document in specifications)
 - ✅ Phase transitions (update timeline and priorities)
+- ✅ Human development sessions end (log actual time spent)
+- ✅ New documentation files created (add to prime.md)
 
 **Consider Updating When:**
 - 🤔 Minor optimizations made (add to notes)
@@ -134,6 +168,17 @@ Systematically update all project documentation to reflect current development p
 4. ❌ **Accuracy Measurement System** - Pending algorithm completion
 ```
 
+**Prime.md Update Example:**
+```markdown
+## Step 2: Read Current Development Plan  
+Read the comprehensive development documentation:
+- `Read docs/demoplan.md` - CURRENT ACTIVE PLAN: Multi-sensor fusion demo implementation
+- `Read docs/design.md` - Overall site strategy and current development phase
+- `Read docs/demo-specifications.md` - Technical specifications for implementation
++ `Read docs/time-tracking.md` - Session time tracking and development velocity metrics
++ `Read docs/phase-a-completion.md` - Phase A completion summary and lessons learned
+```
+
 ## Usage Guidelines
 
 **Run this command when:**
@@ -142,11 +187,14 @@ Systematically update all project documentation to reflect current development p
 - 🎯 Before team handoffs or project reviews
 - 🎯 After implementing significant new features
 - 🎯 When documentation becomes out of sync with reality
+- 🎯 At the end of each development session (for time tracking)
 
 **Command Output:**
 - Summary of documentation files updated
 - List of progress items marked complete
 - Note any new sections or insights added
 - Highlight any inconsistencies resolved
+- Report prime.md updates if new docs were added
+- Log actual human time spent in current session
 
 This command ensures all project stakeholders have current, accurate information about development progress and technical implementation details throughout the multi-sensor fusion demo development cycle.

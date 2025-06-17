@@ -193,7 +193,7 @@ Demo data processing pipeline uses T5 trial as the selected dataset:
 - **Run processing**: `npm run process-data` (generates T5-demo.json)
 - **Analyze trials**: `npm run analyze-trials` (quality assessment of T1-T30)
 - **Test pipeline**: `node scripts/test-processing.js` (validate with small segment)
-- **Generated files**: `public/demo-data/T5-demo.json` and `T5-metadata.json`
+- **Generated files**: `public/demo-data/T5-demo.json` (16.7MB) and `T5-metadata.json` (157 gait events)
 
 ### Adding New Publications
 Publications are in `src/pages/about/index.astro` - follow existing format with title, journal, year, and DOI links.
