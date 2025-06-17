@@ -60,20 +60,31 @@ Custom brand colors defined in `tailwind.config.mjs`:
 - `indigo`: #585ccc (tertiary accent)
 
 ### Interactive Demonstrations
-The gait analysis demo (`src/components/interactive/GaitAnalysisDemo/`) uses:
-- **Three.js** (`@react-three/fiber`, `@react-three/drei`): 3D visualization
-- **Zustand**: State management for real-time data
-- **Chart.js**: Data visualization charts
-- **Complex Animation Loop**: 60fps gait cycle simulation with realistic biomechanics
+The multi-sensor fusion demo (`src/components/interactive/MultiSensorFusionDemo/`) uses:
+- **Chart.js**: Real-time sensor visualization optimized for 60fps
+- **Zustand**: State management for demo playback and algorithm results
+- **TypeScript**: Full type safety for sensor data and algorithm interfaces
+- **Real Dataset**: Constrained gait data (left leg locked) from biomechanics research
+
+### Current Demo: Multi-Sensor Fusion for Constrained Gait Analysis
+- **Clinical Focus**: Left leg locked in extension (pathological gait pattern)
+- **Progressive Enhancement**: Traditional → Basic Fusion → AI Fusion
+- **Performance Targets**: 60% → 75% → 92% accuracy progression
+- **Real-Time Processing**: 20-second trials with live algorithm comparison
 
 ### State Management Structure
 ```typescript
 // store.ts pattern for interactive components
-interface GaitAnalysisState {
+interface MultiSensorFusionState {
   isPlaying: boolean;
-  parameters: GaitParameters;
-  animationState: AnimationState;
-  dataPoints: GaitDataPoint[];
+  currentTime: number;
+  enabledStages: {
+    traditional: boolean;
+    basicFusion: boolean;
+    aiFusion: boolean;
+  };
+  algorithmResults: DetectionResult[];
+  accuracyMetrics: AccuracyComparison;
 }
 ```
 
@@ -115,10 +126,11 @@ export default defineConfig({
 - Professional headshot and credentials
 
 ### Interactive Content
-- Real-time gait analysis simulation
-- 3D human model with biomechanics visualization
-- Multi-sensor data fusion demonstrations
-- ML insights panels with AI processing simulation
+- Multi-sensor fusion gait analysis demo with constrained gait patterns
+- Real-time sensor data visualization (Force plates + EMG + Kinematics)
+- Progressive algorithm comparison (Traditional → Basic Fusion → AI Fusion)
+- Clinical context and educational panels for pathological gait analysis
+- Live accuracy metrics and confidence scoring visualization
 
 ## Development Notes
 
@@ -158,11 +170,13 @@ export default defineConfig({
 - Follow mobile-first responsive design principles
 
 ### Testing Interactive Demos
-When modifying gait analysis or other demos:
-- Test across different screen sizes
-- Verify 3D rendering performance on various devices
-- Ensure animation loops don't cause memory leaks
-- Check that controls are accessible via keyboard
+When modifying multi-sensor fusion demo or other interactive components:
+- Test across different screen sizes and mobile devices
+- Verify Chart.js rendering performance at 60fps
+- Ensure real-time data streaming doesn't cause memory leaks
+- Check that playback controls are accessible via keyboard
+- Validate algorithm accuracy progression is clearly visible
+- Test CSV data processing pipeline with different trials
 
 ## Common Tasks
 
@@ -170,7 +184,11 @@ When modifying gait analysis or other demos:
 Publications are in `src/pages/about/index.astro` - follow existing format with title, journal, year, and DOI links.
 
 ### Modifying Demo Parameters  
-Demo constants are defined in `types.ts` files within component directories. Adjust `GAIT_CONSTANTS` for realistic biomechanics values.
+Demo constants are defined in `types.ts` files within component directories. Key parameters:
+- **Algorithm thresholds**: Force plate detection limits, EMG activation levels
+- **Accuracy targets**: Traditional (60%), Basic Fusion (75%), AI Fusion (92%)
+- **Processing settings**: Sampling rates, filter parameters, constraint detection
+- **Data format**: JSON structure for 20-second constrained gait trials
 
 ### Updating Brand Colors
 Brand colors are centralized in `tailwind.config.mjs`. Use existing color variables rather than hex codes in components.
