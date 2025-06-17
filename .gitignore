@@ -43,6 +43,10 @@ coverage/
 # Astro
 .astro/
 
+# Research data (large files)
+data/
+*.mat
+
 # Temporary files
 *.tmp
 *.temp

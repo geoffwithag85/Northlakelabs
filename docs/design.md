@@ -244,29 +244,49 @@ Transform breakthrough research into accessible hardware and software solutions.
 
 ### Interactive Demonstrations
 
-#### Hardware + AI Integration Demos
-- **Robotic Gait Analysis System**: 3D visualization of AI-powered robotic assessment devices
-- **Smart Sensor Network Demo**: Interactive demonstration of multi-sensor AI integration
-- **Rehabilitation Robotics Simulator**: AI-driven adaptive therapy device demonstrations
-- **Real-time Hardware Processing**: Live AI analysis from simulated sensor inputs
-- **Custom Robotics Design Tool**: Interactive configurator for biomechanics robotics solutions
-- **Hardware-Software Integration Pipeline**: Demonstrating seamless AI processing workflows
+## Software/Data Processing AI/ML Demos
 
-#### Biomechanics & AI Software Demos
-- **Advanced Movement Analysis**: 3D movement pattern analysis with AI insights
-- **Injury Risk Assessment**: ML models predicting injury probability from sensor data
-- **Performance Optimization**: AI-driven training recommendations and analysis
-- **Rehabilitation Progress Tracking**: Automated recovery monitoring with predictive analytics
-- **Multi-Modal Data Fusion**: Combining sensor types with AI for comprehensive analysis
-- **Real-Time Processing Pipeline**: Interactive workflow demonstrations showing data-to-insight conversion
+**Motion Capture Enhancement**
+- Automatic marker gap filling using ML prediction models
+- Real-time marker dropout detection and reconstruction
+- Noise reduction and smoothing algorithms for kinematic data
 
-#### AI Technology Showcases
-- **Computer Vision for Robotics**: Movement analysis integration with robotic systems
-- **Embedded AI Processing**: Real-time analysis capabilities in custom hardware
-- **Sensor Data Fusion**: Multi-modal data integration with AI interpretation
-- **Predictive Modeling**: Outcome prediction for both software and hardware applications
-- **Robotics Control AI**: Intelligent control systems for biomechanics applications
-- **Hugging Face Integration**: Pre-trained models adapted for biomechanics hardware and software
+**Video-Based Analysis**
+- Markerless motion capture from smartphone video
+- Automatic joint angle calculation from 2D video
+- Movement quality scoring (e.g., squat depth, running form)
+
+**Clinical Decision Support**
+- Injury risk assessment from movement patterns
+- Return-to-sport readiness algorithms
+- Fall risk prediction from gait parameters
+- Movement asymmetry detection and quantification
+
+**Signal Processing**
+- EMG onset detection and muscle activation timing
+- Force plate center of pressure trajectory analysis
+- Automatic gait event detection (heel strike, toe-off)
+- Multi-sensor data fusion (IMU + force + EMG)
+
+## Hardware/Robotics Demos
+
+**Wearable Technology**
+- Real-time gait analysis using IMU arrays
+- Smart insoles for pressure distribution and gait timing
+- Wearable EMG systems with ML classification
+- Real-time movement feedback via haptic cues
+
+**Rehabilitation Robotics**
+- Exoskeleton control algorithms for stroke recovery
+- Robotic gait trainers with adaptive assistance
+- Prosthetic control using EMG pattern recognition
+- Balance training robots with real-time adjustments
+
+**Sports Performance**
+- Smart equipment (bats, clubs) with swing analysis
+- Real-time technique correction systems
+- Fatigue detection and performance optimization
+- Biomechanical load monitoring for injury prevention
 
 ### Professional Integration
 - **LinkedIn Profile**: Direct link to professional network and experience
