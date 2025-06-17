@@ -13,10 +13,10 @@ Northlake Labs LLC company website - an Astro-based static site showcasing AI-po
 ## Development Commands
 
 ```bash
-# Development server
+# Development server (includes data processing)
 npm run dev
 
-# Build for production
+# Build for production (includes data processing)
 npm run build
 
 # Preview production build
@@ -24,6 +24,12 @@ npm run preview
 
 # Astro CLI (for adding integrations, etc.)
 npm run astro
+
+# Demo data processing
+npm run process-data
+
+# Trial quality analysis
+npm run analyze-trials
 ```
 
 ## Architecture Overview
@@ -64,13 +70,15 @@ The multi-sensor fusion demo (`src/components/interactive/MultiSensorFusionDemo/
 - **Chart.js**: Real-time sensor visualization optimized for 60fps
 - **Zustand**: State management for demo playback and algorithm results
 - **TypeScript**: Full type safety for sensor data and algorithm interfaces
-- **Real Dataset**: Constrained gait data (left leg locked) from biomechanics research
+- **Real Dataset**: T5 trial with perfect constrained gait pattern (Phase A completed)
 
 ### Current Demo: Multi-Sensor Fusion for Constrained Gait Analysis
 - **Clinical Focus**: Left leg locked in extension (pathological gait pattern)
+- **Selected Data**: T5 trial (302s duration, perfect left leg constraint)
 - **Progressive Enhancement**: Traditional → Basic Fusion → AI Fusion
 - **Performance Targets**: 60% → 75% → 92% accuracy progression
-- **Real-Time Processing**: 20-second trials with live algorithm comparison
+- **Processing Pipeline**: Complete CSV → JSON with build-time optimization
+- **Real-Time Processing**: 20-second segments with ground truth events
 
 ### State Management Structure
 ```typescript
@@ -180,6 +188,13 @@ When modifying multi-sensor fusion demo or other interactive components:
 
 ## Common Tasks
 
+### Processing Demo Data
+Demo data processing pipeline uses T5 trial as the selected dataset:
+- **Run processing**: `npm run process-data` (generates T5-demo.json)
+- **Analyze trials**: `npm run analyze-trials` (quality assessment of T1-T30)
+- **Test pipeline**: `node scripts/test-processing.js` (validate with small segment)
+- **Generated files**: `public/demo-data/T5-demo.json` and `T5-metadata.json`
+
 ### Adding New Publications
 Publications are in `src/pages/about/index.astro` - follow existing format with title, journal, year, and DOI links.
 
@@ -188,7 +203,7 @@ Demo constants are defined in `types.ts` files within component directories. Key
 - **Algorithm thresholds**: Force plate detection limits, EMG activation levels
 - **Accuracy targets**: Traditional (60%), Basic Fusion (75%), AI Fusion (92%)
 - **Processing settings**: Sampling rates, filter parameters, constraint detection
-- **Data format**: JSON structure for 20-second constrained gait trials
+- **Data format**: JSON structure for 20-second constrained gait trials (T5 optimized)
 
 ### Updating Brand Colors
 Brand colors are centralized in `tailwind.config.mjs`. Use existing color variables rather than hex codes in components.

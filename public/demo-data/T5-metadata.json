@@ -1,0 +1,16 @@
+{
+  "trial_id": "T5",
+  "processing_date": "2025-06-17T16:33:00.071Z",
+  "data_summary": {
+    "duration_seconds": 20,
+    "sampling_rate": 1000,
+    "gait_events": 157,
+    "constraint_type": "left_leg_locked_extension"
+  },
+  "file_size_kb": 16727,
+  "quality_metrics": {
+    "constraint_visibility": "excellent",
+    "data_completeness": "complete",
+    "processing_status": "success"
+  }
+}

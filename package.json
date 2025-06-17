@@ -3,11 +3,13 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "npm run process-data && astro dev",
     "start": "astro dev",
-    "build": "astro build",
+    "build": "npm run process-data && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "process-data": "node scripts/process-demo-data.js T5",
+    "analyze-trials": "node scripts/analyze-trials.js"
   },
   "dependencies": {
     "@astrojs/react": "^4.3.0",
