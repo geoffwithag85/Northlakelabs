@@ -77,12 +77,22 @@ Based on file analysis, stage relevant files:
 - **Implementation files**: Stage new `.ts/.tsx` files and significant changes
 - **Configuration**: Stage `package.json`, config files if modified
 - **Data processing**: Stage `scripts/` directory changes
-- **Skip**: Large data files, temporary files, build outputs
+- **Commands**: Stage `.claude/commands/` directory changes
+- **Skip**: Large data files (>1MB), temporary files, build outputs, `node_modules/`
 
-### Step 5: Execute Commit
+**Comprehensive Staging Strategy:**
+```bash
+# Stage all relevant files including untracked
+git add *.md docs/ src/ scripts/ package.json .claude/commands/
+git add public/demo-data/ --ignore-errors  # Stage if exists, ignore if too large
+```
+
+### Step 5: Execute Commit and Push
 - Stage the appropriate files with `git add`
 - Create commit with generated message using HEREDOC format
 - Confirm commit was successful with `git log --oneline -1`
+- **Push to remote**: `git push origin [current-branch]`
+- Confirm push was successful
 
 ## Commit Decision Matrix
 
@@ -91,13 +101,17 @@ Based on file analysis, stage relevant files:
 - `scripts/` changes (data processing pipeline)
 - `docs/` updates (specifications, plans)
 - `package.json` changes (new dependencies)
+- `.claude/commands/` changes (custom commands)
+- `*.md` files (documentation updates)
+- `public/demo-data/` (if <1MB, generated demo files)
 
 **Files to Skip:**
-- `data/` directory (raw CSV files)
-- `public/demo-data/` (generated files)
-- `node_modules/`
+- `data/` directory (raw CSV files - too large)
+- `node_modules/` (dependencies)
 - `.astro/` build cache
-- Large binary files
+- Large binary files (>1MB)
+- Temporary files (`.tmp`, `.log`)
+- Build outputs (`dist/`)
 
 **Special Cases:**
 - If only documentation changed: Use `docs:` prefix instead of `feat:`
@@ -115,8 +129,34 @@ This command should be used at logical development milestones:
 The command will automatically:
 1. Analyze current work and phase
 2. Generate appropriate commit message
-3. Stage relevant files intelligently
+3. Stage relevant files intelligently (including untracked)
 4. Execute the commit
-5. Confirm success
+5. Push to remote repository
+6. Confirm success
 
 This streamlines the commit process while maintaining clear development phase tracking throughout the 13-day multi-sensor fusion demo implementation cycle.
+
+## Implementation Example
+
+When executing `/commit-phase`, the tool will:
+
+```bash
+# Stage comprehensive file set
+git add *.md docs/ src/ scripts/ package.json .claude/commands/
+git add public/demo-data/ 2>/dev/null || true  # Ignore if too large
+
+# Create intelligent commit
+git commit -m "$(cat <<'EOF'
+feat: Phase A - [Generated title based on changes]
+[Bullet points of completed work]
+Phase A progress: X/Y tasks completed
+EOF
+)"
+
+# Push to remote
+git push origin $(git branch --show-current)
+
+# Confirm success
+git log --oneline -1
+echo "✅ Commit and push completed successfully"
+```
