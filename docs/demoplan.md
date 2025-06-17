@@ -360,11 +360,23 @@ const events = await loadGroundTruth(trialId);
 3. ✅ **Data Synchronization** - 1000Hz unified timeline successfully implemented
 4. ✅ **JSON Export Generation** - T5-demo.json generated with size optimization
 
-### Phase B: Algorithm Implementation (Days 4-6) - 🎯 NEXT PHASE
-1. ⏳ **Stage 1: Traditional Detection** - Force plate thresholding with failure modes
-2. ❌ **Stage 2: Basic Fusion** - Rule-based EMG + Force combination
-3. ❌ **Stage 3: AI Fusion** - Multi-modal pattern recognition with confidence scoring
-4. ❌ **Accuracy Measurement System** - Ground truth comparison and metrics
+### Phase B: Algorithm Implementation (Days 4-6) - ⚠️ NEEDS MAJOR REVISION
+1. ⚠️ **Stage 1: Traditional Detection** - Force plate thresholding (NEEDS CALIBRATION)
+2. ⚠️ **Stage 2: Basic Fusion** - Rule-based EMG + Force combination (NEEDS CALIBRATION)
+3. ⚠️ **Stage 3: AI Fusion** - Multi-modal pattern recognition (SEVERE UNDERPERFORMANCE)
+4. ❌ **Accuracy Measurement System** - CRITICAL: No real ground truth data available
+
+### URGENT PHASE B ISSUES DISCOVERED:
+- **Force Direction Error**: Algorithms may have positive/negative force thresholds wrong
+- **No Ground Truth**: Current "ground truth" is from our own incorrect algorithms
+- **Algorithm Performance**: All three stages severely underperforming (24.6%, 32.1%, 4.9% vs targets 60%, 75%, 92%)
+- **Need Kinematic Ground Truth**: Motion capture markers should provide true gait event timing
+
+### REVISED PHASE B PRIORITIES:
+1. **Establish Real Ground Truth** - Use kinematic data to derive true heel strike/toe-off events
+2. **Fix Force Thresholds** - Re-examine force direction and calibrate detection thresholds
+3. **Algorithm Validation** - Test all three algorithms against kinematic ground truth
+4. **Threshold Tuning** - Calibrate detection parameters based on actual T5 force data patterns
 
 ### Phase C: Interactive UI (Days 7-10) - ⏸️ PENDING
 1. ❌ **Dual-Panel Layout** - Sensor display + accuracy dashboard
