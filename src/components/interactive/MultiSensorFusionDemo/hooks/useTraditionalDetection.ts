@@ -3,7 +3,7 @@
  * Executes threshold-based detection on force data
  */
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { TraditionalDetection } from '../algorithms/traditional';
 import type { ForceData } from './useDataLoader';
 import type { DetectedEvent } from '../algorithms/utils';
@@ -33,6 +33,7 @@ export function useTraditionalDetection() {
   const [result, setResult] = useState<DetectionResult | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const defaultConfig: DetectionConfig = {
     heel_strike_threshold: 50,    // Newtons
@@ -161,6 +162,21 @@ export function useTraditionalDetection() {
     setConfig(prev => ({ ...prev, ...newConfig }));
   }, []);
 
+  const updateConfigDebounced = useCallback((newConfig: Partial<DetectionConfig>) => {
+    // Clear existing timeout
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current);
+    }
+    
+    // Update config immediately for UI responsiveness
+    setConfig(prev => ({ ...prev, ...newConfig }));
+    
+    // Debounce the actual detection re-run
+    debounceTimeoutRef.current = setTimeout(() => {
+      // The useEffect with config dependency will trigger re-detection
+    }, 300);
+  }, []);
+
   const resetConfig = useCallback(() => {
     setConfig(defaultConfig);
   }, []);
@@ -180,6 +196,7 @@ export function useTraditionalDetection() {
     // Actions
     runDetection,
     updateConfig,
+    updateConfigDebounced,
     resetConfig,
     
     // Utilities

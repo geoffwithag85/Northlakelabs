@@ -18,6 +18,7 @@ import type { ChartData, ChartOptions } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import type { ForceData } from '../hooks/useDataLoader';
 import type { DetectedEvent } from '../algorithms/utils';
+import { PlaybackControls } from './PlaybackControls';
 
 ChartJS.register(
   CategoryScale,
@@ -38,7 +39,35 @@ interface ForceChartProps {
 
 export function ForceChart({ forceData, detectedEvents, currentTime, className = '' }: ForceChartProps) {
   const chartRef = useRef<ChartJS<'line'>>(null);
-  const [visibleWindow, setVisibleWindow] = useState({ start: 0, end: 6 }); // 6-second window
+  const [windowSize, setWindowSize] = useState(6); // Dynamic window size
+  const [visibleWindow, setVisibleWindow] = useState({ start: 0, end: 6 });
+  const [chartHeight, setChartHeight] = useState(400); // Dynamic chart height
+
+  // Debug events on every render
+  console.log('🎯 ForceChart render - events count:', detectedEvents.length);
+  console.log('🎯 ForceChart render - events sample:', detectedEvents.slice(0, 3));
+
+  // Responsive sizing based on screen width
+  useEffect(() => {
+    const updateResponsiveSizes = () => {
+      if (typeof window !== 'undefined') {
+        if (window.innerWidth >= 1024) {
+          setWindowSize(6); // Desktop: 6 seconds
+          setChartHeight(400); // Desktop: 400px
+        } else if (window.innerWidth >= 768) {
+          setWindowSize(4); // Tablet: 4 seconds
+          setChartHeight(350); // Tablet: 350px
+        } else {
+          setWindowSize(3); // Mobile: 3 seconds
+          setChartHeight(280); // Mobile: 280px (smaller for space)
+        }
+      }
+    };
+
+    updateResponsiveSizes();
+    window.addEventListener('resize', updateResponsiveSizes);
+    return () => window.removeEventListener('resize', updateResponsiveSizes);
+  }, []);
 
   // Debug: Log when events change
   useEffect(() => {
@@ -48,14 +77,12 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
     }
   }, [detectedEvents]);
 
-
-  // Update visible window based on current time
+  // Update visible window based on current time and responsive window size
   useEffect(() => {
-    const windowSize = 6; // seconds
     const start = Math.max(0, currentTime - windowSize / 2);
     const end = Math.min(forceData.duration, start + windowSize);
     setVisibleWindow({ start, end });
-  }, [currentTime, forceData.duration]);
+  }, [currentTime, forceData.duration, windowSize]);
 
   // Prepare chart data - LOAD ALL DATA, no slicing
   const chartData: ChartData<'line'> = {
@@ -170,8 +197,8 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
     }
   };
 
-  // Add event markers - STABLE PLUGIN with full dataset (no window filtering)
-  const eventMarkersPlugin = useMemo(() => ({
+  // Add event markers - RECREATE PLUGIN on every render to ensure updates
+  const eventMarkersPlugin = {
     id: 'eventMarkers',
     afterDraw: (chart: ChartJS) => {
       const ctx = chart.ctx;
@@ -181,9 +208,19 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
       // Debug: Plugin execution
       console.log('🔧 Plugin executing - events:', detectedEvents.length, 'axis range:', xScale.min?.toFixed(1) + '-' + xScale.max?.toFixed(1));
       
+      // Debug: Count event types
+      const heelStrikes = detectedEvents.filter(e => e.type === 'heel_strike');
+      const toeOffs = detectedEvents.filter(e => e.type === 'toe_off');
+      console.log('🔧 Event breakdown - heel strikes:', heelStrikes.length, 'toe offs:', toeOffs.length);
+      
       // NO FILTERING - Chart.js will only render events in visible axis range
-      detectedEvents.forEach(event => {
+      detectedEvents.forEach((event, index) => {
         const x = xScale.getPixelForValue(event.time);
+        
+        // Debug first few events
+        if (index < 5) {
+          console.log(`🔧 Event ${index}: type=${event.type}, time=${event.time.toFixed(2)}, x=${x.toFixed(1)}`);
+        }
         
         // Skip if event is outside canvas (Chart.js optimization)
         if (x < xScale.left || x > xScale.right) return;
@@ -216,14 +253,14 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
         ctx.restore();
       });
     }
-  }), [detectedEvents]); // Only depend on detectedEvents, not visibleWindow
+  };
 
   // Register plugins - note: plugins are passed directly to Line component
   // No need to register/unregister globally
 
   return (
-    <div className={`bg-white/5 rounded-xl border border-white/10 p-4 ${className}`}>
-      <div className="mb-4">
+    <div className={`bg-white/5 rounded-xl border border-white/10 p-4 space-y-4 ${className}`}>
+      <div>
         <h3 className="text-lg font-semibold text-white mb-2">
           Force Plate Data - Traditional Detection
         </h3>
@@ -247,7 +284,7 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
         </div>
       </div>
       
-      <div style={{ height: '400px' }}>
+      <div style={{ height: `${chartHeight}px` }}>
         <Line 
           ref={chartRef}
           data={chartData} 
@@ -257,9 +294,14 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
       </div>
       
       {/* Window info */}
-      <div className="mt-2 text-xs text-gray-500 text-center">
+      <div className="text-xs text-gray-500 text-center">
         Viewing: {visibleWindow.start.toFixed(1)}s - {visibleWindow.end.toFixed(1)}s 
-        (Current: {currentTime.toFixed(3)}s)
+        (Window: {windowSize}s, Current: {currentTime.toFixed(3)}s)
+      </div>
+
+      {/* Integrated Playback Controls */}
+      <div className="border-t border-white/10 pt-4">
+        <PlaybackControls integrated={true} />
       </div>
     </div>
   );

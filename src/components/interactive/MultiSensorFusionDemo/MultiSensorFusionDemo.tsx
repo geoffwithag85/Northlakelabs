@@ -8,9 +8,14 @@ import { useDataLoader } from './hooks/useDataLoader';
 import { useTraditionalDetection } from './hooks/useTraditionalDetection';
 import { useDemoStore } from './store';
 import { ForceChart } from './components/ForceChart';
-import { PlaybackControls } from './components/PlaybackControls';
 import { ThresholdControls } from './components/ThresholdControls';
 import { DetectionStats } from './components/DetectionStats';
+import { GaitAnalysisPanel } from './components/GaitAnalysisPanel';
+import { 
+  GaitAnalysisCollapsiblePanel, 
+  AlgorithmInsightsCollapsiblePanel,
+  CollapsiblePanel 
+} from './components/CollapsiblePanel';
 
 interface MultiSensorFusionDemoProps {
   trialId?: string;
@@ -33,6 +38,7 @@ export default function MultiSensorFusionDemo({
     config,
     runDetection,
     updateConfig,
+    updateConfigDebounced,
     resetConfig,
     events: detectedEvents
   } = useTraditionalDetection();
@@ -144,39 +150,113 @@ export default function MultiSensorFusionDemo({
   }
 
   return (
-    <div className={`space-y-6 ${className}`}>
+    <div className={`space-y-4 md:space-y-6 ${className}`}>
       {/* Demo Header */}
-      <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-        <h2 className="text-2xl font-bold text-white mb-4">
-          <span className="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
-            Traditional Force Plate Detection
-          </span>
-        </h2>
-        <div className="grid md:grid-cols-2 gap-6 text-sm">
-          <div className="space-y-2">
-            <h3 className="font-semibold text-burnt-sienna">Clinical Context</h3>
-            <p className="text-gray-300 leading-relaxed">
-              This demonstration uses real gait data from a subject with the left leg locked in extension, 
-              simulating conditions like knee contracture or post-surgical bracing. Traditional force plate 
-              detection struggles with such asymmetric patterns.
-            </p>
+      <div className="bg-gradient-to-br from-white/10 via-white/5 to-white/5 rounded-xl border border-white/20 p-6 relative overflow-hidden">
+        {/* Background accent */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-burnt-sienna/20 to-transparent rounded-full blur-2xl"></div>
+        
+        <div className="relative z-10">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                <span className="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
+                  Multi-Sensor Fusion Demo
+                </span>
+              </h2>
+              <p className="text-lg text-gray-300 mb-4 max-w-2xl">
+                Interactive demonstration comparing traditional force plate detection with multi-sensor fusion approaches 
+                for constrained gait analysis using real biomechanics data.
+              </p>
+            </div>
+            
+            {/* Status Badge */}
+            <div className="hidden md:flex items-center gap-2 px-4 py-2 bg-green-400/20 border border-green-400/30 rounded-full">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span className="text-green-400 text-sm font-medium">Live Demo</span>
+            </div>
           </div>
-          <div className="space-y-2">
-            <h3 className="font-semibold text-burnt-sienna">Demo Status</h3>
-            <div className="space-y-1 text-gray-300">
-              <div>Data Loaded: {forceData ? 'Yes' : 'No'}</div>
-              <div>Duration: {forceData ? `${forceData.duration.toFixed(1)}s` : '-'}</div>
-              <div>Sample Rate: {forceData ? `${forceData.sampleRate}Hz` : '-'}</div>
-              <div>Events Detected: {detectedEvents.length}</div>
-              <div className="flex items-center gap-2">
-                <span>Detection Status:</span>
-                {isProcessing ? (
-                  <span className="text-burnt-sienna">Processing...</span>
-                ) : detectedEvents.length > 0 ? (
-                  <span className="text-green-400">Complete</span>
-                ) : (
-                  <span className="text-gray-400">Ready</span>
-                )}
+
+          <div className="grid md:grid-cols-3 gap-4 text-sm">
+            <div className="space-y-2">
+              <h3 className="font-semibold text-burnt-sienna flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Dataset Context
+              </h3>
+              <p className="text-gray-300 leading-relaxed">
+                Real constrained gait data (left leg locked in extension) representing conditions like knee contracture 
+                or post-surgical bracing where traditional single-sensor methods show limitations.
+              </p>
+            </div>
+            
+            <div className="space-y-2">
+              <h3 className="font-semibold text-royal-purple flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+                Fusion Approach
+              </h3>
+              <p className="text-gray-300 leading-relaxed">
+                Demonstrates multi-sensor fusion techniques combining force plates, EMG, and kinematics 
+                for improved gait event detection in challenging biomechanics scenarios.
+              </p>
+            </div>
+            
+            <div className="space-y-2">
+              <h3 className="font-semibold text-indigo-400 flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Live Metrics
+              </h3>
+              <div className="space-y-1 text-gray-300">
+                <div>Events Detected: <span className="font-semibold text-green-400">{detectedEvents.length}</span></div>
+                <div>Duration: <span className="font-semibold text-blue-400">{forceData ? `${forceData.duration.toFixed(1)}s` : '-'}</span></div>
+                <div className="flex items-center gap-2">
+                  <span>Status:</span>
+                  {isProcessing ? (
+                    <span className="text-burnt-sienna font-semibold">Processing...</span>
+                  ) : detectedEvents.length > 0 ? (
+                    <span className="text-green-400 font-semibold">✓ Complete</span>
+                  ) : (
+                    <span className="text-gray-400">Ready</span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Technical Note */}
+          <div className="mt-6 p-4 bg-gradient-to-r from-burnt-sienna/10 to-royal-purple/10 rounded-lg border border-burnt-sienna/20">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-burnt-sienna/20 rounded-lg">
+                <svg className="w-5 h-5 text-burnt-sienna" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <h4 className="font-semibold text-white">Interactive Biomechanics Demo</h4>
+                <p className="text-sm text-gray-300 mb-3">
+                  This demonstration showcases sensor fusion techniques for gait analysis. 
+                  Adjust thresholds to see real-time detection and explore comprehensive gait metrics below.
+                </p>
+                <div className="text-xs text-gray-400 p-3 bg-black/20 rounded border-l-2 border-burnt-sienna/40">
+                  <div className="font-medium text-gray-300 mb-1">Data Source:</div>
+                  <div className="leading-relaxed">
+                    Bacek, Tomislav (2024). Biomechanics and energetics of neurotypical (un)constrained walking [Bacek2023] - CSV format (raw). 
+                    The University of Melbourne. Dataset. 
+                    <a 
+                      href="https://doi.org/10.26188/24296032.v1" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-burnt-sienna hover:text-burnt-sienna/80 underline ml-1"
+                    >
+                      https://doi.org/10.26188/24296032.v1
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -186,6 +266,7 @@ export default function MultiSensorFusionDemo({
       {/* Force Chart */}
       {forceData && (
         <ForceChart 
+          key={`chart-${detectedEvents.length}-${detectedEvents[0]?.time || 0}`}
           forceData={forceData}
           detectedEvents={detectedEvents}
           currentTime={currentTime}
@@ -193,32 +274,59 @@ export default function MultiSensorFusionDemo({
       )}
 
       {/* Controls and Stats Layout */}
-      <div className="grid lg:grid-cols-2 gap-6">
+      <div className="grid lg:grid-cols-2 gap-4 md:gap-6">
         {/* Threshold Controls */}
-        <ThresholdControls
-          heelStrikeThreshold={config.heel_strike_threshold}
-          toeOffThreshold={config.toe_off_threshold}
-          onHeelStrikeChange={(value) => updateConfig({ heel_strike_threshold: value })}
-          onToeOffChange={(value) => updateConfig({ toe_off_threshold: value })}
-          onReset={resetConfig}
-        />
+        <CollapsiblePanel
+          title="Detection Thresholds"
+          mobileDefault="open"
+          titleIcon={
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100 4m0-4v2m0-6V4" />
+            </svg>
+          }
+        >
+          <ThresholdControls
+            heelStrikeThreshold={config.heel_strike_threshold}
+            toeOffThreshold={config.toe_off_threshold}
+            onHeelStrikeChange={(value) => updateConfigDebounced({ heel_strike_threshold: value })}
+            onToeOffChange={(value) => updateConfigDebounced({ toe_off_threshold: value })}
+            onReset={resetConfig}
+            standalone={false}
+          />
+        </CollapsiblePanel>
 
         {/* Detection Statistics */}
-        <DetectionStats
-          events={detectedEvents}
-          processingTime={detectionResult?.processingTime || 0}
-          isProcessing={isProcessing}
-        />
+        <CollapsiblePanel
+          title="Detection Statistics"
+          mobileDefault="open"
+          titleIcon={
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+          }
+        >
+          <DetectionStats
+            events={detectedEvents}
+            processingTime={detectionResult?.processingTime || 0}
+            isProcessing={isProcessing}
+            standalone={false}
+          />
+        </CollapsiblePanel>
       </div>
 
-      {/* Playback Controls */}
-      <PlaybackControls />
+      {/* Gait Analysis Panel */}
+      {forceData && detectedEvents.length > 0 && (
+        <GaitAnalysisCollapsiblePanel>
+          <GaitAnalysisPanel 
+            events={detectedEvents}
+            duration={forceData.duration}
+          />
+        </GaitAnalysisCollapsiblePanel>
+      )}
+
 
       {/* Algorithm Insights */}
-      <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-        <h3 className="text-lg font-semibold text-white mb-4">
-          Traditional Detection Challenges
-        </h3>
+      <AlgorithmInsightsCollapsiblePanel>
         <div className="grid md:grid-cols-3 gap-4 text-sm">
           <div className="space-y-2">
             <h4 className="font-semibold text-burnt-sienna">Fixed Thresholds</h4>
@@ -242,7 +350,7 @@ export default function MultiSensorFusionDemo({
             </p>
           </div>
         </div>
-      </div>
+      </AlgorithmInsightsCollapsiblePanel>
     </div>
   );
 }

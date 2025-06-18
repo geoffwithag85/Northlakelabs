@@ -9,9 +9,10 @@ import { useDemoStore } from '../store';
 
 interface PlaybackControlsProps {
   className?: string;
+  integrated?: boolean; // New prop to control panel styling
 }
 
-export function PlaybackControls({ className = '' }: PlaybackControlsProps) {
+export function PlaybackControls({ className = '', integrated = false }: PlaybackControlsProps) {
   const { setPlaybackSpeed } = useDemoStore();
   const {
     isPlaying,
@@ -55,7 +56,7 @@ export function PlaybackControls({ className = '' }: PlaybackControlsProps) {
   const speedOptions = [0.5, 1, 2, 4];
 
   return (
-    <div className={`bg-white/5 rounded-xl border border-white/10 p-4 ${className}`}>
+    <div className={`${integrated ? '' : 'bg-white/5 rounded-xl border border-white/10 p-4'} ${className}`}>
       <div className="space-y-4">
         {/* Timeline Scrubber */}
         <div className="space-y-2">

@@ -11,6 +11,7 @@ interface DetectionStatsProps {
   processingTime: number;
   isProcessing: boolean;
   className?: string;
+  standalone?: boolean; // New prop to control panel styling
 }
 
 interface StatItem {
@@ -24,7 +25,8 @@ export function DetectionStats({
   events, 
   processingTime, 
   isProcessing, 
-  className = '' 
+  className = '',
+  standalone = true
 }: DetectionStatsProps) {
   // Calculate statistics
   const heelStrikesLeft = events.filter(e => e.type === 'heel_strike' && e.leg === 'left').length;
@@ -95,19 +97,34 @@ export function DetectionStats({
     }
   ];
 
+  const containerClass = standalone 
+    ? `bg-white/5 rounded-xl border border-white/10 p-6 ${className}`
+    : className;
+
   return (
-    <div className={`bg-white/5 rounded-xl border border-white/10 p-6 ${className}`}>
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-white">
-          Detection Statistics
-        </h3>
-        {isProcessing && (
+    <div className={containerClass}>
+      {standalone && (
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-semibold text-white">
+            Detection Statistics
+          </h3>
+          {isProcessing && (
+            <div className="flex items-center gap-2 text-sm text-burnt-sienna">
+              <div className="w-2 h-2 bg-burnt-sienna rounded-full animate-pulse"></div>
+              Processing...
+            </div>
+          )}
+        </div>
+      )}
+      
+      {!standalone && isProcessing && (
+        <div className="flex justify-end mb-4">
           <div className="flex items-center gap-2 text-sm text-burnt-sienna">
             <div className="w-2 h-2 bg-burnt-sienna rounded-full animate-pulse"></div>
             Processing...
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {stats.map((stat, index) => (
