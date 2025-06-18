@@ -4,11 +4,14 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "npm run process-data && astro dev",
+    "dev-fast": "astro dev",
     "start": "astro dev",
     "build": "npm run process-data && astro build",
+    "build-fast": "astro build",
     "preview": "astro preview",
     "astro": "astro",
     "process-data": "node scripts/process-demo-data.js T5",
+    "process-data-force": "node scripts/process-demo-data.js T5 --force",
     "analyze-trials": "node scripts/analyze-trials.js"
   },
   "dependencies": {

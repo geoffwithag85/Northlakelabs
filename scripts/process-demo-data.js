@@ -5,7 +5,7 @@
  * Processes selected trial data into optimized JSON for runtime demo loading
  */
 
-import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, writeFileSync, statSync } from 'fs';
 import { join } from 'path';
 import { CSVParser } from './csv-parser.js';
 import { DataSynchronizer } from './data-synchronizer.js';
@@ -16,6 +16,7 @@ class DemoDataProcessor {
     this.dataDir = './data/Sub1';
     this.outputDir = './public/demo-data';
     this.segmentDuration = options.segmentDuration || 20; // seconds
+    this.forceReprocess = options.forceReprocess || false;
     
     // Ensure output directory exists
     if (!existsSync(this.outputDir)) {
@@ -23,11 +24,70 @@ class DemoDataProcessor {
     }
   }
   
+  /**
+   * Check if demo data cache is valid
+   * Returns true if cached data exists and is newer than source files
+   */
+  isCacheValid() {
+    const demoFile = join(this.outputDir, `${this.selectedTrial}-demo.json`);
+    const metadataFile = join(this.outputDir, `${this.selectedTrial}-metadata.json`);
+    
+    // Check if output files exist
+    if (!existsSync(demoFile) || !existsSync(metadataFile)) {
+      return false;
+    }
+    
+    // Get cache timestamp
+    const cacheTime = Math.min(
+      statSync(demoFile).mtime.getTime(),
+      statSync(metadataFile).mtime.getTime()
+    );
+    
+    // Check source file timestamps
+    const sourceFiles = [
+      join(this.dataDir, 'Kinetics', `Sub1_Kinetics_${this.selectedTrial}.csv`),
+      join(this.dataDir, 'EMG', `Sub1_EMG_${this.selectedTrial}.csv`),
+      join(this.dataDir, 'Kinematics', `Sub1_Kinematics_${this.selectedTrial}.csv`)
+    ];
+    
+    for (const sourceFile of sourceFiles) {
+      if (!existsSync(sourceFile)) {
+        console.log(`⚠️  Source file missing: ${sourceFile}`);
+        return false;
+      }
+      
+      const sourceTime = statSync(sourceFile).mtime.getTime();
+      if (sourceTime > cacheTime) {
+        console.log(`📅 Source file newer than cache: ${sourceFile}`);
+        return false;
+      }
+    }
+    
+    return true;
+  }
+  
   async processTrialData() {
     console.log(`🚀 Processing demo data for trial ${this.selectedTrial}...`);
     console.log(`📁 Input: ${this.dataDir}`);
     console.log(`📁 Output: ${this.outputDir}`);
     console.log(`⏱️  Target segment: ${this.segmentDuration} seconds\n`);
+    
+    // Check cache validity unless forced to reprocess
+    if (!this.forceReprocess && this.isCacheValid()) {
+      console.log('✅ Demo data cache is valid and up-to-date!');
+      console.log('📦 Using existing processed data files:');
+      console.log(`   - ${this.selectedTrial}-demo.json`);
+      console.log(`   - ${this.selectedTrial}-metadata.json`);
+      console.log('💡 Use --force flag to reprocess from source data\n');
+      console.log('🎉 Demo data ready! (cached)');
+      return;
+    }
+    
+    if (this.forceReprocess) {
+      console.log('🔄 Force reprocessing enabled, ignoring cache...\n');
+    } else {
+      console.log('🔄 Cache invalid or missing, processing from source...\n');
+    }
     
     try {
       // Step 1: Parse CSV files
@@ -473,8 +533,14 @@ class DemoDataProcessor {
 
 // Run processing if called directly
 if (import.meta.url === `file://${process.argv[1]}`) {
+  // Parse command line arguments
+  const args = process.argv.slice(2);
+  const forceReprocess = args.includes('--force');
+  const selectedTrial = args.find(arg => !arg.startsWith('--')) || 'T5';
+  
   const processor = new DemoDataProcessor({
-    selectedTrial: process.argv[2] || 'T5'
+    selectedTrial,
+    forceReprocess
   });
   
   processor.processTrialData().catch(error => {

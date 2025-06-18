@@ -13,10 +13,16 @@ Northlake Labs LLC company website - an Astro-based static site showcasing AI-po
 ## Development Commands
 
 ```bash
-# Development server (includes data processing)
+# Fast development (recommended - uses cached data)
+npm run dev-fast
+
+# Full development (processes data + starts server)
 npm run dev
 
-# Build for production (includes data processing)
+# Fast build (uses cached data)
+npm run build-fast
+
+# Full build (processes data + builds)
 npm run build
 
 # Preview production build
@@ -25,8 +31,11 @@ npm run preview
 # Astro CLI (for adding integrations, etc.)
 npm run astro
 
-# Demo data processing
+# Demo data processing (smart caching)
 npm run process-data
+
+# Force reprocess demo data (bypass cache)
+npm run process-data-force
 
 # Trial quality analysis
 npm run analyze-trials
