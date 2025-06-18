@@ -70,7 +70,7 @@ export interface GaitEvent {
   time: number;          // Event time (seconds)
   type: 'heel_strike' | 'toe_off';
   leg: 'left' | 'right';
-  confidence: number;    // Confidence score (0-1)
+  threshold_deviation: number;    // Threshold deviation score (0-1)
   detection_method: string;
 }
 
@@ -181,7 +181,7 @@ export interface BasicFusionConfig {
 
 export interface AIFusionConfig {
   model_type: string;             // ML model type
-  confidence_threshold: number;   // Minimum confidence for detection
+  confidence_threshold: number;   // Minimum confidence for detection (AI-specific)
   feature_window_size: number;    // Feature extraction window (samples)
   constraint_adaptation: boolean; // Enable constraint learning
 }

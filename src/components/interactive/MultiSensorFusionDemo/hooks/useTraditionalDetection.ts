@@ -17,7 +17,7 @@ interface DetectionResult {
     heel_strikes_right: number;
     toe_offs_left: number;
     toe_offs_right: number;
-    average_confidence: number;
+    average_threshold_deviation: number;
   };
   processingTime: number;
 }

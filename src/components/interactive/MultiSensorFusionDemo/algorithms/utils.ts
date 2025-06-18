@@ -15,7 +15,7 @@ export interface DetectedEvent {
   time: number;
   type: 'heel_strike' | 'toe_off';
   leg: 'left' | 'right';
-  confidence: number;
+  threshold_deviation: number;
   detection_method: string;
   algorithm_parameters?: Record<string, any>;
 }
@@ -219,7 +219,7 @@ export function validateEvents(events: DetectedEvent[]): DetectedEvent[] {
     // Basic validation rules
     return (
       event.time >= 0 &&
-      event.confidence >= 0 && event.confidence <= 1 &&
+      event.threshold_deviation >= 0 && event.threshold_deviation <= 1 &&
       ['heel_strike', 'toe_off'].includes(event.type) &&
       ['left', 'right'].includes(event.leg)
     );
@@ -253,16 +253,16 @@ export function sortAndCleanEvents(events: DetectedEvent[]): DetectedEvent[] {
 }
 
 /**
- * Calculate confidence score based on signal strength
+ * Calculate threshold deviation score based on signal strength
  */
-export function calculateConfidence(
+export function calculateThresholdDeviation(
   signalValue: number, 
   threshold: number, 
   maxValue: number = 1000
 ): number {
   if (signalValue < threshold) return 0;
   
-  // Normalize confidence between threshold and max value
+  // Normalize threshold deviation between threshold and max value
   const normalized = (signalValue - threshold) / (maxValue - threshold);
   return Math.min(1, Math.max(0, normalized));
 }

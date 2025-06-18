@@ -19,7 +19,7 @@ src/components/interactive/MultiSensorFusionDemo/
 │   └── utils.ts                    # Shared algorithm utilities
 ├── components/
 │   ├── CollapsiblePanel.tsx        # Reusable collapsible panel with mobile optimization
-│   ├── DetectionStats.tsx          # Live statistics display (events, asymmetry, confidence)
+│   ├── DetectionStats.tsx          # Live statistics display (events, asymmetry, threshold deviation)
 │   ├── ForceChart.tsx             # Real-time force plate visualization with Chart.js
 │   ├── GaitAnalysisPanel.tsx      # Comprehensive gait analysis metrics display
 │   ├── PlaybackControls.tsx       # Timeline controls (play/pause/speed/scrub)
@@ -169,7 +169,7 @@ interface TraditionalDetectionOptions {
 - **Integrated Playback Controls**: Play/pause with multi-speed playback (0.5x-4x) integrated into chart panel
 - **Timeline Scrubbing**: Interactive time position control with visual progress
 - **Threshold Controls**: Debounced real-time sliders (20-1000N ranges) with live chart updates
-- **Statistics Display**: Live event counts, asymmetry analysis, confidence metrics
+- **Statistics Display**: Live event counts, asymmetry analysis, threshold deviation metrics
 - **Gait Analysis**: Comprehensive clinical metrics with color-coded interpretation
 - **Collapsible Panels**: Mobile-optimized with smart defaults and smooth animations
 
@@ -289,7 +289,7 @@ public/demo-data/
 **Live Demo**: Available on solutions page with interactive Chart.js visualization
 - ✅ Traditional algorithm detects 81 events (41L+40R) across full 20s timeline
 - ✅ Interactive threshold controls with real-time sliders
-- ✅ Live statistics display with event counts, asymmetry analysis, confidence metrics
+- ✅ Live statistics display with event counts, asymmetry analysis, threshold deviation metrics
 - ✅ Playback controls with multi-speed playback and controlled slider state
 - ✅ Astro component integration on solutions page working
 - ✅ TypeScript integration with all components properly typed
@@ -339,7 +339,7 @@ interface DetectionResult {
   time: number;
   type: 'heel_strike' | 'toe_off';
   leg: 'left' | 'right';
-  confidence: number;
+  threshold_deviation: number;
   algorithm: 'traditional' | 'basic_fusion' | 'ai_fusion';
 }
 ```

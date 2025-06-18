@@ -11,7 +11,7 @@ import type {
 } from './utils';
 import { 
   movingAverage, 
-  calculateConfidence,
+  calculateThresholdDeviation,
   validateEvents,
   sortAndCleanEvents
 } from './utils';
@@ -112,8 +112,8 @@ export class TraditionalDetection {
           currentForce > parameters.heel_strike_threshold && 
           previousForce <= parameters.heel_strike_threshold) {
         
-        // Calculate confidence based on force magnitude
-        const confidence = calculateConfidence(
+        // Calculate threshold deviation based on force magnitude
+        const thresholdDeviation = calculateThresholdDeviation(
           currentForce, 
           parameters.heel_strike_threshold,
           1000 // Max expected force
@@ -123,7 +123,7 @@ export class TraditionalDetection {
           time: currentTime,
           type: 'heel_strike',
           leg,
-          confidence,
+          threshold_deviation: thresholdDeviation,
           detection_method: 'traditional_threshold',
           algorithm_parameters: {
             force_value: currentForce,
@@ -145,7 +145,7 @@ export class TraditionalDetection {
         const stanceDuration = currentTime - stanceStartTime;
         if (stanceDuration >= parameters.min_stance_time) {
           
-          const confidence = calculateConfidence(
+          const thresholdDeviation = calculateThresholdDeviation(
             Math.abs(currentForce - parameters.toe_off_threshold),
             0,
             parameters.toe_off_threshold
@@ -155,7 +155,7 @@ export class TraditionalDetection {
             time: currentTime,
             type: 'toe_off',
             leg,
-            confidence,
+            threshold_deviation: thresholdDeviation,
             detection_method: 'traditional_threshold',
             algorithm_parameters: {
               force_value: currentForce,
@@ -202,15 +202,15 @@ export class TraditionalDetection {
     heel_strikes_right: number;
     toe_offs_left: number;
     toe_offs_right: number;
-    average_confidence: number;
+    average_threshold_deviation: number;
   } {
     const heelStrikesLeft = detectedEvents.filter(e => e.type === 'heel_strike' && e.leg === 'left').length;
     const heelStrikesRight = detectedEvents.filter(e => e.type === 'heel_strike' && e.leg === 'right').length;
     const toeOffsLeft = detectedEvents.filter(e => e.type === 'toe_off' && e.leg === 'left').length;
     const toeOffsRight = detectedEvents.filter(e => e.type === 'toe_off' && e.leg === 'right').length;
     
-    const averageConfidence = detectedEvents.length > 0 
-      ? detectedEvents.reduce((sum, event) => sum + event.confidence, 0) / detectedEvents.length 
+    const averageThresholdDeviation = detectedEvents.length > 0 
+      ? detectedEvents.reduce((sum, event) => sum + event.threshold_deviation, 0) / detectedEvents.length 
       : 0;
     
     return {
@@ -219,7 +219,7 @@ export class TraditionalDetection {
       heel_strikes_right: heelStrikesRight,
       toe_offs_left: toeOffsLeft,
       toe_offs_right: toeOffsRight,
-      average_confidence: averageConfidence
+      average_threshold_deviation: averageThresholdDeviation
     };
   }
 }

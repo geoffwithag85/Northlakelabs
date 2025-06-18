@@ -35,8 +35,8 @@ export function DetectionStats({
   const toeOffsRight = events.filter(e => e.type === 'toe_off' && e.leg === 'right').length;
   
   const totalEvents = events.length;
-  const averageConfidence = totalEvents > 0 
-    ? events.reduce((sum, event) => sum + event.confidence, 0) / totalEvents 
+  const averageThresholdDeviation = totalEvents > 0 
+    ? events.reduce((sum, event) => sum + event.threshold_deviation, 0) / totalEvents 
     : 0;
 
   // Asymmetry analysis
@@ -78,10 +78,10 @@ export function DetectionStats({
       description: 'Right foot lift events'
     },
     {
-      label: 'Avg Confidence',
-      value: `${(averageConfidence * 100).toFixed(1)}%`,
-      color: averageConfidence > 0.7 ? 'text-green-400' : averageConfidence > 0.4 ? 'text-yellow-400' : 'text-red-400',
-      description: 'Detection confidence score'
+      label: 'Avg Threshold Deviation',
+      value: `${(averageThresholdDeviation * 100).toFixed(1)}%`,
+      color: averageThresholdDeviation > 0.7 ? 'text-green-400' : averageThresholdDeviation > 0.4 ? 'text-yellow-400' : 'text-red-400',
+      description: 'Average deviation from detection thresholds'
     },
     {
       label: 'Asymmetry Ratio',
@@ -179,12 +179,12 @@ export function DetectionStats({
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-400">Detection Quality</span>
             <div className="flex items-center gap-2">
-              {averageConfidence > 0.7 ? (
+              {averageThresholdDeviation > 0.7 ? (
                 <>
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
                   <span className="text-sm text-green-400">Good</span>
                 </>
-              ) : averageConfidence > 0.4 ? (
+              ) : averageThresholdDeviation > 0.4 ? (
                 <>
                   <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
                   <span className="text-sm text-yellow-400">Fair</span>

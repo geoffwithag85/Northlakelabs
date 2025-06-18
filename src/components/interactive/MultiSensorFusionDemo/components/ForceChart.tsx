@@ -230,8 +230,8 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
           ? 'rgba(34, 197, 94, 0.8)'  // green-500 for heel strikes
           : 'rgba(239, 68, 68, 0.8)'; // red-500 for toe offs
         
-        // Opacity based on confidence
-        const alpha = Math.max(0.3, event.confidence);
+        // Opacity based on threshold deviation
+        const alpha = Math.max(0.3, event.threshold_deviation);
         
         ctx.save();
         ctx.strokeStyle = color;

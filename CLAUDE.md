@@ -223,6 +223,7 @@ Demo data processing pipeline uses T5 trial as the selected dataset:
 ### Current Development Phase
 **Phase B1**: ✅ COMPLETED & DEPLOYED - Traditional detection demo operational
 **Phase B1a**: ✅ COMPLETED & DEPLOYED - Enhanced UX with mobile-first design and comprehensive gait analysis
+**Phase B1b**: ✅ COMPLETED - Code quality improvements with accurate terminology (threshold_deviation)
 **Phase B2**: 🎯 NEXT - Multi-algorithm comparison (Basic Fusion → AI Fusion)
 
 ### Adding New Publications
@@ -232,6 +233,7 @@ Publications are in `src/pages/about/index.astro` - follow existing format with 
 Demo constants are defined in `types.ts` files within component directories. Key parameters:
 - **Algorithm thresholds**: Force plate detection limits (20-1000N), EMG activation levels
 - **Accuracy targets**: Traditional (60%), Basic Fusion (75%), AI Fusion (92%)
+- **Terminology**: Updated "confidence" to "threshold_deviation" for technical accuracy
 - **Processing settings**: Sampling rates, filter parameters, constraint detection
 - **Data format**: JSON structure for 20-second constrained gait trials (T5 optimized)
 - **Responsive display**: Chart window sizing (6s/4s/3s), panel collapsibility, mobile optimization

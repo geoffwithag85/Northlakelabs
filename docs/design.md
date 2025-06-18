@@ -511,6 +511,7 @@ Visit `http://localhost:4321/Northlakelabs` to view the site locally.
 - Mobile-first responsive design with collapsible panels
 - Chart.js performance optimization (60fps) with responsive sizing
 - Smart caching system for development efficiency
+- Accurate terminology: "threshold deviation" metrics instead of "confidence"
 
 ---
 

@@ -28,7 +28,7 @@
 - Smart caching system providing instant development startup
 
 ### Phase B1a: Demo Enhancement & UX (June 18, 2025) - ✅ COMPLETED
-**Duration**: 3.0 hours (estimated vs actual)
+**Duration**: 3.5 hours (14:00-17:30 actual)
 **Key Outcomes**:
 - Responsive chart sizing (6s desktop, 4s tablet, 3s mobile) with dynamic height adjustment
 - Integrated playback controls into chart panel reducing mobile scrolling by 50%
@@ -52,10 +52,11 @@
 ## Development Velocity
 
 ### Performance Metrics
-- **Combined Velocity**: 15.0 hours / 41 estimated = 37% of estimate (63% faster)
+- **Combined Velocity**: 15.5 hours / 41 estimated = 38% of estimate (62% faster)
 - **Average Task Duration**: ~0.9 hour per major task (down from 2.6h estimated)
 - **Documentation Efficiency**: 8% of development time
 - **Total Project Projection**: 23-27 hours (vs 80h original estimate)
+- **Code Quality**: 0.5h terminology update for technical accuracy
 
 ### Success Factors
 - Clear technical requirements and modular architecture approach
@@ -67,6 +68,16 @@
 ---
 
 ## Recent Sessions
+
+### June 18, 2025 - Terminology Update & Code Quality
+**Duration**: 0.5 hours (15:45-16:15)
+**Focus**: Rename "confidence" to "threshold_deviation" for accuracy
+
+**Achievements**:
+- ✅ Renamed "confidence" to "threshold_deviation" throughout codebase for technical accuracy
+- ✅ Updated UI labels to show "Avg Threshold Deviation" instead of "Avg Confidence"  
+- ✅ Updated algorithm variable names, function names, and TypeScript interfaces
+- ✅ Verified build success and demo functionality after terminology update
 
 ### June 18, 2025 - Phase B1a: Demo Enhancement & UX Optimization
 **Duration**: 3.0 hours (14:00-17:00)
