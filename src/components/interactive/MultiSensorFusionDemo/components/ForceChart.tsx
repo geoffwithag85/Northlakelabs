@@ -12,10 +12,9 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend,
-  ChartData,
-  ChartOptions
+  Legend
 } from 'chart.js';
+import type { ChartData, ChartOptions } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import type { ForceData } from '../hooks/useDataLoader';
 import type { DetectedEvent } from '../algorithms/utils';
