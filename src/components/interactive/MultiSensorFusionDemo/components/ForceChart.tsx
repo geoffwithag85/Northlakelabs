@@ -40,18 +40,11 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
   const chartRef = useRef<ChartJS<'line'>>(null);
   const [visibleWindow, setVisibleWindow] = useState({ start: 0, end: 6 }); // 6-second window
 
-  // Debug: Log when events change and force chart update
+  // Debug: Log when events change
   useEffect(() => {
     console.log('🎯 ForceChart received events:', detectedEvents.length);
     if (detectedEvents.length > 0) {
-      console.log('🎯 First event:', detectedEvents[0]);
-      console.log('🎯 Last event:', detectedEvents[detectedEvents.length - 1]);
-      
-      // Force chart update when events change
-      if (chartRef.current) {
-        console.log('🔄 Forcing chart update');
-        chartRef.current.update('none');
-      }
+      console.log('🎯 Event range:', detectedEvents[0]?.time?.toFixed(1) + 's to ' + detectedEvents[detectedEvents.length - 1]?.time?.toFixed(1) + 's');
     }
   }, [detectedEvents]);
 
@@ -64,22 +57,13 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
     setVisibleWindow({ start, end });
   }, [currentTime, forceData.duration]);
 
-  // Get data indices for current window
-  const getWindowIndices = () => {
-    const startIndex = Math.floor(visibleWindow.start * forceData.sampleRate);
-    const endIndex = Math.ceil(visibleWindow.end * forceData.sampleRate);
-    return { startIndex, endIndex };
-  };
-
-  const { startIndex, endIndex } = getWindowIndices();
-
-  // Prepare chart data
+  // Prepare chart data - LOAD ALL DATA, no slicing
   const chartData: ChartData<'line'> = {
-    labels: forceData.timestamps.slice(startIndex, endIndex),
+    labels: forceData.timestamps, // Full dataset
     datasets: [
       {
         label: 'Left Force Plate',
-        data: forceData.leftForce.slice(startIndex, endIndex),
+        data: forceData.leftForce, // Full dataset
         borderColor: 'rgb(59, 130, 246)', // blue-500
         backgroundColor: 'rgba(59, 130, 246, 0.1)',
         borderWidth: 2,
@@ -89,7 +73,7 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
       },
       {
         label: 'Right Force Plate',
-        data: forceData.rightForce.slice(startIndex, endIndex),
+        data: forceData.rightForce, // Full dataset
         borderColor: 'rgb(239, 68, 68)', // red-500
         backgroundColor: 'rgba(239, 68, 68, 0.1)',
         borderWidth: 2,
@@ -100,7 +84,7 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
     ]
   };
 
-  // Chart options optimized for performance
+  // Chart options optimized for performance - USE AXIS LIMITS FOR VIEWPORT
   const chartOptions: ChartOptions<'line'> = {
     responsive: true,
     maintainAspectRatio: false,
@@ -112,8 +96,8 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
     scales: {
       x: {
         type: 'linear',
-        min: visibleWindow.start,
-        max: visibleWindow.end,
+        min: visibleWindow.start, // Control viewport with axis limits
+        max: visibleWindow.end,   // Instead of data slicing
         title: {
           display: true,
           text: 'Time (seconds)',
@@ -186,7 +170,7 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
     }
   };
 
-  // Add event markers - recreate when events or window changes
+  // Add event markers - STABLE PLUGIN with full dataset (no window filtering)
   const eventMarkersPlugin = useMemo(() => ({
     id: 'eventMarkers',
     afterDraw: (chart: ChartJS) => {
@@ -195,17 +179,14 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
       const yScale = chart.scales.y;
       
       // Debug: Plugin execution
-      console.log('🔧 Plugin executing - events:', detectedEvents.length, 'window:', visibleWindow.start.toFixed(1) + '-' + visibleWindow.end.toFixed(1));
+      console.log('🔧 Plugin executing - events:', detectedEvents.length, 'axis range:', xScale.min?.toFixed(1) + '-' + xScale.max?.toFixed(1));
       
-      // Filter events in visible window
-      const visibleEvents = detectedEvents.filter(
-        event => event.time >= visibleWindow.start && event.time <= visibleWindow.end
-      );
-      
-      console.log('🔧 Visible events:', visibleEvents.length);
-      
-      visibleEvents.forEach(event => {
+      // NO FILTERING - Chart.js will only render events in visible axis range
+      detectedEvents.forEach(event => {
         const x = xScale.getPixelForValue(event.time);
+        
+        // Skip if event is outside canvas (Chart.js optimization)
+        if (x < xScale.left || x > xScale.right) return;
         
         // Color based on event type
         const color = event.type === 'heel_strike' 
@@ -235,7 +216,7 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
         ctx.restore();
       });
     }
-  }), [detectedEvents, visibleWindow]);
+  }), [detectedEvents]); // Only depend on detectedEvents, not visibleWindow
 
   // Register plugins - note: plugins are passed directly to Line component
   // No need to register/unregister globally
@@ -268,7 +249,6 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
       
       <div style={{ height: '400px' }}>
         <Line 
-          key={`chart-${detectedEvents.length}`}
           ref={chartRef}
           data={chartData} 
           options={chartOptions}

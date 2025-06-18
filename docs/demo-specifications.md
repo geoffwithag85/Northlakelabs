@@ -784,6 +784,8 @@ buildDemoData().catch(console.error);
 - [x] **Traditional detection algorithm**: Force plate threshold-based detection implemented with confidence scoring
 - [x] **Real-time visualization**: Chart.js integration with 60fps optimized force data streaming and event markers
 - [x] **Interactive controls**: Play/pause/scrub timeline with multi-speed playback (0.5x-4x)
+- [x] **Interactive threshold controls**: Real-time sliders for heel strike (20-200N) and toe off (5-100N) thresholds
+- [x] **Live statistics display**: Event counts, asymmetry analysis, confidence metrics updated in real-time
 - [x] **Astro integration**: Working component island successfully integrated on solutions page  
 - [x] **Test deployment**: Live demo accessible and functional on test branch
 - [x] **Performance baseline**: <1s loading achieved, smooth 60fps chart rendering
@@ -791,6 +793,7 @@ buildDemoData().catch(console.error);
 - [x] **Force sign convention fix**: Corrected positive = loading for intuitive visualization
 - [x] **Cache busting integration**: Resolved browser caching issues with timestamp parameters
 - [x] **React hydration fix**: Resolved "invalid hook call" errors with client:only directive
+- [x] **Event markers fix**: Chart.js event visualization working consistently across full timeline with simplified full dataset approach
 
 ### Phase B2 Completion Criteria 🎯 NEXT TARGET
 - [ ] **Multi-algorithm comparison**: All three detection stages implemented
