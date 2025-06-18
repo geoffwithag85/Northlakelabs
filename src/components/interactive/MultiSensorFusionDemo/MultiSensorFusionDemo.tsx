@@ -5,7 +5,6 @@
 
 import React, { useEffect } from 'react';
 import { useDataLoader } from './hooks/useDataLoader';
-import { useTraditionalDetection } from './hooks/useTraditionalDetection';
 import { useDemoStore } from './store';
 import { ForceChart } from './components/ForceChart';
 import { PlaybackControls } from './components/PlaybackControls';
@@ -24,20 +23,9 @@ export default function MultiSensorFusionDemo({
   // Load data
   const { data: forceData, isLoading, error, loadingProgress } = useDataLoader(trialId);
   
-  // Traditional detection
-  const { 
-    runDetection, 
-    events, 
-    stats, 
-    isProcessing, 
-    error: detectionError,
-    processingTime 
-  } = useTraditionalDetection();
-  
   // Store integration
   const { 
     setData, 
-    setDetectedEvents, 
     currentTime,
     isDataLoaded 
   } = useDemoStore();
@@ -48,27 +36,6 @@ export default function MultiSensorFusionDemo({
       setData(forceData);
     }
   }, [forceData, setData]);
-
-  // Run detection when data is loaded
-  useEffect(() => {
-    if (forceData && !isProcessing) {
-      runDetection(forceData);
-    }
-  }, [forceData, runDetection, isProcessing]);
-
-  // Update store with detection results
-  useEffect(() => {
-    if (events.length > 0) {
-      setDetectedEvents(events);
-    }
-  }, [events, setDetectedEvents]);
-
-  // Auto-start playback if requested
-  useEffect(() => {
-    if (autoStart && isDataLoaded && events.length > 0) {
-      // Auto-start could be implemented here
-    }
-  }, [autoStart, isDataLoaded, events.length]);
 
   // Loading state
   if (isLoading) {
@@ -93,7 +60,7 @@ export default function MultiSensorFusionDemo({
   }
 
   // Error state
-  if (error || detectionError) {
+  if (error) {
     return (
       <div className={`bg-red-500/10 border border-red-500/20 rounded-xl p-8 ${className}`}>
         <div className="text-center space-y-2">
@@ -101,7 +68,7 @@ export default function MultiSensorFusionDemo({
             Error Loading Demo
           </div>
           <div className="text-red-300">
-            {error || detectionError}
+            {error}
           </div>
           <button 
             onClick={() => window.location.reload()}
@@ -166,34 +133,25 @@ export default function MultiSensorFusionDemo({
             </p>
           </div>
           <div className="space-y-2">
-            <h3 className="font-semibold text-burnt-sienna">Detection Results</h3>
-            {isProcessing ? (
-              <div className="text-gray-400">Processing...</div>
-            ) : stats ? (
-              <div className="space-y-1 text-gray-300">
-                <div>Total Events: {stats.total_events}</div>
-                <div>Left Heel Strikes: {stats.heel_strikes_left}</div>
-                <div>Right Heel Strikes: {stats.heel_strikes_right}</div>
-                <div>Left Toe Offs: {stats.toe_offs_left}</div>
-                <div>Right Toe Offs: {stats.toe_offs_right}</div>
-                <div>Avg Confidence: {(stats.average_confidence * 100).toFixed(1)}%</div>
-                <div className="text-xs text-gray-500">
-                  Processed in {processingTime.toFixed(1)}ms
-                </div>
-              </div>
-            ) : (
-              <div className="text-gray-400">No results yet</div>
-            )}
+            <h3 className="font-semibold text-burnt-sienna">Demo Status</h3>
+            <div className="space-y-1 text-gray-300">
+              <div>Data Loaded: {forceData ? 'Yes' : 'No'}</div>
+              <div>Duration: {forceData ? `${forceData.duration.toFixed(1)}s` : '-'}</div>
+              <div>Sample Rate: {forceData ? `${forceData.sampleRate}Hz` : '-'}</div>
+              <div>Timestamps: {forceData ? forceData.timestamps.length.toLocaleString() : '-'}</div>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Force Chart */}
-      <ForceChart 
-        forceData={forceData}
-        detectedEvents={events}
-        currentTime={currentTime}
-      />
+      {forceData && (
+        <ForceChart 
+          forceData={forceData}
+          detectedEvents={[]}
+          currentTime={currentTime}
+        />
+      )}
 
       {/* Playback Controls */}
       <PlaybackControls />
