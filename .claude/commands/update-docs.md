@@ -1,6 +1,6 @@
 # Update Documentation - Sync All Docs After Development Progress
 
-Systematically update all project documentation to reflect current development progress and maintain consistency across all files.
+Systematically update all project documentation to reflect current development progress and maintain consistency across the 5 core files.
 
 ## Execution Steps
 
@@ -11,21 +11,21 @@ Systematically update all project documentation to reflect current development p
 - `LS scripts` - See completed processing scripts
 - `LS public/demo-data` - Check generated demo files
 
-### Step 2: Review Documentation Files for Updates
+### Step 2: Review Core Documentation Files for Updates
 
-**Core Documentation Files to Check:**
-- `Read CLAUDE.md` (lines 60-90) - Interactive demo descriptions
-- `Read docs/demoplan.md` (lines 355-400) - Development timeline and progress
+**5 Core Documentation Files to Check:**
+- `Read CLAUDE.md` (lines 110-140) - Current development status and phase progress
+- `Read docs/technical-specs.md` (lines 1-50) - Technical implementation progress and component status
 - `Read docs/design.md` (lines 348-380) - Current development phase status
-- `Read docs/demo-specifications.md` (lines 425-460) - Implementation timeline checkboxes
+- `Read docs/development-log.md` (lines 1-30) - Recent session progress and phase completion status
 
 ### Step 3: Update Progress Tracking & Human Time Logging
 
 **Human Time Session Logging:**
 - `Bash "git log --oneline --since='1 day ago' --format='%H %cd %s' --date=iso"` - Check recent commits with timestamps
 - Calculate session duration from commit timestamps and current time
-- Update `docs/time-tracking.md` with actual human-hours spent
-- Log specific activities completed in this session
+- Update `docs/development-log.md` with actual human-hours spent
+- Log specific activities completed in this session (3-4 lines max)
 
 **Phase Progress Updates:**
 - **Phase A (Days 1-3)**: Update completed checkboxes in timeline
@@ -35,31 +35,28 @@ Systematically update all project documentation to reflect current development p
 
 **Files to Update Based on Progress:**
 
-#### time-tracking.md Updates:
-- **Session Log section**: Add new session entry with actual duration
+#### development-log.md Updates:
+- **Session Log section**: Add new session entry with actual duration (3-4 lines max)
 - **Phase completion metrics**: Update actual vs estimated time
-- **Velocity calculations**: Recalculate based on real human-hours
-- **Efficiency analysis**: Note factors that sped up or slowed down work
+- **Velocity calculations**: Update simple percentage improvements
+- **Current phase status**: Update Phase B1/B2 completion status
 
-#### demoplan.md Updates:
-- **Implementation Timeline section (lines 426-442)**: Update ✅ checkboxes
-- **Success Criteria section (lines 452-457)**: Mark achieved targets
-- **Add new insights or challenges discovered during implementation**
+#### technical-specs.md Updates:
+- **Implementation Timeline section**: Update ✅ checkboxes for completed features
+- **Algorithm Progress section**: Mark completed detection algorithms
+- **Performance Metrics section**: Update actual vs target performance numbers
+- **Technical specifications**: Refine based on actual implementation details
 
 #### design.md Updates:
-- **Phase 3 section (lines 348-373)**: Update development phase progress
-- **Interactive Demonstrations section (lines 247-255)**: Update current demo status
-- **Recent Accomplishments section**: Add new completed features
+- **Development Phase section**: Update current phase progress
+- **Interactive Demonstrations section**: Update current demo status
+- **Recent Accomplishments section**: Add new completed features (keep concise)
 
 #### CLAUDE.md Updates:
-- **Interactive Demonstrations section (lines 62-89)**: Update technical details
-- **Common Tasks section (lines 186-191)**: Add new development procedures
-- **Testing Guidelines section (lines 172-179)**: Update based on implementation experience
-
-#### demo-specifications.md Updates:
-- **Acceptance Criteria section**: Mark completed implementation milestones
-- **Timeline sections**: Update phase completion status
-- **Technical specifications**: Refine based on actual implementation details
+- **Current Development Phase section**: Update Phase B1/B2 status
+- **Interactive Demo details**: Update technical implementation status
+- **Common Tasks section**: Add new development procedures discovered
+- **Smart Caching section**: Update performance improvements achieved
 
 ### Step 4: Update Based on Implementation Discoveries
 
@@ -97,24 +94,25 @@ Systematically update all project documentation to reflect current development p
 - **Data processing notes**: CSV parsing insights and best practices
 - **Algorithm tuning**: Parameter adjustments and calibration notes
 
-### Step 7: Update Prime Command with New Documentation
+### Step 7: Maintain 5-File Documentation Structure
 
-**Check for New Documentation Files:**
-- `LS docs/` - Scan for new .md files not referenced in prime.md
-- `Bash "find docs/ -name '*.md' -newer CLAUDE.md"` - Find recently created docs
-- Assess importance based on file size, content, and relevance to development
+**Validate Core Documentation Structure:**
+- `LS docs/` - Ensure only core files exist (technical-specs.md, design.md, development-log.md + archive/)
+- Check that no new .md files have been created outside the 5-file structure
+- If new files exist, determine if they should be consolidated or archived
 
-**Conditionally Update `.claude/commands/prime.md`:**
-- **Add new critical documentation** to appropriate reading steps
+**Maintain `.claude/commands/prime.md` Consistency:**
+- **Verify reading sequence** matches current 5-file structure
 - **Update Context Summary** to reflect current development phase
-- **Reorganize reading order** if priorities have changed
 - **Update phase references** and current focus areas
+- **Ensure file paths** are accurate for consolidated structure
 
-**Priority Documentation to Include:**
-- `docs/time-tracking.md` - Critical for session velocity and time context
-- `docs/phase-a-completion.md` - Important for understanding what's been completed
-- Any new phase completion or milestone documents
-- Updated specifications or architecture decisions
+**5-File Structure Enforcement:**
+- `CLAUDE.md` - Primary development guide
+- `README.md` - Project overview
+- `docs/technical-specs.md` - Consolidated technical reference
+- `docs/design.md` - Design system and strategy
+- `docs/development-log.md` - Compact progress tracking
 
 ### Step 8: Validation and Consistency Check
 

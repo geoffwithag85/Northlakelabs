@@ -101,21 +101,10 @@ Custom brand colors defined in `tailwind.config.mjs`:
 - `indigo`: #585ccc (tertiary accent)
 
 ### Interactive Demonstrations
-The multi-sensor fusion demo (`src/components/interactive/MultiSensorFusionDemo/`) uses:
-- **Chart.js**: Real-time sensor visualization optimized for 60fps
-- **Zustand**: State management for demo playback and algorithm results
-- **TypeScript**: Full type safety for sensor data and algorithm interfaces
-- **Real Dataset**: T5 trial with perfect constrained gait pattern (Phase A completed)
+The multi-sensor fusion demo uses Chart.js for real-time visualization, Zustand for state management, and features T5 trial data with constrained gait patterns.
 
-### Current Demo: Multi-Sensor Fusion for Constrained Gait Analysis
-- **Clinical Focus**: Left leg locked in extension (pathological gait pattern)
-- **Selected Data**: T5 trial (302s duration, perfect left leg constraint)
-- **Development Approach**: MVP-first with traditional detection + visualization (Phase B1), then multi-algorithm comparison (Phase B2)
-- **Performance Targets**: Traditional detection baseline → multi-algorithm accuracy progression
-- **Processing Pipeline**: Complete CSV → JSON with build-time optimization (Phase A ✅ COMPLETED)
-- **Current Status**: **Phase B1 ✅ COMPLETED & DEPLOYED** - Live demo with traditional detection, interactive controls, and fixed event visualization
-- **Live Demo**: Available on solutions page with interactive Chart.js visualization
-- **Smart Caching**: 10-20x faster development with intelligent data processing
+**Current Status**: Phase B1 ✅ COMPLETED & DEPLOYED - Live demo operational on solutions page
+**Next Phase**: Phase B2 multi-algorithm comparison (Basic Fusion → AI Fusion)
 
 ### State Management Structure
 ```typescript
@@ -229,19 +218,11 @@ When modifying multi-sensor fusion demo or other interactive components:
 Demo data processing pipeline uses T5 trial as the selected dataset:
 - **Run processing**: `npm run process-data` (generates T5-demo.json)
 - **Analyze trials**: `npm run analyze-trials` (quality assessment of T1-T30)
-- **Test pipeline**: `node scripts/test-processing.js` (validate with small segment)
-- **Generated files**: `public/demo-data/T5-demo.json` (16.7MB) and `T5-metadata.json` (Phase A ✅ COMPLETED)
+- **Generated files**: `public/demo-data/T5-demo.json` (16.7MB) and `T5-metadata.json`
 
 ### Current Development Phase
-**Phase B1**: Traditional Detection + Visualization - ✅ **COMPLETED**
-- ✅ Traditional algorithm detects 81 events (41L+40R) across full 20s timeline
-- ✅ Interactive threshold controls with real-time sliders (heel strike 20-200N, toe off 5-100N)
-- ✅ Live statistics display with event counts, asymmetry analysis, confidence metrics
-- ✅ Playback controls with multi-speed playback and controlled slider state
-- ✅ Astro component integration on solutions page working
-- ✅ TypeScript integration with all components properly typed
-- ✅ Chart.js event visualization with full dataset + axis limits approach (simplified and fixed)
-- 🎯 **Next**: Phase B2 multi-algorithm comparison (Basic Fusion → AI Fusion)
+**Phase B1**: ✅ COMPLETED & DEPLOYED - Traditional detection demo operational
+**Phase B2**: 🎯 NEXT - Multi-algorithm comparison (Basic Fusion → AI Fusion)
 
 ### Adding New Publications
 Publications are in `src/pages/about/index.astro` - follow existing format with title, journal, year, and DOI links.
@@ -258,4 +239,6 @@ Brand colors are centralized in `tailwind.config.mjs`. Use existing color variab
 
 ## Additional Documentation
 
-For comprehensive design strategy, brand guidelines, and project roadmap, see `design.md`.
+For complete technical implementation details, see `docs/technical-specs.md`
+For development progress and session tracking, see `docs/development-log.md`  
+For design strategy and brand guidelines, see `docs/design.md`

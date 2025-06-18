@@ -5,13 +5,11 @@ Read these files to understand the project structure and development context:
 - `Read CLAUDE.md` - Development instructions, interactive demo details, and codebase overview
 - `Read README.md` - Project overview and basic information
 
-## Step 2: Read Current Development Plan  
-Read the comprehensive development documentation:
-- `Read docs/demoplan.md` - CURRENT ACTIVE PLAN: Multi-sensor fusion demo implementation with detailed pipeline
-- `Read docs/design.md` - Overall site strategy, brand guidelines, and current development phase
-- `Read docs/demo-specifications.md` - Technical specifications for implementation
-- `Read docs/time-tracking.md` - Session time tracking and development velocity metrics
-- `Read docs/phase-a-completion.md` - Phase A completion summary and lessons learned
+## Step 2: Read Consolidated Development Documentation  
+Read the streamlined 5-file documentation structure:
+- `Read docs/technical-specs.md` - CONSOLIDATED TECHNICAL REFERENCE: Multi-sensor fusion implementation, algorithms, and component architecture
+- `Read docs/design.md` - Overall site strategy, brand guidelines, and design system
+- `Read docs/development-log.md` - Compact progress tracking, current phase status, and velocity metrics
 
 ## Step 3: Check Current Development Status
 Execute these commands to understand current state:
@@ -56,9 +54,9 @@ After reading these files, you should understand:
 5. 🎯 **NEXT: Phase B Algorithm Implementation** (Traditional → Basic → AI Fusion)
 
 **Key Files to Understand**:
-- `docs/demoplan.md` - Complete implementation roadmap
-- `docs/demo-specifications.md` - Technical implementation details
-- `CLAUDE.md` - Component architecture and development guidelines
+- `docs/technical-specs.md` - Consolidated implementation roadmap, specifications, and component architecture
+- `docs/development-log.md` - Current progress and session tracking
+- `CLAUDE.md` - Development commands and guidelines
 
 You should now be ready to continue Phase B algorithm development with full project context.
 
