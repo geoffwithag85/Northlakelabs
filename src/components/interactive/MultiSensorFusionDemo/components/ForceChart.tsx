@@ -3,7 +3,7 @@
  * Shows left/right force data with detected event markers
  */
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useMemo } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -38,11 +38,27 @@ interface ForceChartProps {
 
 export function ForceChart({ forceData, detectedEvents, currentTime, className = '' }: ForceChartProps) {
   const chartRef = useRef<ChartJS<'line'>>(null);
-  const [visibleWindow, setVisibleWindow] = useState({ start: 0, end: 4 }); // 4-second window
+  const [visibleWindow, setVisibleWindow] = useState({ start: 0, end: 6 }); // 6-second window
+
+  // Debug: Log when events change and force chart update
+  useEffect(() => {
+    console.log('🎯 ForceChart received events:', detectedEvents.length);
+    if (detectedEvents.length > 0) {
+      console.log('🎯 First event:', detectedEvents[0]);
+      console.log('🎯 Last event:', detectedEvents[detectedEvents.length - 1]);
+      
+      // Force chart update when events change
+      if (chartRef.current) {
+        console.log('🔄 Forcing chart update');
+        chartRef.current.update('none');
+      }
+    }
+  }, [detectedEvents]);
+
 
   // Update visible window based on current time
   useEffect(() => {
-    const windowSize = 4; // seconds
+    const windowSize = 6; // seconds
     const start = Math.max(0, currentTime - windowSize / 2);
     const end = Math.min(forceData.duration, start + windowSize);
     setVisibleWindow({ start, end });
@@ -170,18 +186,23 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
     }
   };
 
-  // Add event markers
-  const eventMarkersPlugin = {
+  // Add event markers - recreate when events or window changes
+  const eventMarkersPlugin = useMemo(() => ({
     id: 'eventMarkers',
     afterDraw: (chart: ChartJS) => {
       const ctx = chart.ctx;
       const xScale = chart.scales.x;
       const yScale = chart.scales.y;
       
+      // Debug: Plugin execution
+      console.log('🔧 Plugin executing - events:', detectedEvents.length, 'window:', visibleWindow.start.toFixed(1) + '-' + visibleWindow.end.toFixed(1));
+      
       // Filter events in visible window
       const visibleEvents = detectedEvents.filter(
         event => event.time >= visibleWindow.start && event.time <= visibleWindow.end
       );
+      
+      console.log('🔧 Visible events:', visibleEvents.length);
       
       visibleEvents.forEach(event => {
         const x = xScale.getPixelForValue(event.time);
@@ -214,16 +235,10 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
         ctx.restore();
       });
     }
-  };
+  }), [detectedEvents, visibleWindow]);
 
-  // Register plugins
-  useEffect(() => {
-    ChartJS.register(currentTimePlugin, eventMarkersPlugin);
-    
-    return () => {
-      ChartJS.unregister(currentTimePlugin, eventMarkersPlugin);
-    };
-  }, []);
+  // Register plugins - note: plugins are passed directly to Line component
+  // No need to register/unregister globally
 
   return (
     <div className={`bg-white/5 rounded-xl border border-white/10 p-4 ${className}`}>
@@ -253,6 +268,7 @@ export function ForceChart({ forceData, detectedEvents, currentTime, className =
       
       <div style={{ height: '400px' }}>
         <Line 
+          key={`chart-${detectedEvents.length}`}
           ref={chartRef}
           data={chartData} 
           options={chartOptions}

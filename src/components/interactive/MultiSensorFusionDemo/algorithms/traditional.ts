@@ -5,9 +5,11 @@
  */
 
 import type { DemoData } from '../../../utils/types';
-import { 
+import type { 
   DetectedEvent, 
-  AlgorithmConfig, 
+  AlgorithmConfig
+} from './utils';
+import { 
   movingAverage, 
   calculateConfidence,
   validateEvents,

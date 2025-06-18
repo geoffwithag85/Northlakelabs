@@ -3,7 +3,7 @@
  * Executes threshold-based detection on force data
  */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { TraditionalDetection } from '../algorithms/traditional';
 import type { ForceData } from './useDataLoader';
 import type { DetectedEvent } from '../algorithms/utils';
@@ -164,6 +164,11 @@ export function useTraditionalDetection() {
   const resetConfig = useCallback(() => {
     setConfig(defaultConfig);
   }, []);
+
+  // Debug: Log hook state changes
+  useEffect(() => {
+    console.log('🎪 Hook state - result:', result ? 'exists' : 'null', 'events:', result?.events?.length || 0, 'processing:', isProcessing);
+  }, [result, isProcessing]);
 
   return {
     // State

@@ -23,7 +23,9 @@ export function usePlaybackControl() {
     if (isPlaying) {
       intervalRef.current = setInterval(() => {
         const timeIncrement = 0.016 * playbackSpeed; // ~60fps * speed
-        setCurrentTime(currentTime + timeIncrement);
+        // Get current time from store and increment
+        const store = useDemoStore.getState();
+        setCurrentTime(store.currentTime + timeIncrement);
       }, 16); // ~60fps
     } else {
       if (intervalRef.current) {
@@ -37,7 +39,7 @@ export function usePlaybackControl() {
         clearInterval(intervalRef.current);
       }
     };
-  }, [isPlaying, currentTime, playbackSpeed, setCurrentTime]);
+  }, [isPlaying, playbackSpeed, setCurrentTime]);
 
   const togglePlayback = () => {
     // If at end, restart from beginning

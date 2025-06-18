@@ -5,9 +5,12 @@
 
 import React, { useEffect } from 'react';
 import { useDataLoader } from './hooks/useDataLoader';
+import { useTraditionalDetection } from './hooks/useTraditionalDetection';
 import { useDemoStore } from './store';
 import { ForceChart } from './components/ForceChart';
 import { PlaybackControls } from './components/PlaybackControls';
+import { ThresholdControls } from './components/ThresholdControls';
+import { DetectionStats } from './components/DetectionStats';
 
 interface MultiSensorFusionDemoProps {
   trialId?: string;
@@ -23,9 +26,21 @@ export default function MultiSensorFusionDemo({
   // Load data
   const { data: forceData, isLoading, error, loadingProgress } = useDataLoader(trialId);
   
+  // Traditional detection hook
+  const {
+    result: detectionResult,
+    isProcessing,
+    config,
+    runDetection,
+    updateConfig,
+    resetConfig,
+    events: detectedEvents
+  } = useTraditionalDetection();
+  
   // Store integration
   const { 
     setData, 
+    setDetectedEvents,
     currentTime,
     isDataLoaded 
   } = useDemoStore();
@@ -36,6 +51,20 @@ export default function MultiSensorFusionDemo({
       setData(forceData);
     }
   }, [forceData, setData]);
+
+  // Auto-run detection when data loads or config changes
+  useEffect(() => {
+    if (forceData && !isProcessing) {
+      runDetection(forceData);
+    }
+  }, [forceData, config, runDetection, isProcessing]);
+
+  // Debug: Log events from detection hook
+  useEffect(() => {
+    console.log('🎲 Main component - detectedEvents from hook:', detectedEvents.length);
+    console.log('🎲 Main component - detectionResult:', detectionResult ? 'exists' : 'null');
+    console.log('🎲 Main component - isProcessing:', isProcessing);
+  }, [detectedEvents, detectionResult, isProcessing]);
 
   // Loading state
   if (isLoading) {
@@ -138,7 +167,17 @@ export default function MultiSensorFusionDemo({
               <div>Data Loaded: {forceData ? 'Yes' : 'No'}</div>
               <div>Duration: {forceData ? `${forceData.duration.toFixed(1)}s` : '-'}</div>
               <div>Sample Rate: {forceData ? `${forceData.sampleRate}Hz` : '-'}</div>
-              <div>Timestamps: {forceData ? forceData.timestamps.length.toLocaleString() : '-'}</div>
+              <div>Events Detected: {detectedEvents.length}</div>
+              <div className="flex items-center gap-2">
+                <span>Detection Status:</span>
+                {isProcessing ? (
+                  <span className="text-burnt-sienna">Processing...</span>
+                ) : detectedEvents.length > 0 ? (
+                  <span className="text-green-400">Complete</span>
+                ) : (
+                  <span className="text-gray-400">Ready</span>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -148,10 +187,29 @@ export default function MultiSensorFusionDemo({
       {forceData && (
         <ForceChart 
           forceData={forceData}
-          detectedEvents={[]}
+          detectedEvents={detectedEvents}
           currentTime={currentTime}
         />
       )}
+
+      {/* Controls and Stats Layout */}
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Threshold Controls */}
+        <ThresholdControls
+          heelStrikeThreshold={config.heel_strike_threshold}
+          toeOffThreshold={config.toe_off_threshold}
+          onHeelStrikeChange={(value) => updateConfig({ heel_strike_threshold: value })}
+          onToeOffChange={(value) => updateConfig({ toe_off_threshold: value })}
+          onReset={resetConfig}
+        />
+
+        {/* Detection Statistics */}
+        <DetectionStats
+          events={detectedEvents}
+          processingTime={detectionResult?.processingTime || 0}
+          isProcessing={isProcessing}
+        />
+      </div>
 
       {/* Playback Controls */}
       <PlaybackControls />

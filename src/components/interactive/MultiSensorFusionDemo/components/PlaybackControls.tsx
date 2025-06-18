@@ -3,7 +3,7 @@
  * Play/pause, scrubbing, speed control
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { usePlaybackControl } from '../hooks/usePlaybackControl';
 import { useDemoStore } from '../store';
 
@@ -27,9 +27,29 @@ export function PlaybackControls({ className = '' }: PlaybackControlsProps) {
     canPlay
   } = usePlaybackControl();
 
+  // Local state for slider to prevent feedback loops
+  const [sliderValue, setSliderValue] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+
+  // Update slider value when currentTime changes (but not when dragging)
+  useEffect(() => {
+    if (!isDragging) {
+      setSliderValue(getCurrentPercentage());
+    }
+  }, [getCurrentPercentage, isDragging]);
+
   const handleTimelineChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const percentage = parseFloat(event.target.value);
+    setSliderValue(percentage);
     seekToPercentage(percentage);
+  };
+
+  const handleMouseDown = () => {
+    setIsDragging(true);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
   };
 
   const speedOptions = [0.5, 1, 2, 4];
@@ -50,15 +70,19 @@ export function PlaybackControls({ className = '' }: PlaybackControlsProps) {
               min="0"
               max="100"
               step="0.1"
-              value={getCurrentPercentage()}
+              value={sliderValue}
               onChange={handleTimelineChange}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onTouchStart={handleMouseDown}
+              onTouchEnd={handleMouseUp}
               disabled={!canPlay}
               className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer
                          slider:bg-burnt-sienna slider:rounded-lg
                          disabled:opacity-50 disabled:cursor-not-allowed
                          focus:outline-none focus:ring-2 focus:ring-burnt-sienna/50"
               style={{
-                background: `linear-gradient(to right, #eb5b48 0%, #eb5b48 ${getCurrentPercentage()}%, #374151 ${getCurrentPercentage()}%, #374151 100%)`
+                background: `linear-gradient(to right, #eb5b48 0%, #eb5b48 ${sliderValue}%, #374151 ${sliderValue}%, #374151 100%)`
               }}
             />
           </div>
