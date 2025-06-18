@@ -360,35 +360,31 @@ const events = await loadGroundTruth(trialId);
 3. ✅ **Data Synchronization** - 1000Hz unified timeline successfully implemented
 4. ✅ **JSON Export Generation** - T5-demo.json generated with size optimization
 
-### Phase B: Algorithm Implementation (Days 4-6) - ⚠️ NEEDS MAJOR REVISION
-1. ⚠️ **Stage 1: Traditional Detection** - Force plate thresholding (NEEDS CALIBRATION)
-2. ⚠️ **Stage 2: Basic Fusion** - Rule-based EMG + Force combination (NEEDS CALIBRATION)
-3. ⚠️ **Stage 3: AI Fusion** - Multi-modal pattern recognition (SEVERE UNDERPERFORMANCE)
-4. ❌ **Accuracy Measurement System** - CRITICAL: No real ground truth data available
+### Phase B1: Traditional Detection + Visualization (Days 4-8) - 🎯 NEXT PHASE
+1. 🎯 **Traditional Force Plate Detection** - Implement threshold-based heel strike/toe-off detection
+2. 🎯 **Real-Time Visualization** - Chart.js integration with force data streaming
+3. 🎯 **Interactive UI Components** - Play/pause controls, timeline scrubbing, event markers
+4. 🎯 **Astro Component Integration** - Working demo as component island on solutions page
+5. 🎯 **Test Branch Deployment** - Live demo accessible at test.northlakelabs.com
 
-### URGENT PHASE B ISSUES DISCOVERED:
-- **Force Direction Error**: Algorithms may have positive/negative force thresholds wrong
-- **No Ground Truth**: Current "ground truth" is from our own incorrect algorithms
-- **Algorithm Performance**: All three stages severely underperforming (24.6%, 32.1%, 4.9% vs targets 60%, 75%, 92%)
-- **Need Kinematic Ground Truth**: Motion capture markers should provide true gait event timing
+### Phase B2: Multi-Algorithm Comparison (Days 9-13) - ⏸️ PENDING PHASE B1
+1. ⏸️ **Kinematic Ground Truth** - Establish real gait events from motion capture data
+2. ⏸️ **Basic Fusion Algorithm** - Rule-based EMG + Force combination with validated thresholds
+3. ⏸️ **AI Fusion Algorithm** - Multi-modal pattern recognition with constraint adaptation
+4. ⏸️ **Accuracy Comparison Dashboard** - Side-by-side performance metrics and visualization
+5. ⏸️ **Production Deployment** - Complete demo with all three algorithms on main branch
 
-### REVISED PHASE B PRIORITIES:
-1. **Establish Real Ground Truth** - Use kinematic data to derive true heel strike/toe-off events
-2. **Fix Force Thresholds** - Re-examine force direction and calibrate detection thresholds
-3. **Algorithm Validation** - Test all three algorithms against kinematic ground truth
-4. **Threshold Tuning** - Calibrate detection parameters based on actual T5 force data patterns
+### REVISED APPROACH BENEFITS:
+- **Risk Reduction**: Validate visualization and integration before algorithmic complexity
+- **Faster Validation**: Working demo on test branch demonstrates real progress
+- **Technical Foundation**: Solve Chart.js performance and Astro integration first
+- **Ground Truth Time**: Phase B2 allows proper kinematic event detection development
 
-### Phase C: Interactive UI (Days 7-10) - ⏸️ PENDING
-1. ❌ **Dual-Panel Layout** - Sensor display + accuracy dashboard
-2. ❌ **Real-Time Charts** - Chart.js integration with 60fps performance
-3. ❌ **Stage Controls** - Toggle switches and parameter adjustment
-4. ❌ **Clinical Context** - Educational panels explaining constraint significance
-
-### Phase D: Integration & Polish (Days 11-13) - ⏸️ PENDING
-1. ❌ **Astro Component Integration** - Solutions page embedding
-2. ❌ **Performance Optimization** - Loading times and animation smoothness
-3. ❌ **Mobile Responsiveness** - Touch-friendly controls and layout
-4. ❌ **Testing & Refinement** - Cross-browser and device testing
+### Original Phase C & D: Integrated into New B1/B2 Structure
+**Note**: The original Phase C (Interactive UI) and Phase D (Integration & Polish) components have been redistributed:
+- **Phase B1** now includes: Real-time visualization, interactive UI, and Astro integration
+- **Phase B2** now includes: Accuracy dashboard, algorithm comparison, and final polish
+- **Timeline**: Still maintains 13-day total development cycle with better risk management
 
 ## Success Criteria & Metrics
 

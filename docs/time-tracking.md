@@ -20,41 +20,34 @@
 | Build Integration | 2 hours | ~1 hour | npm scripts straightforward |
 | **Phase A Total** | **20 hours** | **~3-4 hours** | **80% faster than estimated** |
 
-### 🎯 **Phase B: Algorithm Implementation (Days 4-6) - NEXT**
+### 🎯 **Phase B1: Traditional Detection + Visualization (Days 4-8) - NEXT**
 **Status**: ⏳ NOT STARTED  
-**Target**: 3 days
+**Target**: 4-5 days
 
 | Task | Estimated | Actual | Notes |
 |------|-----------|--------|-------|
-| Stage 1: Traditional Detection | 4 hours | - | Force plate thresholding |
-| Stage 2: Basic Fusion | 6 hours | - | Rule-based EMG + Force |
-| Stage 3: AI Fusion | 8 hours | - | Multi-modal pattern recognition |
-| Accuracy Measurement System | 2 hours | - | Ground truth comparison |
-| **Phase B Total** | **20 hours** | **-** | **Pending** |
+| Traditional Force Detection Algorithm | 4 hours | - | Threshold-based heel strike/toe-off |
+| Chart.js Real-Time Visualization | 6 hours | - | Force streaming with event markers |
+| Interactive UI Controls | 4 hours | - | Play/pause/scrub timeline |
+| Astro Component Integration | 4 hours | - | Component island on solutions page |
+| Test Branch Deployment | 2 hours | - | Live demo validation |
+| **Phase B1 Total** | **20 hours** | **-** | **MVP Approach** |
 
-### ⏸️ **Phase C: Interactive UI (Days 7-10) - PENDING**
+### ⏸️ **Phase B2: Multi-Algorithm Comparison (Days 9-13) - PENDING B1**
 **Status**: ❌ NOT STARTED  
-**Target**: 4 days
+**Target**: 4-5 days
 
 | Task | Estimated | Actual | Notes |
 |------|-----------|--------|-------|
-| Dual-Panel Layout | 6 hours | - | Sensor display + dashboard |
-| Chart.js Integration | 8 hours | - | 60fps real-time visualization |
-| Stage Controls | 4 hours | - | Toggle switches and parameters |
-| Clinical Context | 2 hours | - | Educational panels |
-| **Phase C Total** | **20 hours** | **-** | **Pending** |
+| Kinematic Ground Truth | 4 hours | - | Real gait events from motion capture |
+| Basic Fusion Algorithm | 4 hours | - | Rule-based EMG + Force |
+| AI Fusion Algorithm | 6 hours | - | Multi-modal pattern recognition |
+| Accuracy Dashboard | 4 hours | - | Side-by-side comparison visualization |
+| Production Polish | 2 hours | - | Final deployment and testing |
+| **Phase B2 Total** | **20 hours** | **-** | **Pending B1 Success** |
 
-### ⏸️ **Phase D: Integration & Polish (Days 11-13) - PENDING**
-**Status**: ❌ NOT STARTED  
-**Target**: 3 days
-
-| Task | Estimated | Actual | Notes |
-|------|-----------|--------|-------|
-| Astro Component Integration | 4 hours | - | Solutions page embedding |
-| Performance Optimization | 6 hours | - | Loading times, 60fps |
-| Mobile Responsiveness | 6 hours | - | Touch controls, responsive design |
-| Testing & Refinement | 4 hours | - | Cross-browser testing |
-| **Phase D Total** | **20 hours** | **-** | **Pending** |
+### 📋 **Original Phase C & D: Redistributed into B1/B2**
+**Note**: The original Phase C (Interactive UI) and Phase D (Integration & Polish) have been redistributed into the new Phase B1 and B2 structure for better risk management and faster validation.
 
 ## Session Log
 
@@ -174,10 +167,9 @@ Use this when completing a phase:
 
 ### 📈 **Projections**
 Based on Phase A performance:
-- **Phase B Estimated**: 20 hours → **Projected**: ~4-6 hours (algorithm complexity)
-- **Phase C Estimated**: 20 hours → **Projected**: ~6-8 hours (UI complexity)
-- **Phase D Estimated**: 20 hours → **Projected**: ~4-6 hours
-- **Total Project**: 80 hours → **Projected**: ~17-23 hours
+- **Phase B1 Estimated**: 20 hours → **Projected**: ~6-8 hours (visualization complexity)
+- **Phase B2 Estimated**: 20 hours → **Projected**: ~4-6 hours (algorithm focus)
+- **Total Project**: 80 hours → **Projected**: ~13-18 hours (revised structure)
 
 ### 🎯 **Efficiency Factors**
 **Phase A Success Factors**:
@@ -187,11 +179,11 @@ Based on Phase A performance:
 - Existing TypeScript/Astro knowledge
 - Systematic trial selection process
 
-**Potential Phase B-D Challenges**:
-- Algorithm tuning may take longer than estimated
-- Chart.js performance optimization complexity
-- Mobile responsiveness testing time
-- Cross-browser compatibility issues
+**Potential Phase B1-B2 Challenges**:
+- Chart.js 60fps performance optimization complexity
+- Astro component island integration difficulties  
+- Real-time data streaming performance
+- Algorithm tuning and ground truth establishment
 
 ## Usage Instructions
 
@@ -213,13 +205,12 @@ Every Friday:
 ### 🎯 **Milestone Tracking**
 Major milestones to track:
 - ✅ Phase A completion (June 17, 2025)
-- ⏳ Phase B completion (Target: June 19, 2025)
-- ⏳ Phase C completion (Target: June 22, 2025)
-- ⏳ Phase D completion (Target: June 24, 2025)
-- ⏳ Demo launch (Target: June 25, 2025)
+- ⏳ Phase B1 completion (Target: June 20, 2025) - Traditional demo on test branch
+- ⏳ Phase B2 completion (Target: June 24, 2025) - Multi-algorithm comparison
+- ⏳ Production launch (Target: June 25, 2025) - Complete demo on main branch
 
 ---
 
-**Next Session**: Phase B Algorithm Implementation  
-**Estimated Duration**: 4-6 hours  
-**Priority Tasks**: Traditional detection + basic fusion algorithms
+**Next Session**: Phase B1 Traditional Detection + Visualization  
+**Estimated Duration**: 6-8 hours  
+**Priority Tasks**: Traditional force detection algorithm + Chart.js visualization

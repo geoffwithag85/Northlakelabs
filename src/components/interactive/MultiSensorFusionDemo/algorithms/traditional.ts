@@ -1,8 +1,7 @@
 /**
  * Stage 1: Traditional Force Plate Detection
  * Single-sensor approach using vertical ground reaction force thresholding
- * Designed to demonstrate limitations with constrained gait patterns
- * Target accuracy: ~60% (deliberately shows failure modes)
+ * Focused on pure detection without ground truth comparison
  */
 
 import type { DemoData } from '../../../utils/types';
@@ -10,8 +9,6 @@ import {
   DetectedEvent, 
   AlgorithmConfig, 
   movingAverage, 
-  findPeaks, 
-  findValleys, 
   calculateConfidence,
   validateEvents,
   sortAndCleanEvents
@@ -195,56 +192,32 @@ export class TraditionalDetection {
   }
 
   /**
-   * Generate algorithm failure analysis for constrained gait
-   * This method helps explain why traditional detection fails
+   * Get simple detection statistics for display
    */
-  public analyzeFailures(data: DemoData, detectedEvents: DetectedEvent[]): {
-    asymmetry_detected: boolean;
-    missed_events_left: number;
-    missed_events_right: number;
-    failure_reasons: string[];
+  public getDetectionStats(detectedEvents: DetectedEvent[]): {
+    total_events: number;
+    heel_strikes_left: number;
+    heel_strikes_right: number;
+    toe_offs_left: number;
+    toe_offs_right: number;
+    average_confidence: number;
   } {
-    const leftForce = data.force_plates.left_force_plate.fz;
-    const rightForce = data.force_plates.right_force_plate.fz;
+    const heelStrikesLeft = detectedEvents.filter(e => e.type === 'heel_strike' && e.leg === 'left').length;
+    const heelStrikesRight = detectedEvents.filter(e => e.type === 'heel_strike' && e.leg === 'right').length;
+    const toeOffsLeft = detectedEvents.filter(e => e.type === 'toe_off' && e.leg === 'left').length;
+    const toeOffsRight = detectedEvents.filter(e => e.type === 'toe_off' && e.leg === 'right').length;
     
-    // Calculate force asymmetry (indicator of constraint)
-    const leftMax = Math.max(...leftForce.map(f => Math.abs(f)));
-    const rightMax = Math.max(...rightForce.map(f => Math.abs(f)));
-    const asymmetryRatio = leftMax / rightMax;
-    
-    // Count expected vs detected events by leg
-    const leftDetected = detectedEvents.filter(e => e.leg === 'left').length;
-    const rightDetected = detectedEvents.filter(e => e.leg === 'right').length;
-    const groundTruthLeft = data.ground_truth_events.filter(e => e.leg === 'left').length;
-    const groundTruthRight = data.ground_truth_events.filter(e => e.leg === 'right').length;
-    
-    const failure_reasons: string[] = [];
-    
-    // Analyze failure patterns
-    if (asymmetryRatio < 0.5) {
-      failure_reasons.push('Severe force asymmetry detected - left leg shows reduced loading');
-    }
-    
-    if (leftDetected < groundTruthLeft * 0.7) {
-      failure_reasons.push('Missed heel strikes on constrained left leg due to reduced force');
-    }
-    
-    if (rightDetected > groundTruthRight * 1.3) {
-      failure_reasons.push('False positives on right leg due to compensatory loading');
-    }
-    
-    const lowForceCount = leftForce.filter(f => f < this.config.parameters.heel_strike_threshold).length;
-    const lowForcePercentage = lowForceCount / leftForce.length;
-    
-    if (lowForcePercentage > 0.8) {
-      failure_reasons.push('Left leg force consistently below threshold due to constraint');
-    }
+    const averageConfidence = detectedEvents.length > 0 
+      ? detectedEvents.reduce((sum, event) => sum + event.confidence, 0) / detectedEvents.length 
+      : 0;
     
     return {
-      asymmetry_detected: asymmetryRatio < 0.7,
-      missed_events_left: Math.max(0, groundTruthLeft - leftDetected),
-      missed_events_right: Math.max(0, groundTruthRight - rightDetected),
-      failure_reasons
+      total_events: detectedEvents.length,
+      heel_strikes_left: heelStrikesLeft,
+      heel_strikes_right: heelStrikesRight,
+      toe_offs_left: toeOffsLeft,
+      toe_offs_right: toeOffsRight,
+      average_confidence: averageConfidence
     };
   }
 }
