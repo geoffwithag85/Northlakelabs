@@ -71,7 +71,38 @@
 
 ## Session Log
 
-### June 18, 2025 - Demo Loading Bug Fix Session  
+### June 18, 2025 - Force Plate Sign Convention Fix Session  
+**Duration**: ~1.5 hours  
+**Focus**: Fix force plate data sign convention bug and complete Phase B1
+
+**Activities**:
+- ✅ Identify force plate sign convention bug - right plate showing shifted baseline (20 min)
+- ✅ Root cause analysis - incorrect baseline correction vs simple sign flip needed (15 min)  
+- ✅ Modify correctForceSignConvention() to remove baseline shifting, only flip signs (20 min)
+- ✅ Fix React hooks "invalid hook call" error with client:only directive (15 min)
+- ✅ Add cache busting to JSON data loading to resolve browser cache issues (10 min)
+- ✅ Force reprocess demo data with npm run process-data-force (10 min)
+- ✅ Verify corrected data shows positive forces for loading, zero for constraint (10 min)
+
+**Outcomes**:
+- ✅ **Phase B1 COMPLETED**: Force convention fixed, demo fully functional with positive = loading
+- ✅ **Sign Convention Corrected**: Right plate shows 800-1000N positive when loaded, left shows ~0N (constraint)
+- ✅ **Cache Issues Resolved**: Browser loading fresh data with corrected force values
+- ✅ **React Integration Fixed**: Component hydration working correctly with client:only directive
+- ✅ **Demo Validation**: Live demo at localhost:4321/solutions showing correct constraint pattern
+
+**Technical Solutions**:
+- Changed baseline correction to simple sign flip: `forces[i] = -forces[i]`
+- Added cache busting: `fetch(\`/demo-data/\${trialId}-demo.json?v=\${Date.now()}\`)`
+- Updated Astro directive: `client:load` → `client:only="react"`
+- Regenerated T5-demo.json with correct positive force convention
+
+**Phase B1 Status**: ✅ **COMPLETED & DEPLOYED**
+- Traditional detection working with positive force thresholds
+- Real-time Chart.js visualization showing intuitive positive = loading
+- Perfect constraint demonstration: left ~0N, right 800-1000N during stance
+
+### June 18, 2025 - Demo Loading Bug Fix Session (Previous)
 **Duration**: ~1.5 hours  
 **Focus**: Resolve "No Data Available" issue and get interactive demo working
 
@@ -265,18 +296,18 @@ Use this when completing a phase:
 
 ### ⚡ **Velocity Metrics**
 - **Phase A Velocity**: 8.5 hours / 20 estimated = **~42% of estimate** (58% faster)
-- **Phase B1 Velocity**: 6.5 hours / 18 estimated = **~36% of estimate** (64% faster)
-- **Combined Velocity**: 15 hours / 38 estimated = **~39% of estimate** (61% faster)
-- **Average Task Duration**: ~1.3 hours per major task (down from 2.6h)
-- **Documentation Overhead**: ~15% of development time (down from 25%)
-- **Debugging Time**: ~25% of development time (up due to integration issues)
+- **Phase B1 Velocity**: 8.0 hours / 18 estimated = **~44% of estimate** (56% faster) - COMPLETED
+- **Combined Velocity**: 16.5 hours / 38 estimated = **~43% of estimate** (57% faster)
+- **Average Task Duration**: ~1.2 hours per major task (down from 2.6h)
+- **Documentation Overhead**: ~12% of development time (down from 25%)
+- **Debugging Time**: ~30% of development time (up due to data format and integration issues)
 
 ### 📈 **Updated Projections**
-Based on Phase A + B1 performance:
-- **Phase B1 Completion**: 2-3 hours remaining (algorithm integration)
-- **Phase B2 Estimated**: 23 hours → **Projected**: ~8-10 hours (multi-algorithm focus)
-- **Total Project**: 80 hours → **Projected**: ~25-30 hours (adjusted for integration complexity)
-- **Efficiency Improvement**: Consistent 60-65% faster than estimates with debugging overhead
+Based on Phase A + B1 completion:
+- **Phase B1**: ✅ COMPLETED - 8.0 hours actual vs 18 estimated (56% faster)
+- **Phase B2 Estimated**: 23 hours → **Projected**: ~10-12 hours (multi-algorithm complexity)
+- **Total Project**: 80 hours → **Projected**: ~28-32 hours (based on actual B1 completion)
+- **Efficiency Improvement**: Consistent 55-60% faster than estimates, but debugging overhead increasing
 
 ### 🎯 **Efficiency Factors**
 **Phase A Success Factors**:

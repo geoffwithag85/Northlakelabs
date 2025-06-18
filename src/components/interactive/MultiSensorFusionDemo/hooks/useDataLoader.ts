@@ -36,8 +36,8 @@ export function useDataLoader(trialId: string = 'T5') {
       // Update progress
       setState(prev => ({ ...prev, loadingProgress: 25 }));
 
-      // Load demo data from public directory
-      const response = await fetch(`/demo-data/${trialId}-demo.json`);
+      // Load demo data from public directory (with cache busting)
+      const response = await fetch(`/demo-data/${trialId}-demo.json?v=${Date.now()}`);
       if (!response.ok) {
         throw new Error(`Failed to load trial ${trialId}: ${response.statusText}`);
       }

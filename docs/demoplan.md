@@ -360,7 +360,7 @@ const events = await loadGroundTruth(trialId);
 3. ✅ **Data Synchronization** - 1000Hz unified timeline successfully implemented
 4. ✅ **JSON Export Generation** - T5-demo.json generated with size optimization
 
-### Phase B1: Traditional Detection + Visualization (Days 4-8) - ✅ COMPLETED & DEBUGGED
+### Phase B1: Traditional Detection + Visualization (Days 4-8) - ✅ COMPLETED & DEPLOYED
 1. ✅ **Traditional Force Plate Detection** - Threshold-based detection implemented with confidence scoring
 2. ✅ **Real-Time Visualization** - Chart.js integration with 60fps performance and event markers
 3. ✅ **Interactive UI Components** - Play/pause/scrub controls with multi-speed playback (0.5x-4x)
@@ -368,6 +368,8 @@ const events = await loadGroundTruth(trialId);
 5. ✅ **Test Branch Deployment** - Demo accessible and functional on test branch
 6. ✅ **Smart Caching Bonus** - 10-20x faster development with intelligent data processing
 7. ✅ **SSR Bug Fix** - Resolved "No Data Available" issue with proper client hydration loading states
+8. ✅ **Force Sign Convention Fix** - Corrected force plate data (positive = loading) for intuitive visualization
+9. ✅ **Cache Busting Integration** - Resolved browser caching issues with timestamp parameters
 
 ### Phase B2: Multi-Algorithm Comparison (Days 9-13) - 🎯 NEXT PHASE
 1. 🎯 **Kinematic Ground Truth** - Establish real gait events from motion capture data

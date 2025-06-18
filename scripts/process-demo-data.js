@@ -353,8 +353,8 @@ class DemoDataProcessor {
     // Apply basic filtering and normalization
     const processedData = JSON.parse(JSON.stringify(segmentData)); // Deep copy
     
-    // Force plate preprocessing: baseline correction
-    this.baselineCorrectForces(processedData);
+    // Force plate preprocessing: correct sign convention (positive = loading)
+    this.correctForceSignConvention(processedData);
     
     // EMG preprocessing: envelope detection
     this.processEMGSignals(processedData);
@@ -363,14 +363,14 @@ class DemoDataProcessor {
     return processedData;
   }
   
-  baselineCorrectForces(data) {
+  correctForceSignConvention(data) {
+    // Flip sign convention: multiply by -1 so positive = loading
     ['left_force_plate', 'right_force_plate'].forEach(plate => {
       ['fx', 'fy', 'fz'].forEach(component => {
         const forces = data.force_plates[plate][component];
-        const baseline = forces.slice(0, 100).reduce((sum, f) => sum + f, 0) / 100;
         
         for (let i = 0; i < forces.length; i++) {
-          forces[i] -= baseline;
+          forces[i] = -forces[i]; // Flip sign: positive = loading
         }
       });
     });
