@@ -114,12 +114,34 @@ export default function MultiSensorFusionDemo({
     );
   }
 
-  // No data state
-  if (!forceData) {
+  // No data state (only show after loading attempt)
+  if (!forceData && !isLoading) {
     return (
       <div className={`bg-white/5 rounded-xl border border-white/10 p-8 ${className}`}>
         <div className="text-center text-gray-400">
           No data available
+        </div>
+      </div>
+    );
+  }
+  
+  // Initial state - show loading even before useDataLoader starts
+  if (!forceData) {
+    return (
+      <div className={`bg-white/5 rounded-xl border border-white/10 p-8 ${className}`}>
+        <div className="text-center space-y-4">
+          <div className="text-xl font-semibold text-white">
+            Loading Constrained Gait Data...
+          </div>
+          <div className="w-full bg-gray-700 rounded-full h-2">
+            <div 
+              className="bg-burnt-sienna h-2 rounded-full transition-all duration-300"
+              style={{ width: `${loadingProgress}%` }}
+            />
+          </div>
+          <div className="text-sm text-gray-400">
+            {loadingProgress}% complete
+          </div>
         </div>
       </div>
     );

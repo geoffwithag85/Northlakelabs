@@ -53,7 +53,7 @@ export function useDataLoader(trialId: string = 'T5') {
         timestamps: demoData.timestamps,
         leftForce: demoData.force_plates.left_force_plate.fz,
         rightForce: demoData.force_plates.right_force_plate.fz,
-        duration: demoData.metadata.duration_seconds,
+        duration: demoData.metadata.total_samples / demoData.metadata.sampling_rate, // Use actual segment duration
         sampleRate: demoData.metadata.sampling_rate
       };
 
