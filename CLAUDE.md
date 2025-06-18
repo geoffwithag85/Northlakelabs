@@ -12,34 +12,60 @@ Northlake Labs LLC company website - an Astro-based static site showcasing AI-po
 
 ## Development Commands
 
+### Fast Development (Recommended)
 ```bash
-# Fast development (recommended - uses cached data)
+# Fast development - instant startup using cached data
 npm run dev-fast
 
-# Full development (processes data + starts server)
+# Fast build - instant build using cached data  
+npm run build-fast
+```
+
+### Full Development (When Data Changes)
+```bash
+# Full development - processes data + starts server
 npm run dev
 
-# Fast build (uses cached data)
-npm run build-fast
-
-# Full build (processes data + builds)
+# Full build - processes data + builds
 npm run build
 
 # Preview production build
 npm run preview
+```
+
+### Data Processing Commands
+```bash
+# Smart caching - only processes if CSV sources changed
+npm run process-data
+
+# Force reprocess demo data (bypass cache completely)
+npm run process-data-force
+
+# Trial quality analysis across T1-T30
+npm run analyze-trials
 
 # Astro CLI (for adding integrations, etc.)
 npm run astro
-
-# Demo data processing (smart caching)
-npm run process-data
-
-# Force reprocess demo data (bypass cache)
-npm run process-data-force
-
-# Trial quality analysis
-npm run analyze-trials
 ```
+
+### Smart Caching System
+The data processing pipeline includes intelligent caching for 10-20x faster development:
+
+**How It Works:**
+- **Cache Check**: Compares timestamps of source CSV files vs generated JSON files
+- **Smart Skip**: If JSON files are newer than CSV sources, skips processing entirely  
+- **Auto-Process**: Only processes when source data has actually changed
+- **Force Override**: Use `--force` flag to bypass cache when needed
+
+**Performance:**
+- **First run**: ~2-3 minutes (processes ~300MB of CSV data)
+- **Subsequent runs**: ~500ms (cache hit)
+- **Development startup**: 500ms vs 3 minutes
+
+**Cache Validation:**
+- ✅ Do T5-demo.json and T5-metadata.json exist?
+- ✅ Are output files newer than all source CSV files?
+- ✅ Are all source CSV files present?
 
 ## Architecture Overview
 
