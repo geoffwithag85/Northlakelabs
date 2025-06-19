@@ -4,6 +4,8 @@
  */
 
 import type { DetectedEvent } from './utils';
+import type { DemoData } from '../../../../utils/types';
+import { ForceAnalyzer, type ForceMetrics } from './forceAnalysis';
 
 export interface GaitCycle {
   leg: 'left' | 'right';
@@ -45,13 +47,16 @@ export interface GaitMetrics {
   totalStrides: { left: number; right: number };
   totalSteps: number;
   walkingSpeed?: number; // if distance is known
+  
+  // Force analysis metrics
+  forceMetrics?: ForceMetrics;
 }
 
 export class GaitAnalyzer {
   /**
    * Analyzes gait events to extract clinical metrics
    */
-  static analyzeGait(events: DetectedEvent[], duration: number): GaitMetrics {
+  static analyzeGait(events: DetectedEvent[], duration: number, demoData?: DemoData): GaitMetrics {
     // Sort events by time
     const sortedEvents = [...events].sort((a, b) => a.time - b.time);
     
@@ -131,6 +136,17 @@ export class GaitAnalyzer {
       right: this.mean(rightSwingTimes)
     };
     
+    // Calculate force metrics if demo data is available
+    let forceMetrics: ForceMetrics | undefined;
+    if (demoData) {
+      try {
+        forceMetrics = ForceAnalyzer.analyzeForces(demoData, events);
+      } catch (error) {
+        console.warn('Failed to calculate force metrics:', error);
+        forceMetrics = undefined;
+      }
+    }
+    
     return {
       avgStanceTime,
       avgSwingTime,
@@ -150,7 +166,8 @@ export class GaitAnalyzer {
         left: leftStrideTimes.length,
         right: rightStrideTimes.length
       },
-      totalSteps
+      totalSteps,
+      forceMetrics
     };
   }
   

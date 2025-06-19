@@ -29,7 +29,7 @@ export default function MultiSensorFusionDemo({
   className = '' 
 }: MultiSensorFusionDemoProps) {
   // Load data
-  const { data: forceData, isLoading, error, loadingProgress } = useDataLoader(trialId);
+  const { data: forceData, fullData: fullDemoData, isLoading, error, loadingProgress } = useDataLoader(trialId);
   
   // Traditional detection hook
   const {
@@ -189,6 +189,18 @@ export default function MultiSensorFusionDemo({
                 Real constrained gait data (left leg locked in extension) representing conditions like knee contracture 
                 or post-surgical bracing where traditional single-sensor methods show limitations.
               </p>
+              <div className="text-xs text-gray-500 mt-3 pt-2 border-t border-gray-700/50">
+                <strong>Data Source:</strong> Bacek, Tomislav (2024). Biomechanics and energetics of neurotypical (un)constrained walking [Bacek2023] - CSV format (raw). 
+                The University of Melbourne. Dataset. 
+                <a 
+                  href="https://doi.org/10.26188/24296032.v1" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-burnt-sienna hover:text-burnt-sienna/80 underline ml-1"
+                >
+                  https://doi.org/10.26188/24296032.v1
+                </a>
+              </div>
             </div>
             
             <div className="space-y-2">
@@ -228,38 +240,6 @@ export default function MultiSensorFusionDemo({
             </div>
           </div>
           
-          {/* Technical Note */}
-          <div className="mt-6 p-4 bg-gradient-to-r from-burnt-sienna/10 to-royal-purple/10 rounded-lg border border-burnt-sienna/20">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-burnt-sienna/20 rounded-lg">
-                <svg className="w-5 h-5 text-burnt-sienna" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <div>
-                <h4 className="font-semibold text-white">Interactive Biomechanics Demo</h4>
-                <p className="text-sm text-gray-300 mb-3">
-                  This demonstration showcases sensor fusion techniques for gait analysis. 
-                  Adjust thresholds to see real-time detection and explore comprehensive gait metrics below.
-                </p>
-                <div className="text-xs text-gray-400 p-3 bg-black/20 rounded border-l-2 border-burnt-sienna/40">
-                  <div className="font-medium text-gray-300 mb-1">Data Source:</div>
-                  <div className="leading-relaxed">
-                    Bacek, Tomislav (2024). Biomechanics and energetics of neurotypical (un)constrained walking [Bacek2023] - CSV format (raw). 
-                    The University of Melbourne. Dataset. 
-                    <a 
-                      href="https://doi.org/10.26188/24296032.v1" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-burnt-sienna hover:text-burnt-sienna/80 underline ml-1"
-                    >
-                      https://doi.org/10.26188/24296032.v1
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -320,6 +300,7 @@ export default function MultiSensorFusionDemo({
           <GaitAnalysisPanel 
             events={detectedEvents}
             duration={forceData.duration}
+            demoData={fullDemoData}
           />
         </GaitAnalysisCollapsiblePanel>
       )}

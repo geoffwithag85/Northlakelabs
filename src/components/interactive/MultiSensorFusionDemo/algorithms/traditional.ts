@@ -100,7 +100,6 @@ export class TraditionalDetection {
     // State tracking for stance/swing phases
     let inStance = false;
     let stanceStartTime = 0;
-    let stanceStartIdx = 0;
     
     for (let i = 1; i < smoothedForce.length; i++) {
       const currentForce = smoothedForce[i];
@@ -125,15 +124,14 @@ export class TraditionalDetection {
           leg,
           threshold_deviation: thresholdDeviation,
           detection_method: 'traditional_threshold',
+          force_magnitude: currentForce,
           algorithm_parameters: {
-            force_value: currentForce,
             threshold: parameters.heel_strike_threshold
           }
         });
         
         inStance = true;
         stanceStartTime = currentTime;
-        stanceStartIdx = i;
       }
       
       // Toe off detection: force drops below threshold
@@ -157,8 +155,8 @@ export class TraditionalDetection {
             leg,
             threshold_deviation: thresholdDeviation,
             detection_method: 'traditional_threshold',
+            force_magnitude: currentForce,
             algorithm_parameters: {
-              force_value: currentForce,
               threshold: parameters.toe_off_threshold,
               stance_duration: stanceDuration
             }
@@ -194,7 +192,7 @@ export class TraditionalDetection {
   }
 
   /**
-   * Get simple detection statistics for display
+   * Get detection statistics with force magnitude analysis for biomechanical insights
    */
   public getDetectionStats(detectedEvents: DetectedEvent[]): {
     total_events: number;
@@ -203,23 +201,70 @@ export class TraditionalDetection {
     toe_offs_left: number;
     toe_offs_right: number;
     average_threshold_deviation: number;
+    force_magnitude_stats?: {
+      heel_strike_forces: { left: { min: number; max: number; avg: number }; right: { min: number; max: number; avg: number } };
+      toe_off_forces: { left: { min: number; max: number; avg: number }; right: { min: number; max: number; avg: number } };
+      force_asymmetry: number; // Percentage difference in average heel strike forces
+    };
   } {
-    const heelStrikesLeft = detectedEvents.filter(e => e.type === 'heel_strike' && e.leg === 'left').length;
-    const heelStrikesRight = detectedEvents.filter(e => e.type === 'heel_strike' && e.leg === 'right').length;
-    const toeOffsLeft = detectedEvents.filter(e => e.type === 'toe_off' && e.leg === 'left').length;
-    const toeOffsRight = detectedEvents.filter(e => e.type === 'toe_off' && e.leg === 'right').length;
+    const heelStrikesLeft = detectedEvents.filter(e => e.type === 'heel_strike' && e.leg === 'left');
+    const heelStrikesRight = detectedEvents.filter(e => e.type === 'heel_strike' && e.leg === 'right');
+    const toeOffsLeft = detectedEvents.filter(e => e.type === 'toe_off' && e.leg === 'left');
+    const toeOffsRight = detectedEvents.filter(e => e.type === 'toe_off' && e.leg === 'right');
     
     const averageThresholdDeviation = detectedEvents.length > 0 
       ? detectedEvents.reduce((sum, event) => sum + event.threshold_deviation, 0) / detectedEvents.length 
       : 0;
     
+    // Calculate force magnitude statistics if available
+    let forceMagnitudeStats = undefined;
+    const eventsWithForce = detectedEvents.filter(e => e.force_magnitude !== undefined);
+    
+    if (eventsWithForce.length > 0) {
+      const getForceStats = (events: DetectedEvent[]) => {
+        const forces = events.map(e => e.force_magnitude!).filter(f => f !== undefined);
+        if (forces.length === 0) return { min: 0, max: 0, avg: 0 };
+        return {
+          min: Math.min(...forces),
+          max: Math.max(...forces),
+          avg: forces.reduce((sum, f) => sum + f, 0) / forces.length
+        };
+      };
+      
+      const leftHeelForces = heelStrikesLeft.filter(e => e.force_magnitude !== undefined);
+      const rightHeelForces = heelStrikesRight.filter(e => e.force_magnitude !== undefined);
+      const leftToeForces = toeOffsLeft.filter(e => e.force_magnitude !== undefined);
+      const rightToeForces = toeOffsRight.filter(e => e.force_magnitude !== undefined);
+      
+      const leftHeelStats = getForceStats(leftHeelForces);
+      const rightHeelStats = getForceStats(rightHeelForces);
+      
+      // Calculate force asymmetry (biomechanical insight)
+      const forceAsymmetry = leftHeelStats.avg > 0 && rightHeelStats.avg > 0 
+        ? Math.abs(leftHeelStats.avg - rightHeelStats.avg) / ((leftHeelStats.avg + rightHeelStats.avg) / 2) * 100
+        : 0;
+      
+      forceMagnitudeStats = {
+        heel_strike_forces: {
+          left: leftHeelStats,
+          right: rightHeelStats
+        },
+        toe_off_forces: {
+          left: getForceStats(leftToeForces),
+          right: getForceStats(rightToeForces)
+        },
+        force_asymmetry: forceAsymmetry
+      };
+    }
+    
     return {
       total_events: detectedEvents.length,
-      heel_strikes_left: heelStrikesLeft,
-      heel_strikes_right: heelStrikesRight,
-      toe_offs_left: toeOffsLeft,
-      toe_offs_right: toeOffsRight,
-      average_threshold_deviation: averageThresholdDeviation
+      heel_strikes_left: heelStrikesLeft.length,
+      heel_strikes_right: heelStrikesRight.length,
+      toe_offs_left: toeOffsLeft.length,
+      toe_offs_right: toeOffsRight.length,
+      average_threshold_deviation: averageThresholdDeviation,
+      force_magnitude_stats: forceMagnitudeStats
     };
   }
 }

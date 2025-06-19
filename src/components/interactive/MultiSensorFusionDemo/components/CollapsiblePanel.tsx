@@ -88,7 +88,7 @@ export function CollapsiblePanel({
       {/* Content */}
       <div 
         className={`transition-all duration-300 ease-in-out overflow-hidden ${
-          isOpen ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+          isOpen ? 'max-h-[5000px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
         <div className="p-4 pt-0">

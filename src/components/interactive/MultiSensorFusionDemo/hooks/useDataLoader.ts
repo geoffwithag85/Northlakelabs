@@ -16,6 +16,7 @@ export interface ForceData {
 
 interface DataLoaderState {
   data: ForceData | null;
+  fullData: DemoData | null;
   isLoading: boolean;
   error: string | null;
   loadingProgress: number;
@@ -24,6 +25,7 @@ interface DataLoaderState {
 export function useDataLoader(trialId: string = 'T5') {
   const [state, setState] = useState<DataLoaderState>({
     data: null,
+    fullData: null,
     isLoading: false,
     error: null,
     loadingProgress: 0
@@ -65,7 +67,8 @@ export function useDataLoader(trialId: string = 'T5') {
 
       setState(prev => ({ 
         ...prev, 
-        data: forceData, 
+        data: forceData,
+        fullData: demoData,
         isLoading: false, 
         loadingProgress: 100 
       }));

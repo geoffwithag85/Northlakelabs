@@ -18,6 +18,7 @@ export interface DetectedEvent {
   threshold_deviation: number;
   detection_method: string;
   algorithm_parameters?: Record<string, any>;
+  force_magnitude?: number; // Force value at detection point (N)
 }
 
 /**
