@@ -14,6 +14,7 @@ src/components/interactive/MultiSensorFusionDemo/
 ├── algorithms/
 │   ├── traditional.ts               # Stage 1: Force plate threshold detection
 │   ├── gaitAnalysis.ts             # Comprehensive gait metrics calculation
+│   ├── forceAnalysis.ts            # Force metrics and biomechanical calculations (✅ completed)
 │   ├── basicFusion.ts              # Stage 2: EMG + Force rule-based fusion (pending)
 │   ├── aiFusion.ts                 # Stage 3: Multi-modal AI pattern recognition (pending)
 │   └── utils.ts                    # Shared algorithm utilities
@@ -122,13 +123,15 @@ public/demo-data/
 ## 3. Algorithm Specifications
 
 ### 3.1 Traditional Force Plate Detection (Stage 1)
-**Current Status**: ✅ COMPLETED & DEPLOYED
+**Current Status**: ✅ COMPLETED & ENHANCED (Phase B1c)
 - **Algorithm**: Threshold-based heel strike/toe off detection with debounced real-time updates
 - **Performance**: 81 events detected (41L+40R) across full 20s timeline
 - **Thresholds**: Interactive sliders (heel strike 20-1000N, toe off 5-1000N) with real-time chart updates
-- **Confidence Scoring**: Based on force magnitude relative to threshold
+- **Force Magnitude Capture**: Enhanced with actual force values at detection points for biomechanical analysis
+- **Threshold Deviation Scoring**: Based on force magnitude relative to threshold (terminology updated from "confidence")
 - **Expected Accuracy**: ~60% with constrained gait patterns
-- **Gait Analysis**: Comprehensive temporal, frequency, and asymmetry metrics
+- **Gait Analysis**: Comprehensive temporal, frequency, asymmetry, and force magnitude metrics
+- **Force Analysis**: Peak forces, impulse, loading rates, weight distribution, and biomechanical asymmetry calculations
 
 ```typescript
 interface TraditionalDetectionOptions {
@@ -285,11 +288,14 @@ public/demo-data/
 
 ## 7. Current Development Status
 
-### 7.1 Phase B1 - ✅ COMPLETED & DEPLOYED
+### 7.1 Phase B1 - ✅ COMPLETED & DEPLOYED (Including B1a/B1b/B1c Extensions)
 **Live Demo**: Available on solutions page with interactive Chart.js visualization
 - ✅ Traditional algorithm detects 81 events (41L+40R) across full 20s timeline
 - ✅ Interactive threshold controls with real-time sliders
 - ✅ Live statistics display with event counts, asymmetry analysis, threshold deviation metrics
+- ✅ Enhanced force analysis: Force magnitude capture, biomechanical asymmetry calculations, force range analysis
+- ✅ Mobile-responsive design with collapsible panels and optimized layout
+- ✅ Comprehensive gait analysis panel with force metrics integration
 - ✅ Playback controls with multi-speed playback and controlled slider state
 - ✅ Astro component integration on solutions page working
 - ✅ TypeScript integration with all components properly typed
@@ -335,12 +341,14 @@ interface DemoData {
   groundTruthEvents: GaitEvent[];
 }
 
-interface DetectionResult {
+interface DetectedEvent {
   time: number;
   type: 'heel_strike' | 'toe_off';
   leg: 'left' | 'right';
   threshold_deviation: number;
-  algorithm: 'traditional' | 'basic_fusion' | 'ai_fusion';
+  detection_method: string;
+  force_magnitude?: number; // Enhanced in Phase B1c
+  algorithm_parameters?: Record<string, any>;
 }
 ```
 

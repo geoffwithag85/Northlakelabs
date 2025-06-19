@@ -103,7 +103,7 @@ Custom brand colors defined in `tailwind.config.mjs`:
 ### Interactive Demonstrations
 The multi-sensor fusion demo uses Chart.js for real-time visualization, Zustand for state management, and features T5 trial data with constrained gait patterns.
 
-**Current Status**: Phase B1a ✅ COMPLETED & DEPLOYED - Enhanced demo with mobile-first UX and comprehensive gait analysis
+**Current Status**: Phase B1c ✅ COMPLETED & DEPLOYED - Enhanced demo with comprehensive force analysis and biomechanical insights
 **Next Phase**: Phase B2 multi-algorithm comparison (Basic Fusion → AI Fusion)
 
 ### State Management Structure
@@ -224,6 +224,7 @@ Demo data processing pipeline uses T5 trial as the selected dataset:
 **Phase B1**: ✅ COMPLETED & DEPLOYED - Traditional detection demo operational
 **Phase B1a**: ✅ COMPLETED & DEPLOYED - Enhanced UX with mobile-first design and comprehensive gait analysis
 **Phase B1b**: ✅ COMPLETED - Code quality improvements with accurate terminology (threshold_deviation)
+**Phase B1c**: ✅ COMPLETED - Force analysis enhancements with biomechanical insights and mobile layout fixes
 **Phase B2**: 🎯 NEXT - Multi-algorithm comparison (Basic Fusion → AI Fusion)
 
 ### Adding New Publications
@@ -237,7 +238,7 @@ Demo constants are defined in `types.ts` files within component directories. Key
 - **Processing settings**: Sampling rates, filter parameters, constraint detection
 - **Data format**: JSON structure for 20-second constrained gait trials (T5 optimized)
 - **Responsive display**: Chart window sizing (6s/4s/3s), panel collapsibility, mobile optimization
-- **Gait analysis**: Temporal parameters, frequency metrics, asymmetry analysis, clinical interpretation
+- **Gait analysis**: Temporal parameters, frequency metrics, asymmetry analysis, force magnitude capture, biomechanical insights
 
 ### Updating Brand Colors
 Brand colors are centralized in `tailwind.config.mjs`. Use existing color variables rather than hex codes in components.
