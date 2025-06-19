@@ -50,3 +50,15 @@ data/
 # Temporary files
 *.tmp
 *.temp
+
+# Python virtual environment
+venv/
+*.pyc
+__pycache__/
+.python-version
+
+# Jupyter notebooks
+.ipynb_checkpoints/
+
+# Python package info
+*.egg-info/
