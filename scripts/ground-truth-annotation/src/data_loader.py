@@ -28,14 +28,30 @@ class GaitDataLoader:
         """
         filepath = self.data_dir / "kinetics" / f"Sub1_Kinetics_{trial_id}.csv"
         
-        # Read CSV, skipping header rows
-        df = pd.read_csv(filepath, skiprows=4)
+        # Read CSV with proper header handling
+        # Line 3 has column names, line 4 has units, data starts at line 5
+        df = pd.read_csv(filepath, skiprows=4, header=0)
         
-        # Clean column names - remove units row artifacts
-        df.columns = df.columns.str.strip()
+        # Create unique column names for dual force plates
+        # Left plate: Frame, Sub Frame, Fx_L, Fy_L, Fz_L, Mx_L, My_L, Mz_L, Cx_L, Cy_L, Cz_L
+        # Right plate: Fx_R, Fy_R, Fz_R, Mx_R, My_R, Mz_R, Cx_R, Cy_R, Cz_R
+        unique_names = ['Frame', 'Sub Frame']
+        force_components = ['Fx', 'Fy', 'Fz', 'Mx', 'My', 'Mz', 'Cx', 'Cy', 'Cz']
         
-        # Convert Frame to time in seconds (1000 Hz sampling)
-        df['time'] = df['Frame'] / 1000.0
+        # Left force plate columns
+        for comp in force_components:
+            unique_names.append(f'{comp}_L')
+        
+        # Right force plate columns  
+        for comp in force_components:
+            unique_names.append(f'{comp}_R')
+        
+        # Set proper column names
+        df.columns = unique_names[:len(df.columns)]
+        
+        # Convert to time in seconds (1000 Hz sampling)
+        # Use sample index instead of Frame column
+        df['time'] = df.index / 1000.0
         
         return df
     
@@ -51,14 +67,22 @@ class GaitDataLoader:
         """
         filepath = self.data_dir / "emg" / f"Sub1_EMG_{trial_id}.csv"
         
-        # Read CSV, skipping header rows
-        df = pd.read_csv(filepath, skiprows=4)
+        # Read CSV with proper header handling
+        # Line 3 has column names, line 4 has units, data starts at line 5
+        df = pd.read_csv(filepath, skiprows=4, header=0)
         
-        # Clean column names
-        df.columns = df.columns.str.strip()
+        # Use the header row (line 3) for column names
+        with open(filepath, 'r') as f:
+            lines = f.readlines()
+            header_line = lines[3].strip()
+            column_names = [col.strip() for col in header_line.split(',')]
         
-        # Convert Frame to time in seconds (2000 Hz sampling)
-        df['time'] = df['Frame'] / 2000.0
+        # Set proper column names
+        df.columns = column_names[:len(df.columns)]
+        
+        # Convert to time in seconds (2000 Hz sampling)
+        # Use sample index instead of Frame column  
+        df['time'] = df.index / 2000.0
         
         return df
     
@@ -74,14 +98,22 @@ class GaitDataLoader:
         """
         filepath = self.data_dir / "kinematics" / f"Sub1_Kinematics_{trial_id}.csv"
         
-        # Read CSV, skipping header rows
-        df = pd.read_csv(filepath, skiprows=4)
+        # Read CSV with proper header handling
+        # Line 3 has column names, line 4 has units, data starts at line 5
+        df = pd.read_csv(filepath, skiprows=4, header=0)
         
-        # Clean column names
-        df.columns = df.columns.str.strip()
+        # Use the header row (line 3) for column names
+        with open(filepath, 'r') as f:
+            lines = f.readlines()
+            header_line = lines[3].strip()
+            column_names = [col.strip() for col in header_line.split(',')]
         
-        # Convert Frame to time in seconds (100 Hz sampling)
-        df['time'] = df['Frame'] / 100.0
+        # Set proper column names
+        df.columns = column_names[:len(df.columns)]
+        
+        # Convert to time in seconds (100 Hz sampling)
+        # Use sample index instead of Frame column
+        df['time'] = df.index / 100.0
         
         return df
     

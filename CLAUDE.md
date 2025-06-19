@@ -225,8 +225,8 @@ Demo data processing pipeline uses T5 trial as the selected dataset:
 **Phase B1a**: ✅ COMPLETED & DEPLOYED - Enhanced UX with mobile-first design and comprehensive gait analysis
 **Phase B1b**: ✅ COMPLETED - Code quality improvements with accurate terminology (threshold_deviation)
 **Phase B1c**: ✅ COMPLETED - Force analysis enhancements with biomechanical insights and mobile layout fixes
-**Ground Truth Tool**: ✅ COMPLETED - Scientific validation framework for algorithm accuracy assessment
-**Phase B2**: 🎯 READY TO START - Multi-algorithm comparison with ground truth validation
+**Ground Truth Tool**: ✅ COMPLETED & OPERATIONAL - Scientific validation framework with fixed sampling rates
+**Phase B2**: 🎯 READY TO START - Multi-algorithm comparison with validated ground truth reference
 
 ### Adding New Publications
 Publications are in `src/pages/about/index.astro` - follow existing format with title, journal, year, and DOI links.
@@ -247,16 +247,19 @@ Brand colors are centralized in `tailwind.config.mjs`. Use existing color variab
 ### Ground Truth Annotation Tool
 A complete Python toolkit for scientific algorithm validation:
 - **Location**: `scripts/ground-truth-annotation/`
+- **Status**: ✅ FULLY OPERATIONAL - All import and sampling issues fixed
 - **Setup**: Use Python virtual environment at repository root
 - **Usage**: Interactive Jupyter notebooks for expert manual annotation
 - **Purpose**: Create sensor-independent ground truth for accuracy validation
 - **Output**: Ground truth events and validation results for algorithm comparison
+- **Sampling Rates**: Correctly configured (1000Hz kinetics, 2000Hz EMG, 100Hz kinematics)
 
 ```bash
 # Setup and usage
 source venv/bin/activate
 cd scripts/ground-truth-annotation/
-jupyter notebook
+jupyter lab --no-browser --port=8888
+# Navigate to: notebooks/01_data_exploration.ipynb
 ```
 
 ## Additional Documentation

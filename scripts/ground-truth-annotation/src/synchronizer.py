@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 from typing import Dict, Tuple
 from scipy import signal
-from scipy.interpolation import interp1d
+from scipy.interpolate import interp1d
 
 class MultiModalSynchronizer:
     """Synchronize multi-modal gait data to common timeline."""

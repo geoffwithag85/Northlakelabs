@@ -11,7 +11,7 @@ from typing import Dict, List, Tuple, Optional
 import seaborn as sns
 
 # Set style for clean plots
-plt.style.use('seaborn-v0_8-whitegrid')
+plt.style.use('default')
 sns.set_palette("husl")
 
 class GaitDataVisualizer:
