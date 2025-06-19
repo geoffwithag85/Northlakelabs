@@ -225,7 +225,8 @@ Demo data processing pipeline uses T5 trial as the selected dataset:
 **Phase B1a**: ✅ COMPLETED & DEPLOYED - Enhanced UX with mobile-first design and comprehensive gait analysis
 **Phase B1b**: ✅ COMPLETED - Code quality improvements with accurate terminology (threshold_deviation)
 **Phase B1c**: ✅ COMPLETED - Force analysis enhancements with biomechanical insights and mobile layout fixes
-**Phase B2**: 🎯 NEXT - Multi-algorithm comparison (Basic Fusion → AI Fusion)
+**Ground Truth Tool**: ✅ COMPLETED - Scientific validation framework for algorithm accuracy assessment
+**Phase B2**: 🎯 READY TO START - Multi-algorithm comparison with ground truth validation
 
 ### Adding New Publications
 Publications are in `src/pages/about/index.astro` - follow existing format with title, journal, year, and DOI links.
@@ -242,6 +243,21 @@ Demo constants are defined in `types.ts` files within component directories. Key
 
 ### Updating Brand Colors
 Brand colors are centralized in `tailwind.config.mjs`. Use existing color variables rather than hex codes in components.
+
+### Ground Truth Annotation Tool
+A complete Python toolkit for scientific algorithm validation:
+- **Location**: `scripts/ground-truth-annotation/`
+- **Setup**: Use Python virtual environment at repository root
+- **Usage**: Interactive Jupyter notebooks for expert manual annotation
+- **Purpose**: Create sensor-independent ground truth for accuracy validation
+- **Output**: Ground truth events and validation results for algorithm comparison
+
+```bash
+# Setup and usage
+source venv/bin/activate
+cd scripts/ground-truth-annotation/
+jupyter notebook
+```
 
 ## Additional Documentation
 
