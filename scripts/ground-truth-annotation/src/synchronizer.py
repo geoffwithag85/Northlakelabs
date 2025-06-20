@@ -96,7 +96,12 @@ class MultiModalSynchronizer:
         cutoff = self.target_rate / 2
         b, a = signal.butter(4, cutoff / nyquist, btype='low')
         
-        downsampled = emg_data.copy()
+        # Create new downsampled DataFrame with correct length
+        downsampled_data = {}
+        
+        # Downsample time vector first to get correct length
+        downsampled_time = emg_data['time'][::downsample_factor]
+        downsampled_data['time'] = downsampled_time
         
         # Filter and downsample each EMG channel
         for col in emg_data.columns:
@@ -104,12 +109,10 @@ class MultiModalSynchronizer:
                 # Apply filter
                 filtered = signal.filtfilt(b, a, emg_data[col])
                 # Downsample
-                downsampled[col] = filtered[::downsample_factor]
+                downsampled_data[col] = filtered[::downsample_factor]
         
-        # Update time vector
-        downsampled['time'] = emg_data['time'][::downsample_factor]
-        
-        return downsampled
+        # Create new DataFrame with consistent length
+        return pd.DataFrame(downsampled_data)
     
     def upsample_kinematics(self, kinematics_data: pd.DataFrame, 
                            target_times: np.ndarray) -> pd.DataFrame:

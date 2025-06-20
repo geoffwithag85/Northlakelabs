@@ -10,9 +10,9 @@ from typing import Dict, List, Optional, Tuple
 import json
 from pathlib import Path
 
-from .data_loader import GaitDataLoader
-from .synchronizer import MultiModalSynchronizer, compute_emg_envelopes
-from .visualizer import GaitDataVisualizer, create_constrained_gait_plot
+from data_loader import GaitDataLoader
+from synchronizer import MultiModalSynchronizer, compute_emg_envelopes
+from visualizer import GaitDataVisualizer, create_constrained_gait_plot
 
 class GaitEventAnnotator:
     """

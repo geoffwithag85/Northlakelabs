@@ -85,13 +85,13 @@ class GaitDataVisualizer:
         """Plot force plate vertical forces."""
         time = kinetics_data['time']
         
-        # Plot both force plates if available
-        if 'Fz' in kinetics_data.columns:
-            ax.plot(time, kinetics_data['Fz'], label='Left Force Plate (Fz)', 
+        # Plot both force plates if available (using correct column names)
+        if 'Fz_L' in kinetics_data.columns:
+            ax.plot(time, kinetics_data['Fz_L'], label='Left Force Plate (Fz_L)', 
                    color='blue', alpha=0.7)
         
-        if 'Fz.1' in kinetics_data.columns:
-            ax.plot(time, kinetics_data['Fz.1'], label='Right Force Plate (Fz)', 
+        if 'Fz_R' in kinetics_data.columns:
+            ax.plot(time, kinetics_data['Fz_R'], label='Right Force Plate (Fz_R)', 
                    color='red', alpha=0.7)
         
         ax.set_ylabel('Vertical Force (N)')
@@ -106,22 +106,25 @@ class GaitDataVisualizer:
         """Plot key kinematic markers for gait events."""
         time = kinematics_data['time']
         
-        # Plot toe and heel markers (vertical positions)
-        marker_mapping = {
-            'S12:RTOE': ('Right Toe', 'red'),
-            'S12:RCAL': ('Right Heel', 'darkred'),
-            'S12:LTOE': ('Left Toe', 'blue'),
-            'S12:LCAL': ('Left Heel', 'darkblue')
-        }
+        # Get available numeric columns (excluding time, Frame, Sub Frame)
+        numeric_cols = [col for col in kinematics_data.columns 
+                       if col not in ['time', 'Frame', 'Sub Frame'] 
+                       and pd.api.types.is_numeric_dtype(kinematics_data[col])]
         
-        for marker_col, (label, color) in marker_mapping.items():
-            if marker_col in kinematics_data.columns:
-                ax.plot(time, kinematics_data[marker_col], 
-                       label=label, color=color, alpha=0.7)
+        # Plot first few kinematic signals (assuming they are vertical positions)
+        colors = plt.cm.tab10(np.linspace(0, 1, min(4, len(numeric_cols))))
         
-        ax.set_ylabel('Vertical Position (mm)')
-        ax.set_title('Key Kinematic Markers')
-        ax.legend()
+        for i, col in enumerate(numeric_cols[:4]):  # Plot first 4 channels
+            ax.plot(time, kinematics_data[col], 
+                   label=f'Kinematic {i+1}', color=colors[i], alpha=0.7)
+        
+        ax.set_ylabel('Position/Angle (units vary)')
+        ax.set_title('Kinematic Markers')
+        if len(numeric_cols) > 0:
+            ax.legend()
+        else:
+            ax.text(0.5, 0.5, 'No kinematic data available', 
+                   transform=ax.transAxes, ha='center', va='center')
         ax.grid(True, alpha=0.3)
     
     def _plot_emg_envelopes(self, ax, emg_envelopes):
@@ -147,16 +150,20 @@ class GaitDataVisualizer:
         """Plot combined overview for context."""
         time = kinetics_data['time']
         
-        # Normalize and plot force plates
-        if 'Fz' in kinetics_data.columns:
-            fz_norm = kinetics_data['Fz'] / kinetics_data['Fz'].abs().max()
-            ax.plot(time, fz_norm, label='Left Force (norm)', 
-                   color='blue', alpha=0.6, linewidth=1)
+        # Normalize and plot force plates (using correct column names)
+        if 'Fz_L' in kinetics_data.columns:
+            fz_max = kinetics_data['Fz_L'].abs().max()
+            if fz_max > 0:
+                fz_norm = kinetics_data['Fz_L'] / fz_max
+                ax.plot(time, fz_norm, label='Left Force (norm)', 
+                       color='blue', alpha=0.6, linewidth=1)
         
-        if 'Fz.1' in kinetics_data.columns:
-            fz_norm = kinetics_data['Fz.1'] / kinetics_data['Fz.1'].abs().max()
-            ax.plot(time, fz_norm, label='Right Force (norm)', 
-                   color='red', alpha=0.6, linewidth=1)
+        if 'Fz_R' in kinetics_data.columns:
+            fz_max = kinetics_data['Fz_R'].abs().max()
+            if fz_max > 0:
+                fz_norm = kinetics_data['Fz_R'] / fz_max
+                ax.plot(time, fz_norm, label='Right Force (norm)', 
+                       color='red', alpha=0.6, linewidth=1)
         
         ax.set_ylabel('Normalized Signals')
         ax.set_title('Overview')
@@ -259,18 +266,18 @@ class GaitDataVisualizer:
 def create_constrained_gait_plot(synchronized_data: Dict[str, pd.DataFrame],
                                 time_window: float = 20.0) -> plt.Figure:
     """
-    Create specialized plot for constrained gait analysis.
-    Focuses on asymmetry patterns from left leg constraint.
+    Create multi-modal plot for gait event annotation.
+    Shows force plates, kinematic markers, and EMG activity.
     
     Args:
         synchronized_data: Synchronized multi-modal data
         time_window: Time window to display (seconds)
         
     Returns:
-        matplotlib Figure
+        matplotlib Figure with 3 subplots for annotation
     """
     fig, axes = plt.subplots(3, 1, figsize=(15, 10))
-    fig.suptitle('Constrained Gait Analysis - Left Leg Locked in Extension', fontsize=16)
+    fig.suptitle('Multi-Modal Gait Event Annotation - Force, Kinematics & EMG', fontsize=16)
     
     kinetics = synchronized_data['kinetics']
     kinematics = synchronized_data['kinematics']
@@ -283,43 +290,95 @@ def create_constrained_gait_plot(synchronized_data: Dict[str, pd.DataFrame],
     time = kinetics['time']
     
     # Plot 1: Force asymmetry
-    if 'Fz' in kinetics.columns and 'Fz.1' in kinetics.columns:
-        axes[0].plot(time, kinetics['Fz'], label='Left Force Plate', color='blue', linewidth=2)
-        axes[0].plot(time, kinetics['Fz.1'], label='Right Force Plate', color='red', linewidth=2)
-        axes[0].fill_between(time, kinetics['Fz'], alpha=0.3, color='blue')
-        axes[0].fill_between(time, kinetics['Fz.1'], alpha=0.3, color='red')
+    if 'Fz_L' in kinetics.columns and 'Fz_R' in kinetics.columns:
+        axes[0].plot(time, kinetics['Fz_L'], label='Left Force Plate', color='blue', linewidth=2)
+        axes[0].plot(time, kinetics['Fz_R'], label='Right Force Plate', color='red', linewidth=2)
+        axes[0].fill_between(time, kinetics['Fz_L'], alpha=0.3, color='blue')
+        axes[0].fill_between(time, kinetics['Fz_R'], alpha=0.3, color='red')
         axes[0].set_ylabel('Vertical Force (N)')
         axes[0].set_title('Force Asymmetry Pattern')
         axes[0].legend()
         axes[0].grid(True, alpha=0.3)
     
-    # Plot 2: Compensatory movement patterns
-    if 'S12:RTOE' in kinematics.columns and 'S12:LTOE' in kinematics.columns:
-        axes[1].plot(time, kinematics['S12:LTOE'], label='Left Toe (Constrained)', 
-                    color='blue', linewidth=2)
-        axes[1].plot(time, kinematics['S12:RTOE'], label='Right Toe (Compensating)', 
-                    color='red', linewidth=2)
+    # Plot 2: Kinematic markers (focus on vertical positions for gait events)
+    # Look for Z-coordinate (vertical) markers which are most useful for gait events
+    z_markers = [col for col in kinematics.columns if col.endswith('_Z')]
+    
+    if len(z_markers) >= 4:
+        # Plot several Z-coordinate markers (vertical positions)
+        colors = ['blue', 'red', 'green', 'orange', 'purple', 'brown']
+        
+        # Plot first 4-6 markers for clarity
+        for i, marker in enumerate(z_markers[:6]):
+            color = colors[i % len(colors)]
+            label = marker.replace('_Z', ' (vertical)')
+            axes[1].plot(time, kinematics[marker], label=label, 
+                        color=color, alpha=0.8, linewidth=1.5)
+        
         axes[1].set_ylabel('Vertical Position (mm)')
-        axes[1].set_title('Compensatory Movement Patterns')
+        axes[1].set_title('Kinematic Markers - Vertical Positions')
         axes[1].legend()
         axes[1].grid(True, alpha=0.3)
+        
+    elif len(z_markers) > 0:
+        # Plot available Z markers
+        for i, marker in enumerate(z_markers):
+            axes[1].plot(time, kinematics[marker], 
+                        label=marker.replace('_Z', ' (vertical)'),
+                        alpha=0.8, linewidth=1.5)
+        axes[1].set_ylabel('Vertical Position (mm)')
+        axes[1].set_title('Kinematic Markers - Vertical Positions')
+        axes[1].legend()
+        axes[1].grid(True, alpha=0.3)
+        
+    else:
+        axes[1].text(0.5, 0.5, 'No kinematic markers available', 
+                    transform=axes[1].transAxes, ha='center', va='center')
+        axes[1].set_ylabel('Kinematics')
+        axes[1].set_title('Kinematic Markers')
+        axes[1].grid(True, alpha=0.3)
     
-    # Plot 3: Asymmetry index over time
-    if 'Fz' in kinetics.columns and 'Fz.1' in kinetics.columns:
-        left_force = np.abs(kinetics['Fz'])
-        right_force = np.abs(kinetics['Fz.1'])
+    # Plot 3: EMG Activity Overview (more useful than asymmetry for gait events)
+    if 'emg' in synchronized_data and len(synchronized_data['emg'].columns) > 3:
+        emg_data = synchronized_data['emg']
+        emg_mask = emg_data['time'] <= time_window
+        emg_filtered = emg_data[emg_mask]
+        emg_time = emg_filtered['time']
         
-        # Calculate asymmetry index (avoiding division by zero)
-        total_force = left_force + right_force
-        asymmetry = np.where(total_force > 10, 
-                           (right_force - left_force) / total_force, 0)
+        # Get EMG columns (exclude time, Frame, Sub Frame)
+        emg_cols = [col for col in emg_filtered.columns 
+                   if col not in ['time', 'Frame', 'Sub Frame'] 
+                   and pd.api.types.is_numeric_dtype(emg_filtered[col])]
         
-        axes[2].plot(time, asymmetry * 100, color='purple', linewidth=2)
-        axes[2].axhline(y=0, color='black', linestyle='-', alpha=0.5)
-        axes[2].fill_between(time, asymmetry * 100, alpha=0.3, color='purple')
-        axes[2].set_ylabel('Asymmetry Index (%)')
+        if len(emg_cols) >= 2:
+            # Plot first 4 EMG channels with simple envelope
+            for i, col in enumerate(emg_cols[:4]):
+                # Simple envelope: moving RMS over 100 samples
+                envelope = emg_filtered[col].rolling(window=100, center=True).apply(
+                    lambda x: np.sqrt(np.mean(x**2)), raw=True
+                )
+                color = colors[i % len(colors)]
+                axes[2].plot(emg_time, envelope, label=col, 
+                           color=color, alpha=0.8, linewidth=1.5)
+            
+            axes[2].set_ylabel('EMG Amplitude (V)')
+            axes[2].set_xlabel('Time (seconds)')
+            axes[2].set_title('EMG Activity Overview')
+            axes[2].legend()
+            axes[2].grid(True, alpha=0.3)
+        else:
+            axes[2].text(0.5, 0.5, 'EMG data processing...', 
+                        transform=axes[2].transAxes, ha='center', va='center')
+            axes[2].set_ylabel('EMG')
+            axes[2].set_xlabel('Time (seconds)')
+            axes[2].set_title('EMG Activity')
+            axes[2].grid(True, alpha=0.3)
+    else:
+        axes[2].text(0.5, 0.5, 'EMG data not available', 
+                    transform=axes[2].transAxes, ha='center', va='center')
+        axes[2].set_ylabel('EMG')
         axes[2].set_xlabel('Time (seconds)')
-        axes[2].set_title('Loading Asymmetry Index (Positive = Right Bias)')
+        axes[2].set_title('EMG Activity')
         axes[2].grid(True, alpha=0.3)
     
     plt.tight_layout()

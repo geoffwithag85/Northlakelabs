@@ -102,14 +102,28 @@ class GaitDataLoader:
         # Line 3 has column names, line 4 has units, data starts at line 5
         df = pd.read_csv(filepath, skiprows=4, header=0)
         
-        # Use the header row (line 3) for column names
-        with open(filepath, 'r') as f:
-            lines = f.readlines()
-            header_line = lines[3].strip()
-            column_names = [col.strip() for col in header_line.split(',')]
+        # Create unique column names for kinematic markers
+        # The data has repeated X, Y, Z patterns for different markers
+        unique_names = ['Frame', 'Sub Frame']
         
-        # Set proper column names
-        df.columns = column_names[:len(df.columns)]
+        # Calculate number of markers (excluding Frame, Sub Frame)
+        remaining_cols = len(df.columns) - 2
+        num_markers = remaining_cols // 3  # Each marker has X, Y, Z
+        
+        # Create unique names for each marker's coordinates
+        for marker_idx in range(num_markers):
+            unique_names.extend([
+                f'Marker{marker_idx+1:02d}_X',
+                f'Marker{marker_idx+1:02d}_Y', 
+                f'Marker{marker_idx+1:02d}_Z'
+            ])
+        
+        # Handle any remaining columns (shouldn't happen but be safe)
+        while len(unique_names) < len(df.columns):
+            unique_names.append(f'Extra_{len(unique_names)}')
+        
+        # Set proper column names (only use as many as we have)
+        df.columns = unique_names[:len(df.columns)]
         
         # Convert to time in seconds (100 Hz sampling)
         # Use sample index instead of Frame column

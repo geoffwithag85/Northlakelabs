@@ -247,19 +247,20 @@ Brand colors are centralized in `tailwind.config.mjs`. Use existing color variab
 ### Ground Truth Annotation Tool
 A complete Python toolkit for scientific algorithm validation:
 - **Location**: `scripts/ground-truth-annotation/`
-- **Status**: ✅ FULLY OPERATIONAL - All import and sampling issues fixed
+- **Status**: ✅ FULLY OPERATIONAL - All import, sampling, and kinematic data issues fixed
 - **Setup**: Use Python virtual environment at repository root
-- **Usage**: Interactive Jupyter notebooks for expert manual annotation
+- **Usage**: Interactive Jupyter notebooks for expert manual annotation with multi-modal display
 - **Purpose**: Create sensor-independent ground truth for accuracy validation
 - **Output**: Ground truth events and validation results for algorithm comparison
-- **Sampling Rates**: Correctly configured (1000Hz kinetics, 2000Hz EMG, 100Hz kinematics)
+- **Data Support**: Complete kinetics (1000Hz), EMG (2000Hz), kinematics (100Hz, 78 markers)
+- **Interface**: Multi-modal visualization (force plates + kinematic markers + EMG activity)
 
 ```bash
 # Setup and usage
 source venv/bin/activate
 cd scripts/ground-truth-annotation/
 jupyter lab --no-browser --port=8888
-# Navigate to: notebooks/01_data_exploration.ipynb
+# Navigate to: notebooks/02_annotation_tool.ipynb for interactive annotation
 ```
 
 ## Additional Documentation
