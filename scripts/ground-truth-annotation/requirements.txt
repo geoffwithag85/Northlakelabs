@@ -17,3 +17,6 @@ scipy>=1.10.0
 
 # Data validation and utilities
 python-dateutil>=2.8.0
+
+# Web-based annotation tool
+flask>=2.3.0

@@ -226,6 +226,8 @@ Demo data processing pipeline uses T5 trial as the selected dataset:
 **Phase B1b**: ✅ COMPLETED - Code quality improvements with accurate terminology (threshold_deviation)
 **Phase B1c**: ✅ COMPLETED - Force analysis enhancements with biomechanical insights and mobile layout fixes
 **Ground Truth Tool**: ✅ COMPLETED & OPERATIONAL - Scientific validation framework with fixed sampling rates
+**Web Annotation Tool**: ✅ COMPLETED & OPERATIONAL - Reliable browser-based annotation interface replacing problematic matplotlib
+**Site Structure**: ✅ COMPLETED - Clean main site with hidden demos page for development
 **Phase B2**: 🎯 READY TO START - Multi-algorithm comparison with validated ground truth reference
 
 ### Adding New Publications
@@ -245,15 +247,24 @@ Demo constants are defined in `types.ts` files within component directories. Key
 Brand colors are centralized in `tailwind.config.mjs`. Use existing color variables rather than hex codes in components.
 
 ### Ground Truth Annotation Tool
-A complete Python toolkit for scientific algorithm validation:
+A complete scientific validation framework with both Jupyter and web-based annotation options:
 - **Location**: `scripts/ground-truth-annotation/`
-- **Status**: ✅ FULLY OPERATIONAL - All import, sampling, and kinematic data issues fixed
+- **Status**: ✅ FULLY OPERATIONAL - Multiple annotation interfaces available
 - **Setup**: Use Python virtual environment at repository root
-- **Usage**: Interactive Jupyter notebooks for expert manual annotation with multi-modal display
+- **Web Tool**: Reliable browser-based annotation interface (recommended)
+- **Jupyter Option**: Interactive notebooks for expert manual annotation with multi-modal display
 - **Purpose**: Create sensor-independent ground truth for accuracy validation
 - **Output**: Ground truth events and validation results for algorithm comparison
 - **Data Support**: Complete kinetics (1000Hz), EMG (2000Hz), kinematics (100Hz, 78 markers)
-- **Interface**: Multi-modal visualization (force plates + kinematic markers + EMG activity)
+- **Interface**: Multi-modal visualization (force plates + **key heel/toe markers only** + EMG activity)
+- **Enhanced Usability**: Shows only 4 relevant markers (left/right heel/toe) with clear labels and color coding
+
+#### Web Annotation Tool (Recommended)
+- **Location**: `scripts/ground-truth-annotation/web-tool/`
+- **Status**: ✅ FULLY OPERATIONAL - Replaces problematic matplotlib interactive plots
+- **Advantages**: Environment-independent, reliable browser click events, Chart.js visualization
+- **Usage**: Start server with `python annotation_server.py`, open http://localhost:5000
+- **Features**: Native click events, automatic saving/loading, JSON export compatible with validation workflow
 
 ```bash
 # Setup and usage

@@ -94,31 +94,48 @@ class GaitDataLoader:
             trial_id: Trial identifier (e.g., "T5")
             
         Returns:
-            DataFrame with marker positions
+            DataFrame with marker positions using semantic marker names
         """
         filepath = self.data_dir / "kinematics" / f"Sub1_Kinematics_{trial_id}.csv"
         
+        # Read marker names from header row 3 (0-indexed line 2)
+        with open(filepath, 'r') as f:
+            lines = f.readlines()
+            marker_header = lines[2].strip()  # Row 3 contains marker names
+            marker_names = [name.strip() for name in marker_header.split(',')]
+        
         # Read CSV with proper header handling
-        # Line 3 has column names, line 4 has units, data starts at line 5
+        # Line 3 has marker names, line 4 has X,Y,Z, line 5 has units, data starts at line 6
         df = pd.read_csv(filepath, skiprows=4, header=0)
         
-        # Create unique column names for kinematic markers
-        # The data has repeated X, Y, Z patterns for different markers
+        # Create semantic column names using actual marker names
         unique_names = ['Frame', 'Sub Frame']
         
-        # Calculate number of markers (excluding Frame, Sub Frame)
-        remaining_cols = len(df.columns) - 2
-        num_markers = remaining_cols // 3  # Each marker has X, Y, Z
+        # Process marker names (skip first 2 empty entries for Frame, Sub Frame)
+        marker_names_clean = marker_names[2:]  # Skip Frame, Sub Frame entries
         
-        # Create unique names for each marker's coordinates
-        for marker_idx in range(num_markers):
-            unique_names.extend([
-                f'Marker{marker_idx+1:02d}_X',
-                f'Marker{marker_idx+1:02d}_Y', 
-                f'Marker{marker_idx+1:02d}_Z'
-            ])
+        # Create column names with marker semantics
+        coord_idx = 0
+        for marker_name in marker_names_clean:
+            if marker_name and marker_name.strip():  # Skip empty entries
+                # Clean marker name (remove S12: prefix for readability)
+                clean_name = marker_name.replace('S12:', '').strip()
+                if clean_name:
+                    unique_names.extend([
+                        f'{clean_name}_X',
+                        f'{clean_name}_Y',
+                        f'{clean_name}_Z'
+                    ])
+                else:
+                    # Fallback for empty or malformed names
+                    unique_names.extend([
+                        f'Marker{coord_idx//3+1:02d}_X',
+                        f'Marker{coord_idx//3+1:02d}_Y',
+                        f'Marker{coord_idx//3+1:02d}_Z'
+                    ])
+                coord_idx += 3
         
-        # Handle any remaining columns (shouldn't happen but be safe)
+        # Handle any remaining columns
         while len(unique_names) < len(df.columns):
             unique_names.append(f'Extra_{len(unique_names)}')
         
@@ -130,6 +147,47 @@ class GaitDataLoader:
         df['time'] = df.index / 100.0
         
         return df
+    
+    def load_kinematics_key_markers(self, trial_id: str) -> pd.DataFrame:
+        """
+        Load only key gait markers (heel and toe positions) for annotation.
+        
+        Args:
+            trial_id: Trial identifier (e.g., "T5")
+            
+        Returns:
+            DataFrame with only heel/toe marker positions for gait annotation
+        """
+        # Load full kinematics data with semantic names
+        full_kinematics = self.load_kinematics(trial_id)
+        
+        # Define the 4 key markers for gait events
+        key_markers = {
+            'right_toe': ['RTOE_X', 'RTOE_Y', 'RTOE_Z'],
+            'right_heel': ['RCAL_X', 'RCAL_Y', 'RCAL_Z'],
+            'left_toe': ['LTOE_X', 'LTOE_Y', 'LTOE_Z'],
+            'left_heel': ['LCAL_X', 'LCAL_Y', 'LCAL_Z']
+        }
+        
+        # Extract only key markers
+        key_data = pd.DataFrame()
+        key_data['time'] = full_kinematics['time']
+        
+        for marker_label, marker_cols in key_markers.items():
+            for coord_col in marker_cols:
+                if coord_col in full_kinematics.columns:
+                    # Use semantic names like 'right_toe_z' for clarity
+                    coord_suffix = coord_col.split('_')[-1].lower()  # x, y, or z
+                    new_col_name = f'{marker_label}_{coord_suffix}'
+                    key_data[new_col_name] = full_kinematics[coord_col]
+                else:
+                    # Handle missing markers gracefully
+                    coord_suffix = coord_col.split('_')[-1].lower()
+                    new_col_name = f'{marker_label}_{coord_suffix}'
+                    key_data[new_col_name] = np.nan
+                    warnings.warn(f"Marker {coord_col} not found in kinematics data")
+        
+        return key_data
     
     def load_all_modalities(self, trial_id: str) -> Dict[str, pd.DataFrame]:
         """

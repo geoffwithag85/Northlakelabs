@@ -167,6 +167,10 @@ class MultiModalSynchronizer:
             elif modality == 'kinematics':
                 # Upsample kinematics from 100 Hz
                 synchronized[modality] = self.upsample_kinematics(trimmed, master_times)
+            
+            elif modality == 'key_markers':
+                # Upsample key markers from 100 Hz (same as kinematics)
+                synchronized[modality] = self.upsample_kinematics(trimmed, master_times)
         
         return synchronized
 

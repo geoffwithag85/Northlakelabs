@@ -264,7 +264,12 @@ scripts/
 ├── test-processing.js         # Pipeline validation with small segments
 └── ground-truth-annotation/   # Scientific validation toolkit (✅ completed)
     ├── src/                   # Python utilities for data loading and annotation
-    ├── notebooks/             # Interactive Jupyter annotation interface
+    ├── notebooks/             # Interactive Jupyter annotation interface  
+    ├── web-tool/              # Web-based annotation interface (✅ operational)
+    │   ├── annotation_server.py    # Flask server with REST API
+    │   └── static/                  # Web interface files
+    │       ├── annotation_tool.html # Main annotation interface
+    │       └── annotation.js        # Chart.js annotation logic
     ├── data/                  # Symlinks to main dataset
     └── output/                # Generated ground truth and validation results
 ```
@@ -284,7 +289,18 @@ src/components/interactive/MultiSensorFusionDemo/
 └── types.ts                        # TypeScript definitions
 ```
 
-### 6.3 Generated Demo Data
+### 6.3 Site Page Structure (Updated June 22, 2025)
+```
+src/pages/
+├── index.astro               # Homepage with hero and features
+├── about/index.astro         # Professional profile with publications
+├── solutions/index.astro     # "Coming Soon" version (✅ restored for launch)
+├── demos/index.astro         # Hidden interactive demo (✅ created, not linked)
+├── products/index.astro      # Product pipeline and development
+└── contact/index.astro       # Contact information and forms
+```
+
+### 6.4 Generated Demo Data
 ```
 public/demo-data/
 ├── T5-demo.json              # Main demo data (16.7MB)
@@ -309,11 +325,27 @@ public/demo-data/
 - ✅ Chart.js event visualization with full dataset + axis limits approach
 - ✅ Smart caching system providing 10-20x faster development workflow
 
-### 7.2 Phase B2 - 🎯 NEXT PHASE
-**Target**: Multi-algorithm comparison with accuracy progression demonstration
-- 🎯 Kinematic ground truth establishment (motion capture event detection)
-- 🎯 Basic fusion algorithm (EMG + Force rule-based combination)
-- 🎯 AI fusion algorithm (multi-modal pattern recognition)
+### 7.2 Ground Truth & Web Annotation Tool - ✅ COMPLETED & OPERATIONAL
+**Scientific Validation Framework**: Complete toolkit for algorithm validation
+- ✅ Ground truth annotation tool with Jupyter notebooks (fixed all import/sampling issues)
+- ✅ Web-based annotation interface with reliable browser click events
+- ✅ Multi-modal data visualization (Force plates + Key markers + EMG)
+- ✅ JSON export format compatible with validation workflow
+- ✅ Flask server providing REST API for data loading and annotation saving
+- ✅ Chart.js integration with native click handling (replaces problematic matplotlib)
+
+### 7.3 Site Structure Reorganization - ✅ COMPLETED
+**Clean Main Site**: Professional marketing ready for launch
+- ✅ Solutions page restored to main branch "Coming Soon" version
+- ✅ Hidden demos page created at `/demos` (not linked in navigation)
+- ✅ Interactive demo moved to development staging area
+- ✅ Main site clean and professional for public launch
+
+### 7.4 Phase B2 - 🎯 READY TO START WITH GROUND TRUTH
+**Target**: Multi-algorithm comparison with validated accuracy measurement
+- 🎯 Basic fusion algorithm (EMG + Force rule-based combination - target 75%)
+- 🎯 AI fusion algorithm (multi-modal pattern recognition - target 92%)
+- 🎯 Algorithm validation against web-annotated ground truth reference
 - 🎯 Accuracy comparison dashboard (side-by-side performance metrics)
 - 🎯 Production deployment (complete demo on main branch)
 
@@ -394,6 +426,14 @@ interface DetectedEvent {
 - Replaced asymmetry index with meaningful kinematic vertical marker display
 - Verified matplotlib backend compatibility for Jupyter notebook environments
 - Complete annotation workflow operational for scientific ground truth creation
+
+**Key Marker Improvements (June 20, 2025)**:
+- **Semantic Marker Names**: Parse actual marker names from CSV header (S12:RTOE → RTOE_X/Y/Z)
+- **Key Marker Extraction**: New `load_kinematics_key_markers()` function extracting only 4 critical markers
+- **Targeted Visualization**: Shows only heel/toe markers with clear labels and color coding
+- **Expert-Friendly Interface**: Red (right) vs blue (left), solid (toe) vs dashed (heel) visual distinction
+- **Annotation Guidance**: Heel minima = heel strikes, toe minima = toe offs for precise event detection
+- **Data Quality**: All 4 markers verified with complete coverage (20,000 points over 20s demo window)
 
 **Output Files**:
 - Ground truth events JSON with expert annotations

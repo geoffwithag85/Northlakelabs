@@ -57,9 +57,17 @@ class GaitEventAnnotator:
         # Load all modalities
         self.raw_data = self.loader.load_all_modalities(trial_id)
         
+        # Also load key markers for better annotation visualization
+        self.raw_data['key_markers'] = self.loader.load_kinematics_key_markers(trial_id)
+        
         # Synchronize data
         print("Synchronizing multi-modal data...")
         self.synchronized_data = self.synchronizer.synchronize_all_modalities(self.raw_data)
+        
+        # Replace kinematics with key markers for annotation interface
+        if 'key_markers' in self.synchronized_data:
+            print("Using key heel/toe markers for annotation...")
+            self.synchronized_data['kinematics'] = self.synchronized_data['key_markers']
         
         # Compute EMG envelopes for visualization
         if 'emg' in self.synchronized_data:

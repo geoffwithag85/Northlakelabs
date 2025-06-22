@@ -1,0 +1,263 @@
+🚀 Starting Ground Truth Annotation Server
+==================================================
+✓ Data loader initialized with directory: /home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/data
+📝 Annotation interface will be available at:
+   http://localhost:5000
+
+🎯 Features:
+   - Reliable browser-based annotation
+   - Chart.js visualization with native click events
+   - Multi-modal data display (Force + Kinematics + EMG)
+   - Automatic annotation saving and loading
+   - Compatible with existing validation workflow
+
+💡 Usage:
+   1. Open http://localhost:5000 in your browser
+   2. Load trial T5
+   3. Click on charts to annotate gait events
+   4. Select event type when prompted
+   5. Save annotations for algorithm validation
+==================================================
+ * Serving Flask app 'annotation_server'
+ * Debug mode: on
+[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://172.25.119.36:5000
+[33mPress CTRL+C to quit[0m
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 100-437-655
+127.0.0.1 - - [22/Jun/2025 10:21:34] "HEAD / HTTP/1.1" 200 -
+127.0.0.1 - - [22/Jun/2025 10:21:57] "GET /?id=791537fd-42b2-4c35-960e-3629fc7079cb&vscodeBrowserReqId=1750602117648 HTTP/1.1" 200 -
+127.0.0.1 - - [22/Jun/2025 10:21:58] "[33mGET /annotation.js HTTP/1.1[0m" 404 -
+127.0.0.1 - - [22/Jun/2025 10:23:55] "GET /api/trials HTTP/1.1" 200 -
+Traceback (most recent call last):
+  File "/home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/web-tool/annotation_server.py", line 78, in get_trial_data
+    synchronized_data = synchronizer.synchronize_all({
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MultiModalSynchronizer' object has no attribute 'synchronize_all'
+127.0.0.1 - - [22/Jun/2025 10:24:06] "[35m[1mGET /api/data/T5 HTTP/1.1[0m" 500 -
+ * Detected change in '/home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/web-tool/annotation_server.py', reloading
+🚀 Starting Ground Truth Annotation Server
+==================================================
+✓ Data loader initialized with directory: /home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/data
+📝 Annotation interface will be available at:
+   http://localhost:5000
+
+🎯 Features:
+   - Reliable browser-based annotation
+   - Chart.js visualization with native click events
+   - Multi-modal data display (Force + Kinematics + EMG)
+   - Automatic annotation saving and loading
+   - Compatible with existing validation workflow
+
+💡 Usage:
+   1. Open http://localhost:5000 in your browser
+   2. Load trial T5
+   3. Click on charts to annotate gait events
+   4. Select event type when prompted
+   5. Save annotations for algorithm validation
+==================================================
+Loading trial T5...
+✓ Raw data loaded
+❌ Error loading trial T5: 'MultiModalSynchronizer' object has no attribute 'synchronize_all'
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 100-437-655
+ * Detected change in '/home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/web-tool/annotation_server.py', reloading
+🚀 Starting Ground Truth Annotation Server
+==================================================
+✓ Data loader initialized with directory: /home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/data
+📝 Annotation interface will be available at:
+   http://localhost:5000
+
+🎯 Features:
+   - Reliable browser-based annotation
+   - Chart.js visualization with native click events
+   - Multi-modal data display (Force + Kinematics + EMG)
+   - Automatic annotation saving and loading
+   - Compatible with existing validation workflow
+
+💡 Usage:
+   1. Open http://localhost:5000 in your browser
+   2. Load trial T5
+   3. Click on charts to annotate gait events
+   4. Select event type when prompted
+   5. Save annotations for algorithm validation
+==================================================
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 100-437-655
+Traceback (most recent call last):
+  File "/home/geoffbrown/github/Northlakelabs/venv/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'LHEE_Z'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/web-tool/annotation_server.py", line 121, in get_trial_data
+    'left_heel_z': synchronized_data['key_markers']['LHEE_Z'][time_mask].tolist(),
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/geoffbrown/github/Northlakelabs/venv/lib/python3.12/site-packages/pandas/core/frame.py", line 4107, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/geoffbrown/github/Northlakelabs/venv/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'LHEE_Z'
+127.0.0.1 - - [22/Jun/2025 10:24:56] "[35m[1mGET /api/data/T5 HTTP/1.1[0m" 500 -
+ * Detected change in '/home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/web-tool/annotation_server.py', reloading
+🚀 Starting Ground Truth Annotation Server
+==================================================
+✓ Data loader initialized with directory: /home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/data
+📝 Annotation interface will be available at:
+   http://localhost:5000
+
+🎯 Features:
+   - Reliable browser-based annotation
+   - Chart.js visualization with native click events
+   - Multi-modal data display (Force + Kinematics + EMG)
+   - Automatic annotation saving and loading
+   - Compatible with existing validation workflow
+
+💡 Usage:
+   1. Open http://localhost:5000 in your browser
+   2. Load trial T5
+   3. Click on charts to annotate gait events
+   4. Select event type when prompted
+   5. Save annotations for algorithm validation
+==================================================
+Loading trial T5...
+✓ Raw data loaded
+✓ Data synchronized at 1000Hz
+✓ EMG envelopes computed
+❌ Error loading trial T5: 'LHEE_Z'
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 100-437-655
+Traceback (most recent call last):
+  File "/home/geoffbrown/github/Northlakelabs/venv/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 3812, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7088, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7096, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'EMG1_envelope'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/web-tool/annotation_server.py", line 127, in get_trial_data
+    f'channel_{i}': synchronized_data['emg_envelopes'][f'EMG{i+1}_envelope'][time_mask].tolist()
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/geoffbrown/github/Northlakelabs/venv/lib/python3.12/site-packages/pandas/core/frame.py", line 4107, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/geoffbrown/github/Northlakelabs/venv/lib/python3.12/site-packages/pandas/core/indexes/base.py", line 3819, in get_loc
+    raise KeyError(key) from err
+KeyError: 'EMG1_envelope'
+127.0.0.1 - - [22/Jun/2025 10:25:41] "[35m[1mGET /api/data/T5 HTTP/1.1[0m" 500 -
+ * Detected change in '/home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/web-tool/annotation_server.py', reloading
+🚀 Starting Ground Truth Annotation Server
+==================================================
+✓ Data loader initialized with directory: /home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/data
+📝 Annotation interface will be available at:
+   http://localhost:5000
+
+🎯 Features:
+   - Reliable browser-based annotation
+   - Chart.js visualization with native click events
+   - Multi-modal data display (Force + Kinematics + EMG)
+   - Automatic annotation saving and loading
+   - Compatible with existing validation workflow
+
+💡 Usage:
+   1. Open http://localhost:5000 in your browser
+   2. Load trial T5
+   3. Click on charts to annotate gait events
+   4. Select event type when prompted
+   5. Save annotations for algorithm validation
+==================================================
+Loading trial T5...
+✓ Raw data loaded
+✓ Data synchronized at 1000Hz
+✓ EMG envelopes computed
+❌ Error loading trial T5: 'EMG1_envelope'
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 100-437-655
+ * Detected change in '/home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/web-tool/annotation_server.py', reloading
+🚀 Starting Ground Truth Annotation Server
+==================================================
+✓ Data loader initialized with directory: /home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/data
+📝 Annotation interface will be available at:
+   http://localhost:5000
+
+🎯 Features:
+   - Reliable browser-based annotation
+   - Chart.js visualization with native click events
+   - Multi-modal data display (Force + Kinematics + EMG)
+   - Automatic annotation saving and loading
+   - Compatible with existing validation workflow
+
+💡 Usage:
+   1. Open http://localhost:5000 in your browser
+   2. Load trial T5
+   3. Click on charts to annotate gait events
+   4. Select event type when prompted
+   5. Save annotations for algorithm validation
+==================================================
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 100-437-655
+127.0.0.1 - - [22/Jun/2025 10:26:21] "GET /api/data/T5 HTTP/1.1" 200 -
+127.0.0.1 - - [22/Jun/2025 10:26:31] "[33mHEAD /annotation.js HTTP/1.1[0m" 404 -
+ * Detected change in '/home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/web-tool/annotation_server.py', reloading
+🚀 Starting Ground Truth Annotation Server
+==================================================
+✓ Data loader initialized with directory: /home/geoffbrown/github/Northlakelabs/scripts/ground-truth-annotation/data
+📝 Annotation interface will be available at:
+   http://localhost:5000
+
+🎯 Features:
+   - Reliable browser-based annotation
+   - Chart.js visualization with native click events
+   - Multi-modal data display (Force + Kinematics + EMG)
+   - Automatic annotation saving and loading
+   - Compatible with existing validation workflow
+
+💡 Usage:
+   1. Open http://localhost:5000 in your browser
+   2. Load trial T5
+   3. Click on charts to annotate gait events
+   4. Select event type when prompted
+   5. Save annotations for algorithm validation
+==================================================
+Loading trial T5...
+✓ Raw data loaded
+✓ Data synchronized at 1000Hz
+✓ EMG envelopes computed
+  Available EMG envelope columns: ['time', 'Frame_envelope', 'Sub Frame_envelope', 'IM EMG1_envelope', 'IM EMG2_envelope', 'IM EMG3_envelope', 'IM EMG4_envelope', 'IM EMG5_envelope', 'IM EMG6_envelope', 'IM EMG7_envelope', 'IM EMG8_envelope', 'IM EMG9_envelope', 'IM EMG10_envelope', 'IM EMG11_envelope', 'IM EMG12_envelope', 'IM EMG13_envelope', 'IM EMG14_envelope', 'IM EMG15_envelope', 'IM EMG16_envelope']
+✓ Trial T5 prepared for annotation
+  - Time window: 0 to 20.0s
+  - Data points: 20000
+  - Force plates: Left & Right (Fx, Fy, Fz)
+  - Key markers: 4 heel/toe positions
+  - EMG channels: 8 envelope signals
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 100-437-655
+127.0.0.1 - - [22/Jun/2025 10:28:08] "HEAD /annotation.js HTTP/1.1" 200 -
+127.0.0.1 - - [22/Jun/2025 10:28:23] "GET /?id=791537fd-42b2-4c35-960e-3629fc7079cb&vscodeBrowserReqId=1750602503373 HTTP/1.1" 200 -
+127.0.0.1 - - [22/Jun/2025 10:28:23] "GET /annotation.js HTTP/1.1" 200 -
+127.0.0.1 - - [22/Jun/2025 10:28:30] "GET /api/data/T5 HTTP/1.1" 200 -
+127.0.0.1 - - [22/Jun/2025 10:28:31] "GET /api/annotations/T5 HTTP/1.1" 200 -
+127.0.0.1 - - [22/Jun/2025 10:28:39] "GET /api/data/T5 HTTP/1.1" 200 -
+127.0.0.1 - - [22/Jun/2025 10:28:39] "GET /api/annotations/T5 HTTP/1.1" 200 -

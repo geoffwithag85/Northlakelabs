@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ground Truth Annotation Tool - Northlake Labs</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #040b1b 0%, #0a1428 50%, #040b1b 100%);
+            color: #e5e7eb;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #eb5b48, #5c37a9, #585ccc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #9ca3af;
+            margin-bottom: 20px;
+        }
+        
+        .controls {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .button {
+            background: linear-gradient(135deg, #eb5b48, #5c37a9);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: transform 0.2s;
+        }
+        
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #eb5b48;
+        }
+        
+        .chart-wrapper {
+            position: relative;
+            height: 300px;
+        }
+        
+        .status {
+            background: rgba(235, 91, 72, 0.1);
+            border: 1px solid rgba(235, 91, 72, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .event-counter {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .event-count {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .event-count-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #eb5b48;
+        }
+        
+        .event-count-label {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            margin-top: 5px;
+        }
+        
+        .instructions {
+            background: rgba(92, 55, 169, 0.1);
+            border: 1px solid rgba(92, 55, 169, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions h3 {
+            color: #5c37a9;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ul {
+            margin-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 5px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #040b1b;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            min-width: 400px;
+            text-align: center;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #eb5b48;
+        }
+        
+        .event-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .event-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .event-button:hover {
+            background: rgba(235, 91, 72, 0.2);
+            border-color: #eb5b48;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #9ca3af;
+            padding: 40px;
+        }
+        
+        .error {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            color: #fca5a5;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Ground Truth Annotation Tool</h1>
+            <p class="subtitle">Interactive gait event annotation for algorithm validation</p>
+        </div>
+        
+        <div class="controls">
+            <button id="loadTrialBtn" class="button">Load Trial T5</button>
+            <button id="saveAnnotationsBtn" class="button" disabled>Save Annotations</button>
+            <button id="clearAnnotationsBtn" class="button" disabled>Clear All</button>
+            <button id="undoBtn" class="button" disabled>Undo Last</button>
+        </div>
+        
+        <div id="status" class="status" style="display: none;"></div>
+        <div id="error" class="error" style="display: none;"></div>
+        
+        <div class="instructions">
+            <h3>📋 Annotation Instructions</h3>
+            <ul>
+                <li><strong>Click on any chart</strong> at the time of a gait event</li>
+                <li><strong>Select event type:</strong> Left/Right Heel Strike or Toe Off</li>
+                <li><strong>Look for patterns:</strong> Force spikes (heel strikes), force drops (toe offs)</li>
+                <li><strong>Use all data:</strong> Force plates + heel/toe markers + EMG activity</li>
+                <li><strong>Expected events:</strong> ~20-25 total over 20 seconds (constrained gait)</li>
+            </ul>
+        </div>
+        
+        <div id="charts" style="display: none;">
+            <div class="chart-container">
+                <div class="chart-title">Force Plates - Vertical Forces (Fz)</div>
+                <div class="chart-wrapper">
+                    <canvas id="forceChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">Key Gait Markers - Vertical Positions (Z)</div>
+                <div class="chart-wrapper">
+                    <canvas id="kinematicsChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-title">EMG Activity - Envelope Signals</div>
+                <div class="chart-wrapper">
+                    <canvas id="emgChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="event-counter">
+                <div class="event-count">
+                    <div class="event-count-number" id="leftHeelCount">0</div>
+                    <div class="event-count-label">Left Heel Strike</div>
+                </div>
+                <div class="event-count">
+                    <div class="event-count-number" id="leftToeCount">0</div>
+                    <div class="event-count-label">Left Toe Off</div>
+                </div>
+                <div class="event-count">
+                    <div class="event-count-number" id="rightHeelCount">0</div>
+                    <div class="event-count-label">Right Heel Strike</div>
+                </div>
+                <div class="event-count">
+                    <div class="event-count-number" id="rightToeCount">0</div>
+                    <div class="event-count-label">Right Toe Off</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="loading" class="loading">
+            <p>Ready to load trial data...</p>
+        </div>
+    </div>
+    
+    <!-- Event Selection Modal -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Select Gait Event Type</div>
+            <p style="margin-bottom: 20px; color: #9ca3af;">
+                Time: <span id="eventTime">0.00</span> seconds
+            </p>
+            
+            <div class="event-buttons">
+                <div class="event-button" onclick="selectEvent('left_heel_strike')">
+                    <strong>Left Heel Strike</strong><br>
+                    <small>Initial contact of left foot</small>
+                </div>
+                <div class="event-button" onclick="selectEvent('left_toe_off')">
+                    <strong>Left Toe Off</strong><br>
+                    <small>Left foot leaves ground</small>
+                </div>
+                <div class="event-button" onclick="selectEvent('right_heel_strike')">
+                    <strong>Right Heel Strike</strong><br>
+                    <small>Initial contact of right foot</small>
+                </div>
+                <div class="event-button" onclick="selectEvent('right_toe_off')">
+                    <strong>Right Toe Off</strong><br>
+                    <small>Right foot leaves ground</small>
+                </div>
+            </div>
+            
+            <button class="button" onclick="cancelEvent()">Cancel</button>
+        </div>
+    </div>
+    
+    <script src="annotation.js"></script>
+</body>
+</html>

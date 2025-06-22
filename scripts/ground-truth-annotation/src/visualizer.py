@@ -267,7 +267,7 @@ def create_constrained_gait_plot(synchronized_data: Dict[str, pd.DataFrame],
                                 time_window: float = 20.0) -> plt.Figure:
     """
     Create multi-modal plot for gait event annotation.
-    Shows force plates, kinematic markers, and EMG activity.
+    Shows force plates, key kinematic markers (heel/toe), and EMG activity.
     
     Args:
         synchronized_data: Synchronized multi-modal data
@@ -277,7 +277,7 @@ def create_constrained_gait_plot(synchronized_data: Dict[str, pd.DataFrame],
         matplotlib Figure with 3 subplots for annotation
     """
     fig, axes = plt.subplots(3, 1, figsize=(15, 10))
-    fig.suptitle('Multi-Modal Gait Event Annotation - Force, Kinematics & EMG', fontsize=16)
+    fig.suptitle('Multi-Modal Gait Event Annotation - Force, Key Markers & EMG', fontsize=16)
     
     kinetics = synchronized_data['kinetics']
     kinematics = synchronized_data['kinematics']
@@ -300,42 +300,52 @@ def create_constrained_gait_plot(synchronized_data: Dict[str, pd.DataFrame],
         axes[0].legend()
         axes[0].grid(True, alpha=0.3)
     
-    # Plot 2: Kinematic markers (focus on vertical positions for gait events)
-    # Look for Z-coordinate (vertical) markers which are most useful for gait events
-    z_markers = [col for col in kinematics.columns if col.endswith('_Z')]
+    # Plot 2: Key kinematic markers (heel and toe vertical positions)
+    # Look for specific heel and toe markers that are critical for gait events
+    key_markers = {
+        'right_toe_z': {'label': 'Right Toe', 'color': 'red', 'style': '-'},
+        'right_heel_z': {'label': 'Right Heel', 'color': 'darkred', 'style': '--'},
+        'left_toe_z': {'label': 'Left Toe', 'color': 'blue', 'style': '-'},
+        'left_heel_z': {'label': 'Left Heel', 'color': 'darkblue', 'style': '--'}
+    }
     
-    if len(z_markers) >= 4:
-        # Plot several Z-coordinate markers (vertical positions)
-        colors = ['blue', 'red', 'green', 'orange', 'purple', 'brown']
-        
-        # Plot first 4-6 markers for clarity
-        for i, marker in enumerate(z_markers[:6]):
-            color = colors[i % len(colors)]
-            label = marker.replace('_Z', ' (vertical)')
-            axes[1].plot(time, kinematics[marker], label=label, 
-                        color=color, alpha=0.8, linewidth=1.5)
-        
+    markers_found = 0
+    for marker_col, style_info in key_markers.items():
+        if marker_col in kinematics.columns:
+            axes[1].plot(time, kinematics[marker_col], 
+                        label=style_info['label'],
+                        color=style_info['color'],
+                        linestyle=style_info['style'],
+                        linewidth=2,
+                        alpha=0.8)
+            markers_found += 1
+    
+    if markers_found > 0:
         axes[1].set_ylabel('Vertical Position (mm)')
-        axes[1].set_title('Kinematic Markers - Vertical Positions')
+        axes[1].set_title('Key Gait Markers - Heel & Toe Vertical Positions')
         axes[1].legend()
         axes[1].grid(True, alpha=0.3)
         
-    elif len(z_markers) > 0:
-        # Plot available Z markers
-        for i, marker in enumerate(z_markers):
-            axes[1].plot(time, kinematics[marker], 
-                        label=marker.replace('_Z', ' (vertical)'),
-                        alpha=0.8, linewidth=1.5)
-        axes[1].set_ylabel('Vertical Position (mm)')
-        axes[1].set_title('Kinematic Markers - Vertical Positions')
-        axes[1].legend()
-        axes[1].grid(True, alpha=0.3)
-        
+        # Add annotation help
+        axes[1].text(0.02, 0.98, 
+                    'Look for: Heel minima = heel strike, Toe minima = toe off',
+                    transform=axes[1].transAxes, fontsize=9, 
+                    verticalalignment='top', alpha=0.7,
+                    bbox=dict(boxstyle="round,pad=0.3", facecolor="wheat", alpha=0.7))
     else:
-        axes[1].text(0.5, 0.5, 'No kinematic markers available', 
-                    transform=axes[1].transAxes, ha='center', va='center')
-        axes[1].set_ylabel('Kinematics')
-        axes[1].set_title('Kinematic Markers')
+        # Fallback: show any available Z markers 
+        z_markers = [col for col in kinematics.columns if col.endswith('_Z')]
+        if len(z_markers) > 0:
+            colors = ['blue', 'red', 'green', 'orange']
+            for i, marker in enumerate(z_markers[:4]):
+                color = colors[i % len(colors)]
+                label = marker.replace('_Z', ' (vertical)')
+                axes[1].plot(time, kinematics[marker], label=label, 
+                            color=color, alpha=0.8, linewidth=1.5)
+        
+        axes[1].set_ylabel('Vertical Position (mm)')
+        axes[1].set_title('Kinematic Markers - Vertical Positions')
+        axes[1].legend()
         axes[1].grid(True, alpha=0.3)
     
     # Plot 3: EMG Activity Overview (more useful than asymmetry for gait events)
@@ -352,12 +362,13 @@ def create_constrained_gait_plot(synchronized_data: Dict[str, pd.DataFrame],
         
         if len(emg_cols) >= 2:
             # Plot first 4 EMG channels with simple envelope
+            emg_colors = ['blue', 'red', 'green', 'orange']
             for i, col in enumerate(emg_cols[:4]):
                 # Simple envelope: moving RMS over 100 samples
                 envelope = emg_filtered[col].rolling(window=100, center=True).apply(
                     lambda x: np.sqrt(np.mean(x**2)), raw=True
                 )
-                color = colors[i % len(colors)]
+                color = emg_colors[i % len(emg_colors)]
                 axes[2].plot(emg_time, envelope, label=col, 
                            color=color, alpha=0.8, linewidth=1.5)
             
