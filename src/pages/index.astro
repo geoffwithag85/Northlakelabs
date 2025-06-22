@@ -5,41 +5,62 @@ import Footer from '../components/layout/Footer.astro';
 import Button from '../components/ui/Button.astro';
 ---
 
-<Layout title="Northlake Labs - AI-Integrated Robotics + Software Solutions">
+<Layout title="Northlake Labs - Bespoke Biomechanics Solutions | Enhancing Today, Enabling Tomorrow">
   <Header />
   
   <main class="relative z-10">    <!-- Hero Section -->
-    <section class="py-20">
-      <div class="max-w-6xl mx-auto px-6 text-center">        <!-- Large Logo/Brand Splash -->
-        <div class="flex items-center justify-center gap-4 md:gap-8 mb-8 md:mb-12">          <img 
-            src="/assets/northlake_logo_transparent.png"
-            alt="Northlake Labs Logo" 
-            width="200" 
-            height="200"
-            class="w-[100px] h-[100px] md:w-[140px] md:h-[140px] lg:w-[160px] lg:h-[160px] xl:w-[200px] xl:h-[200px] 2xl:w-[280px] 2xl:h-[280px] rounded-lg filter drop-shadow-xl"
-          />          <div class="flex flex-col mt-6 md:mt-8 lg:mt-10">
-            <h1 class="text-3xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-semibold bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent leading-none font-['Orbitron']">
-              NORTHLAKE
-            </h1>
-            <span class="text-sm md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-medium bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent self-end leading-none -mt-1 font-['Orbitron']">
-              LABS
-            </span>
+    <section class="py-2 md:py-6">
+      <div class="max-w-6xl mx-auto px-6 text-center">        <!-- Combined Logo + Headline Animation -->
+        <div class="relative flex justify-center mb-2 md:mb-6" style="height: 280px;">
+          <!-- Logo that slides out -->
+          <div class="absolute inset-0 flex items-center justify-center gap-4 md:gap-8 animate-slide-out-left opacity-100" style="animation-delay: 1.5s; animation-fill-mode: forwards;">
+            <img 
+              src="/assets/northlake_logo_transparent.png"
+              alt="Northlake Labs Logo" 
+              width="200" 
+              height="200"
+              class="w-[100px] h-[100px] md:w-[140px] md:h-[140px] lg:w-[160px] lg:h-[160px] xl:w-[200px] xl:h-[200px] 2xl:w-[280px] 2xl:h-[280px] rounded-lg filter drop-shadow-xl"
+            />
+            <div class="flex flex-col mt-6 md:mt-8 lg:mt-10">
+              <h1 class="text-3xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-semibold bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent leading-none font-['Orbitron']">
+                NORTHLAKE
+              </h1>
+              <span class="text-sm md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl font-medium bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent self-end leading-none -mt-1 font-['Orbitron']">
+                LABS
+              </span>
+            </div>
+          </div>
+          
+          <!-- Headline that slides in to replace logo -->
+          <div class="absolute inset-0 flex items-center justify-center">
+            <h2 class="text-4xl md:text-6xl font-bold leading-tight text-left">
+            <div class="animate-slide-in-right opacity-0" style="animation-delay: 1.7s; animation-fill-mode: forwards;">
+              <span class="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
+                Bespoke.
+              </span>
+            </div>
+            <div class="animate-slide-in-right opacity-0" style="animation-delay: 2.0s; animation-fill-mode: forwards;">
+              Biomechanics.
+            </div>
+            <div class="animate-slide-in-right opacity-0" style="animation-delay: 2.3s; animation-fill-mode: forwards;">
+              <span class="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
+                Solutions.
+              </span>
+            </div>
+            </h2>
           </div>
         </div>
         
-        <h2 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-          AI-Powered Biomechanics
-          <span class="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
-            Hardware + Software
-          </span>
-        </h2>
+        <div class="text-2xl md:text-3xl font-semibold mb-6 text-gray-200">
+          Enhancing Today, Enabling Tomorrow
+        </div>
         
         <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-          Custom robotics solutions and intelligent software platforms for biomechanics research, clinical assessment, and rehabilitation. 
-          Where AI meets biomechanics in both silicon and steel.
+          Custom AI-powered solutions that enhance your existing biomechanics workflows while enabling breakthrough innovation. 
+          We don't replace your processes—we make them intelligent, efficient, and more capable.
         </p>        <div class="inline-flex items-center gap-3 bg-burnt-sienna/10 border border-burnt-sienna/30 px-6 py-3 rounded-full backdrop-blur-sm mb-8">
           <div class="w-2 h-2 bg-burnt-sienna rounded-full animate-pulse-custom"></div>
-          <span class="text-sm">Developing hardware & software solutions</span>
+          <span class="text-sm">Bespoke biomechanics • Enhancing workflows with AI</span>
         </div><div class="flex flex-col sm:flex-row gap-4 justify-center">
           <Button href="/solutions/" variant="primary" size="lg">
             Explore Solutions
@@ -58,7 +79,7 @@ import Button from '../components/ui/Button.astro';
             <div class="text-4xl mb-4">🤖</div>
             <h3 class="text-xl font-semibold mb-3">Custom Robotics</h3>
             <p class="text-gray-400 leading-relaxed">
-              AI-integrated robotic systems for automated biomechanics assessment, rehabilitation, and intelligent sensor networks.
+              AI-integrated robotics designed to enhance your existing assessment workflows while enabling new automated capabilities.
             </p>
           </div>
           
@@ -66,7 +87,7 @@ import Button from '../components/ui/Button.astro';
             <div class="text-4xl mb-4">💻</div>
             <h3 class="text-xl font-semibold mb-3">AI Software Platforms</h3>
             <p class="text-gray-400 leading-relaxed">
-              Advanced data processing, multi-sensor fusion, and machine learning platforms for biomechanics analysis.
+              Custom software solutions that enhance your current data processing while unlocking advanced AI-powered insights.
             </p>
           </div>
           
@@ -74,7 +95,7 @@ import Button from '../components/ui/Button.astro';
             <div class="text-4xl mb-4">🔗</div>
             <h3 class="text-xl font-semibold mb-3">Integrated Solutions</h3>
             <p class="text-gray-400 leading-relaxed">
-              Seamless hardware-software ecosystems combining intelligent robotics with real-time AI processing.
+              Intelligent ecosystems that integrate seamlessly with your existing workflows while enabling advanced automation.
             </p>
           </div>
         </div>
@@ -88,8 +109,8 @@ import Button from '../components/ui/Button.astro';
             Next-Generation Solutions in Development
           </h3>
           <p class="text-gray-400 leading-relaxed">
-            We're developing breakthrough AI-integrated robotics and intelligent software platforms to revolutionize biomechanics. 
-            Bringing custom hardware and software solutions to market with embedded AI capabilities.
+            We're developing breakthrough AI-integrated solutions that enhance existing workflows while enabling new possibilities. 
+            Custom platforms designed specifically for your unique biomechanics challenges and opportunities.
           </p>
         </div>
       </div>

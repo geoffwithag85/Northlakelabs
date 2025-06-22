@@ -64,7 +64,9 @@ export default {
       },
       animation: {
         'float': 'float 8s ease-in-out infinite',
-        'pulse-custom': 'pulse-custom 2s infinite'
+        'pulse-custom': 'pulse-custom 2s infinite',
+        'slide-in-right': 'slide-in-right 0.8s ease-out',
+        'slide-out-left': 'slide-out-left 0.6s ease-in'
       },
       keyframes: {
         float: {
@@ -74,6 +76,14 @@ export default {
         'pulse-custom': {
           '0%, 100%': { opacity: '1', transform: 'scale(1)' },
           '50%': { opacity: '0.5', transform: 'scale(1.2)' }
+        },
+        'slide-in-right': {
+          '0%': { transform: 'translateX(100%)', opacity: '0' },
+          '100%': { transform: 'translateX(0)', opacity: '1' }
+        },
+        'slide-out-left': {
+          '0%': { transform: 'translateX(0)', opacity: '1' },
+          '100%': { transform: 'translateX(-100%)', opacity: '0' }
         }
       }
     },
