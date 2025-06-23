@@ -61,12 +61,17 @@ import Button from '../components/ui/Button.astro';
         </p>        <div class="inline-flex items-center gap-3 bg-burnt-sienna/10 border border-burnt-sienna/30 px-6 py-3 rounded-full backdrop-blur-sm mb-8">
           <div class="w-2 h-2 bg-burnt-sienna rounded-full animate-pulse-custom"></div>
           <span class="text-sm">Bespoke biomechanics • Enhancing workflows with AI</span>
-        </div><div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button href="/solutions/" variant="primary" size="lg">
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button href="/solutions/" variant="secondary" size="lg">
             Explore Solutions
           </Button>
           <Button href="/about/" variant="secondary" size="lg">
             Meet the Expert
+          </Button>
+          <Button href="/contact/" variant="primary" size="lg">
+            Start Your Project
           </Button>
         </div>
       </div>
@@ -102,16 +107,39 @@ import Button from '../components/ui/Button.astro';
       </div>
     </section>
 
-    <!-- Coming Soon Section -->
-    <section class="py-20">
-      <div class="max-w-4xl mx-auto px-6">        <div class="bg-white/5 p-12 rounded-2xl border border-white/10 backdrop-blur-sm text-center">
+    <!-- Latest Updates Section -->
+    <section class="pt-10 pb-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-12">
           <h3 class="text-2xl font-semibold mb-4 bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
-            Next-Generation Solutions in Development
+            Latest Updates
           </h3>
-          <p class="text-gray-400 leading-relaxed">
-            We're developing breakthrough AI-integrated solutions that enhance existing workflows while enabling new possibilities. 
-            Custom platforms designed specifically for your unique biomechanics challenges and opportunities.
-          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Company Launch Update -->
+          <div class="bg-white/5 p-8 rounded-xl border border-white/10 backdrop-blur-sm">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-2 h-2 bg-burnt-sienna rounded-full"></div>
+              <span class="text-sm text-gray-400">June 24, 2025</span>
+            </div>
+            <h4 class="text-lg font-semibold mb-3 text-burnt-sienna">Northlake Labs Officially Launched</h4>
+            <p class="text-gray-400 leading-relaxed">
+              We're excited to announce the official launch of Northlake Labs, bringing bespoke biomechanics solutions powered by AI to research labs, clinics, and sports professionals.
+            </p>
+          </div>
+          
+          <!-- ASB Conference Update -->
+          <div class="bg-white/5 p-8 rounded-xl border border-white/10 backdrop-blur-sm">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-2 h-2 bg-royal-purple rounded-full"></div>
+              <span class="text-sm text-gray-400">August 13-16, 2025</span>
+            </div>
+            <h4 class="text-lg font-semibold mb-3 text-royal-purple">See You at ASB 2025 in Pittsburgh</h4>
+            <p class="text-gray-400 leading-relaxed">
+              I'll be attending the American Society of Biomechanics Annual Meeting in Pittsburgh, mingling with fellow researchers and attending talks on the latest biomechanics innovations. Looking forward to connecting with the community!
+            </p>
+          </div>
         </div>
       </div>
     </section>

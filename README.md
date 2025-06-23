@@ -1,10 +1,10 @@
-# Northlake Labs LLC
+# Northlake Labs
 
 AI-powered biomechanics solutions combining intelligent software and custom robotics.
 
 ## About
 
-Northlake Labs LLC specializes in developing comprehensive biomechanics solutions that combine cutting-edge AI software with custom robotics hardware. We create intelligent systems that bridge the physical and digital realms of biomechanics research, clinical assessment, and rehabilitation.
+Northlake Labs specializes in developing comprehensive biomechanics solutions that combine cutting-edge AI software with custom robotics hardware. We create intelligent systems that bridge the physical and digital realms of biomechanics research, clinical assessment, and rehabilitation.
 
 ## Live Website
 
@@ -85,4 +85,4 @@ jupyter lab --no-browser --port=8888
 
 ---
 
-© 2025 Northlake Labs LLC. All rights reserved.
+© 2025 Northlake Labs. All rights reserved.

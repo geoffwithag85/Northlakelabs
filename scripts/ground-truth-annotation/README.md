@@ -355,7 +355,7 @@ If using this tool in research, please cite:
 
 ```
 Ground Truth Annotation Tool for Multi-Modal Gait Analysis
-Northlake Labs LLC
+Northlake Labs
 https://github.com/northlakelabs/Northlakelabs/tree/main/scripts/ground-truth-annotation
 ```
 
