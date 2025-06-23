@@ -8,7 +8,393 @@ import Footer from '../../components/layout/Footer.astro';
   <Header />
   
   <main class="relative z-10">
-    <!-- Contact Section -->
+    <!-- Contextual Sections - Shown ABOVE default when accessed via anchor -->
+    
+    <!-- Robotics Consultation Section -->
+    <section id="robotics" class="py-20 hidden target:block">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-gradient-to-r from-burnt-sienna/10 to-royal-purple/10 p-12 rounded-2xl border border-burnt-sienna/20 backdrop-blur-sm">
+          <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">
+              <span class="text-4xl">🤖</span>
+              <span class="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
+                Robotics Solutions Discussion
+              </span>
+            </h1>
+            <p class="text-xl text-gray-300 mb-8">
+              Let's explore how custom robotics can transform your biomechanics work
+            </p>
+          </div>
+
+          <!-- Contact Methods for Robotics - Moved to top for mobile optimization -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 bg-burnt-sienna/20 rounded-lg flex items-center justify-center">
+                  <span class="text-burnt-sienna text-xl">📧</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-burnt-sienna">Email Discussion</h4>
+                  <p class="text-sm text-gray-400">Detailed robotics consultation</p>
+                </div>
+              </div>
+              <a href="mailto:contact@northlakelabs.com?subject=Robotics Solutions Consultation" 
+                 class="block w-full text-center bg-burnt-sienna/20 hover:bg-burnt-sienna/30 text-burnt-sienna py-3 px-4 rounded-lg transition-colors">
+                Start Robotics Discussion
+              </a>
+            </div>
+            
+            <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 bg-burnt-sienna/20 rounded-lg flex items-center justify-center">
+                  <span class="text-burnt-sienna text-xl">📅</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-burnt-sienna">Video Consultation</h4>
+                  <p class="text-sm text-gray-400">30-minute robotics planning call</p>
+                </div>
+              </div>
+              <a href="https://calendly.com/geoff-northlakelabs/30min" target="_blank"
+                 class="block w-full text-center bg-burnt-sienna/20 hover:bg-burnt-sienna/30 text-burnt-sienna py-3 px-4 rounded-lg transition-colors">
+                Schedule Robotics Call
+              </a>
+            </div>
+          </div>
+
+          <!-- Supporting Content - Moved below CTAs -->
+          <div class="grid md:grid-cols-2 gap-8 mt-12 pt-8 border-t border-white/10">
+            <div>
+              <h3 class="text-lg font-semibold mb-4 text-burnt-sienna">We'll Discuss:</h3>
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-start gap-3">
+                  <span class="text-burnt-sienna mt-1">•</span>
+                  <span>Your current hardware setup and limitations</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-burnt-sienna mt-1">•</span>
+                  <span>Automated assessment and rehabilitation needs</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-burnt-sienna mt-1">•</span>
+                  <span>AI integration possibilities with existing systems</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-burnt-sienna mt-1">•</span>
+                  <span>Custom sensor arrays and real-time feedback</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-4 text-burnt-sienna">Perfect For:</h3>
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-start gap-3">
+                  <span class="text-royal-purple mt-1">▸</span>
+                  <span>Research labs needing automated data collection</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-royal-purple mt-1">▸</span>
+                  <span>Clinics wanting intelligent rehabilitation devices</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-royal-purple mt-1">▸</span>
+                  <span>Sports facilities requiring precision assessment</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Software Demo Section -->
+    <section id="software" class="py-20 hidden target:block">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-gradient-to-r from-royal-purple/10 to-indigo/10 p-12 rounded-2xl border border-royal-purple/20 backdrop-blur-sm">
+          <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">
+              <span class="text-4xl">💻</span>
+              <span class="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
+                AI Software Platform Demo
+              </span>
+            </h1>
+            <p class="text-xl text-gray-300 mb-8">
+              Experience advanced biomechanics AI processing capabilities
+            </p>
+          </div>
+
+          <!-- Contact Methods for Software - Moved to top for mobile optimization -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 bg-royal-purple/20 rounded-lg flex items-center justify-center">
+                  <span class="text-royal-purple text-xl">📧</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-royal-purple">Email Discussion</h4>
+                  <p class="text-sm text-gray-400">Software demo and requirements</p>
+                </div>
+              </div>
+              <a href="mailto:contact@northlakelabs.com?subject=AI Software Platform Demo Request" 
+                 class="block w-full text-center bg-royal-purple/20 hover:bg-royal-purple/30 text-gray-400 py-3 px-4 rounded-lg transition-colors">
+                Request Software Demo
+              </a>
+            </div>
+            
+            <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 bg-royal-purple/20 rounded-lg flex items-center justify-center">
+                  <span class="text-royal-purple text-xl">📅</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-royal-purple">Live Demo Session</h4>
+                  <p class="text-sm text-gray-400">30-minute software demonstration</p>
+                </div>
+              </div>
+              <a href="https://calendly.com/geoff-northlakelabs/30min" target="_blank"
+                 class="block w-full text-center bg-royal-purple/20 hover:bg-royal-purple/30 text-gray-400 py-3 px-4 rounded-lg transition-colors">
+                Schedule Demo Call
+              </a>
+            </div>
+          </div>
+
+          <!-- Supporting Content - Moved below CTAs -->
+          <div class="grid md:grid-cols-2 gap-8 mt-12 pt-8 border-t border-white/10">
+            <div>
+              <h3 class="text-lg font-semibold mb-4 text-royal-purple">Demo Includes:</h3>
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-start gap-3">
+                  <span class="text-royal-purple mt-1">•</span>
+                  <span>Multi-sensor data fusion algorithms</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-royal-purple mt-1">•</span>
+                  <span>Real-time processing and visualization</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-royal-purple mt-1">•</span>
+                  <span>Predictive modeling capabilities</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-royal-purple mt-1">•</span>
+                  <span>Computer vision movement analysis</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-4 text-royal-purple">Ideal For:</h3>
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-start gap-3">
+                  <span class="text-burnt-sienna mt-1">▸</span>
+                  <span>Labs with complex data processing needs</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-burnt-sienna mt-1">▸</span>
+                  <span>Clinics seeking intelligent analysis tools</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-burnt-sienna mt-1">▸</span>
+                  <span>Organizations wanting AI integration</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Integration Strategy Section -->
+    <section id="integration" class="py-20 hidden target:block">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-gradient-to-r from-indigo/10 to-burnt-sienna/10 p-12 rounded-2xl border border-indigo/20 backdrop-blur-sm">
+          <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">
+              <span class="text-4xl">🔗</span>
+              <span class="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
+                Integration Strategy Planning
+              </span>
+            </h1>
+            <p class="text-xl text-gray-300 mb-8">
+              Seamlessly connect hardware and software for comprehensive solutions
+            </p>
+          </div>
+
+          <!-- Contact Methods for Integration - Moved to top for mobile optimization -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 bg-indigo/20 rounded-lg flex items-center justify-center">
+                  <span class="text-indigo text-xl">📧</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-indigo">Email Discussion</h4>
+                  <p class="text-sm text-gray-400">Integration planning and strategy</p>
+                </div>
+              </div>
+              <a href="mailto:contact@northlakelabs.com?subject=Integration Strategy Planning" 
+                 class="block w-full text-center bg-indigo/20 hover:bg-indigo/30 text-indigo py-3 px-4 rounded-lg transition-colors">
+                Discuss Integration
+              </a>
+            </div>
+            
+            <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 bg-indigo/20 rounded-lg flex items-center justify-center">
+                  <span class="text-indigo text-xl">📅</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-indigo">Strategy Session</h4>
+                  <p class="text-sm text-gray-400">30-minute integration planning</p>
+                </div>
+              </div>
+              <a href="https://calendly.com/geoff-northlakelabs/30min" target="_blank"
+                 class="block w-full text-center bg-indigo/20 hover:bg-indigo/30 text-indigo py-3 px-4 rounded-lg transition-colors">
+                Schedule Strategy Call
+              </a>
+            </div>
+          </div>
+
+          <!-- Supporting Content - Moved below CTAs -->
+          <div class="grid md:grid-cols-2 gap-8 mt-12 pt-8 border-t border-white/10">
+            <div>
+              <h3 class="text-lg font-semibold mb-4 text-indigo">We'll Plan:</h3>
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-start gap-3">
+                  <span class="text-indigo mt-1">•</span>
+                  <span>Hardware-software communication protocols</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-indigo mt-1">•</span>
+                  <span>Real-time data flow architectures</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-indigo mt-1">•</span>
+                  <span>Cloud-edge processing strategies</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-indigo mt-1">•</span>
+                  <span>Scalable deployment approaches</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-4 text-indigo">Great For:</h3>
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-start gap-3">
+                  <span class="text-royal-purple mt-1">▸</span>
+                  <span>Facilities with existing systems to enhance</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-royal-purple mt-1">▸</span>
+                  <span>Organizations planning comprehensive upgrades</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-royal-purple mt-1">▸</span>
+                  <span>Multi-site deployments requiring consistency</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research Partnership Section -->
+    <section id="research" class="py-20 hidden target:block">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-gradient-to-r from-burnt-sienna/10 to-indigo/10 p-12 rounded-2xl border border-burnt-sienna/20 backdrop-blur-sm">
+          <div class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">
+              <span class="text-4xl">🔬</span>
+              <span class="bg-gradient-to-r from-burnt-sienna via-royal-purple to-indigo bg-clip-text text-transparent">
+                Research Partnership Discussion
+              </span>
+            </h1>
+            <p class="text-xl text-gray-300 mb-8">
+              Collaborate on cutting-edge biomechanics research and development
+            </p>
+          </div>
+
+          <!-- Contact Methods for Research - Moved to top for mobile optimization -->
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 bg-burnt-sienna/20 rounded-lg flex items-center justify-center">
+                  <span class="text-burnt-sienna text-xl">📧</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-burnt-sienna">Email Discussion</h4>
+                  <p class="text-sm text-gray-400">Research collaboration inquiry</p>
+                </div>
+              </div>
+              <a href="mailto:contact@northlakelabs.com?subject=Research Partnership Discussion" 
+                 class="block w-full text-center bg-burnt-sienna/20 hover:bg-burnt-sienna/30 text-burnt-sienna py-3 px-4 rounded-lg transition-colors">
+                Discuss Partnership
+              </a>
+            </div>
+            
+            <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+              <div class="flex items-center gap-4 mb-4">
+                <div class="w-12 h-12 bg-burnt-sienna/20 rounded-lg flex items-center justify-center">
+                  <span class="text-burnt-sienna text-xl">📅</span>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-burnt-sienna">Research Call</h4>
+                  <p class="text-sm text-gray-400">30-minute collaboration discussion</p>
+                </div>
+              </div>
+              <a href="https://calendly.com/geoff-northlakelabs/30min" target="_blank"
+                 class="block w-full text-center bg-burnt-sienna/20 hover:bg-burnt-sienna/30 text-burnt-sienna py-3 px-4 rounded-lg transition-colors">
+                Schedule Research Call
+              </a>
+            </div>
+          </div>
+
+          <!-- Supporting Content - Moved below CTAs -->
+          <div class="grid md:grid-cols-2 gap-8 mt-12 pt-8 border-t border-white/10">
+            <div>
+              <h3 class="text-lg font-semibold mb-4 text-burnt-sienna">Partnership Opportunities:</h3>
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-start gap-3">
+                  <span class="text-burnt-sienna mt-1">•</span>
+                  <span>Joint research projects and publications</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-burnt-sienna mt-1">•</span>
+                  <span>Grant funding collaboration and support</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-burnt-sienna mt-1">•</span>
+                  <span>Custom instrumentation development</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-burnt-sienna mt-1">•</span>
+                  <span>Research-grade precision tools</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold mb-4 text-burnt-sienna">Perfect For:</h3>
+              <ul class="space-y-3 text-gray-300">
+                <li class="flex items-start gap-3">
+                  <span class="text-indigo mt-1">▸</span>
+                  <span>University research labs and PIs</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-indigo mt-1">▸</span>
+                  <span>Clinical research facilities</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="text-indigo mt-1">▸</span>
+                  <span>Industry R&D departments</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Default Contact Section (shown when no anchor or after contextual) -->
     <section class="py-20">
       <div class="max-w-4xl mx-auto px-6">
         <div class="text-center mb-16">
