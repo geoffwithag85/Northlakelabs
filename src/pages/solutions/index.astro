@@ -141,15 +141,24 @@ import Button from '../../components/ui/Button.astro';
 
         <!-- Coming Soon Section -->
         <div class="bg-gradient-to-r from-burnt-sienna/5 to-royal-purple/5 p-12 rounded-3xl border border-burnt-sienna/20 backdrop-blur-sm text-center">
-          <div class="text-6xl mb-6">🚀</div>
-          <h3 class="text-2xl font-semibold mb-4 text-burnt-sienna">
-            Interactive Demos Coming Soon
+          <h3 class="text-2xl font-semibold mb-2 text-burnt-sienna flex items-center justify-center gap-3">
+            <span class="text-3xl">🚀</span>
+            Full Launch: Q3 2025
           </h3>
-          <p class="text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
-            We're developing cutting-edge interactive demonstrations that will showcase our AI-integrated 
-            biomechanics solutions, including multi-sensor fusion algorithms, real-time gait analysis, 
-            and intelligent robotics systems in action.
+          <p class="text-gray-400 mb-8 text-lg">
+            In the meantime, see our technology in action
           </p>
+          
+          <!-- Development Demo CTA -->
+          <div class="mb-8">
+            <a href="/demos" class="inline-flex items-center gap-3 bg-burnt-sienna/10 hover:bg-burnt-sienna/20 border border-burnt-sienna/30 px-8 py-4 rounded-xl transition-all duration-300 hover:scale-105">
+              <span class="text-2xl">🧪</span>
+              <div class="text-left">
+                <div class="text-burnt-sienna font-semibold text-lg">Demos (BETA)</div>
+                <div class="text-gray-400 text-sm">Preview builds • Work in progress</div>
+              </div>
+            </a>
+          </div>
           
           <!-- Features Preview -->
           <div class="grid md:grid-cols-3 gap-6 mb-8">
@@ -170,20 +179,7 @@ import Button from '../../components/ui/Button.astro';
             </div>
           </div>
           
-          <div class="space-y-4">
-            <p class="text-sm text-gray-400">
-              Stay tuned for immersive demonstrations of our AI-powered solutions
-            </p>
-            <p class="text-sm text-burnt-sienna">
-              <a href="/demos" class="hover:text-royal-purple transition-colors duration-300">
-                🧪 See what's cooking in the lab →
-              </a>
-            </p>
-            <p class="text-xs text-gray-500">
-              Development demos available now • Full demos published here when complete
-            </p>
-            <Button href="/contact" variant="primary" size="lg">Discuss Custom Solutions</Button>
-          </div>
+          <Button href="/contact" variant="primary" size="lg">Discuss Custom Solutions</Button>
         </div>
       </div>
     </section>
