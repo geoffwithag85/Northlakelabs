@@ -41,7 +41,7 @@ jobs:
         working-directory: ${{ env.BUILD_PATH }}
       
       - name: Build with Astro
-        run: npm run build
+        run: npm run build-fast
         working-directory: ${{ env.BUILD_PATH }}
       
       - name: Upload artifact

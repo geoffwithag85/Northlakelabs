@@ -26,7 +26,7 @@ class DemoDataProcessor {
   
   /**
    * Check if demo data cache is valid
-   * Returns true if cached data exists and is newer than source files
+   * Returns true if cached data exists and is newer than source files (if available)
    */
   isCacheValid() {
     const demoFile = join(this.outputDir, `${this.selectedTrial}-demo.json`);
@@ -35,6 +35,13 @@ class DemoDataProcessor {
     // Check if output files exist
     if (!existsSync(demoFile) || !existsSync(metadataFile)) {
       return false;
+    }
+    
+    // Check if source data directory exists (CI environment may not have it)
+    if (!existsSync(this.dataDir)) {
+      console.log(`📦 Source data directory not available: ${this.dataDir}`);
+      console.log(`✅ Using pre-processed demo data files (CI/production mode)`);
+      return true; // In CI/production, assume pre-processed data is valid
     }
     
     // Get cache timestamp
@@ -53,7 +60,8 @@ class DemoDataProcessor {
     for (const sourceFile of sourceFiles) {
       if (!existsSync(sourceFile)) {
         console.log(`⚠️  Source file missing: ${sourceFile}`);
-        return false;
+        console.log(`✅ Using pre-processed demo data (source not available)`);
+        return true; // If processed data exists but source doesn't, assume it's valid
       }
       
       const sourceTime = statSync(sourceFile).mtime.getTime();
